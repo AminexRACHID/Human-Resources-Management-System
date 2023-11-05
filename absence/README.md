@@ -1,7 +1,7 @@
 ce micro service permet de : 
  * ajouter une absence
  * supprimer une absence par id
- * chercher une absence par id de l'absence (à améliorer chercher par colaboratteurId)
+ * chercher une absence par collaborateurId
  * afficher tout les absences
  * modifier une absence
 
