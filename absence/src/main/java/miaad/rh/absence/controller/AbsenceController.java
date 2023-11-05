@@ -22,10 +22,10 @@ public class AbsenceController {
         return new ResponseEntity<>(savedAbsence, HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<AbsenceDto> getAbsenceById(@PathVariable("id") Long absenceId){
-        AbsenceDto absenceDto = absenceService.getAbsencebyId(absenceId);
-        return ResponseEntity.ok(absenceDto);
+    @GetMapping("{collaborateurId}")
+    public ResponseEntity<List<AbsenceDto>> getAbsenceBycollaborateurId(@PathVariable("collaborateurId")Long collaborateurId) {
+        List<AbsenceDto> absences = absenceService.getAbsenceBycollaborateurId(collaborateurId);
+        return ResponseEntity.ok(absences);
     }
 
     @GetMapping

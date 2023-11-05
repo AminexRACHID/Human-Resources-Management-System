@@ -25,13 +25,13 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public AbsenceDto getAbsencebyId(Long absenceId) {
-        Absence absence = absenceRepository.findById(absenceId)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("Pas d'absence avec cette id : " + absenceId));
+    public List<AbsenceDto> getAbsenceBycollaborateurId(Long collaborateurId) {
+        List<Absence> absences = absenceRepository.findAll();
 
-
-        return AbsenceMapper.mapToAbsenceDto(absence);
+        return absences.stream()
+                .filter(absence -> absence.getCollaborateurId().equals(collaborateurId))
+                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
+                .collect(Collectors.toList());
     }
 
     @Override

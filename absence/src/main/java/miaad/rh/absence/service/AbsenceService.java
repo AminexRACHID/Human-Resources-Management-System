@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface AbsenceService {
     AbsenceDto createAbsence(AbsenceDto absenceDto);
-    AbsenceDto getAbsencebyId(Long absenceId);
     List<AbsenceDto> getAllAbsences();
+    List<AbsenceDto> getAbsenceBycollaborateurId(Long collaborateurId);
     AbsenceDto updateAbsence(Long absenceId, AbsenceDto updateAbsence);
     void deleteAbsence(Long absenceId);
 }
