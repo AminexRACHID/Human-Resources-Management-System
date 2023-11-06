@@ -1,5 +1,6 @@
 package miaad.sgrh.employeemanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Setter
 @Getter
@@ -36,5 +37,20 @@ public class Employee {
 
     private String service;
     private String post;
+    @Transient
+    @OneToOne(mappedBy = "employee", fetch = FetchType.LAZY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Account account;
 
+    public Employee(Long id, String firstName, String lastName, String email, Date birthDay, String cin, Date hireDate, String service, String post) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.birthDay = birthDay;
+        this.cin = cin;
+        this.hireDate = hireDate;
+        this.service = service;
+        this.post = post;
+    }
 }
