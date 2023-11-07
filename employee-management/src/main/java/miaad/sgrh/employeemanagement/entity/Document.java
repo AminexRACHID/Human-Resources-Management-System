@@ -11,14 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Account {
+public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String documentName;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] content;
 
-    private String login;
-    private String password;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Employee employee;
 }

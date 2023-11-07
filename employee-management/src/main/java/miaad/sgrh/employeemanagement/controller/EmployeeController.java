@@ -2,11 +2,18 @@ package miaad.sgrh.employeemanagement.controller;
 
 import lombok.AllArgsConstructor;
 import miaad.sgrh.employeemanagement.dto.EmployeeDto;
+import miaad.sgrh.employeemanagement.entity.Document;
+import miaad.sgrh.employeemanagement.entity.Employee;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
+import miaad.sgrh.employeemanagement.mapper.EmployeeMapper;
 import miaad.sgrh.employeemanagement.service.EmployeeService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -50,7 +57,7 @@ public class EmployeeController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteEmplyee(@PathVariable("id") Long employeeId){
         try{
-            employeeService.deleteEmployee(employeeId);
+            employeeService.deleteEmployees(employeeId);
             return ResponseEntity.ok("Employee deleted successfully.");
         } catch (RessourceNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -108,5 +115,43 @@ public class EmployeeController {
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    //Documents
+    // curl -o document.pdf -X GET http://localhost:8080/api/employees/{employeeId}/documents/{documentId}
+    // http://localhost:8080/api/employees/1/documents
+    // Post -> body -> form data -> key value == file , value == select file
+    @PostMapping("/{employeeId}/documents")
+    public ResponseEntity<Document> uploadDocument(@PathVariable Long employeeId, @RequestParam("file") MultipartFile file) {
+        EmployeeDto employeedto = employeeService.getEmployeeById(employeeId);
+        Employee employee = EmployeeMapper.mapToEmployee(employeedto);
+
+        if (employee != null) {
+            Document document = employeeService.uploadDocument(employee, file);
+            return new ResponseEntity<>(document, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    // http://localhost:8080/api/employees/{employeeId}/documents/{documentId}
+    @GetMapping("/{employeeId}/documents/{documentId}")
+    public ResponseEntity<byte[]> downloadDocument(@PathVariable Long employeeId, @PathVariable Long documentId) {
+        Document document = employeeService.getEmployeeDocument(employeeId, documentId);
+
+        if (document != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+
+            return new ResponseEntity<>(document.getContent(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{employeeId}/documents")
+    public List<Document> getAllDocumentsByEmployee(@PathVariable Long employeeId) {
+        return employeeService.getAllDocumentsByEmployee(employeeId);
     }
 }

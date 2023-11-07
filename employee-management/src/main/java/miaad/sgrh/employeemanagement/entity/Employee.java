@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -34,13 +35,18 @@ public class Employee {
     @Column(name = "hire_date")
     @DateTimeFormat(fallbackPatterns = "dd/MM/yyyy")
     private Date hireDate;
-
     private String service;
     private String post;
+
     @Transient
-    @OneToOne(mappedBy = "employee", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Account account;
+
+    @Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Document> documents;
 
     public Employee(Long id, String firstName, String lastName, String email, Date birthDay, String cin, Date hireDate, String service, String post) {
         this.id = id;

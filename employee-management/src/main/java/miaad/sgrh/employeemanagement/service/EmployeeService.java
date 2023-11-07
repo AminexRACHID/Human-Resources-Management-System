@@ -1,6 +1,9 @@
 package miaad.sgrh.employeemanagement.service;
 
 import miaad.sgrh.employeemanagement.dto.EmployeeDto;
+import miaad.sgrh.employeemanagement.entity.Document;
+import miaad.sgrh.employeemanagement.entity.Employee;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,8 +18,14 @@ public interface EmployeeService {
 
     List<EmployeeDto> getAllEmployees();
     EmployeeDto updateEmployee(Long employeeId, EmployeeDto updatedEmployee);
-    void deleteEmployee(Long employeeId);
+    void deleteEmployees(Long employeeId);
 
     EmployeeDto getEmployeeByLastNameAndFirstName(String lastName, String firstName);
+
+    Document uploadDocument(Employee employee, MultipartFile file);
+
+    Document getEmployeeDocument(Long employeeId, Long documentId);
+
+    List<Document> getAllDocumentsByEmployee(Long employeeId);
 
 }
