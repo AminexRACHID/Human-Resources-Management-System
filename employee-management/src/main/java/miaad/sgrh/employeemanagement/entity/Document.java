@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 
@@ -21,9 +20,8 @@ public class Document {
     private Long id;
     private String documentName;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
     private Date creationDate;
 
     @Lob
@@ -32,4 +30,9 @@ public class Document {
 
     @ManyToOne
     private Employee employee;
+
+    @PrePersist
+    protected void onCreate() {
+        creationDate = new Date();
+    }
 }
