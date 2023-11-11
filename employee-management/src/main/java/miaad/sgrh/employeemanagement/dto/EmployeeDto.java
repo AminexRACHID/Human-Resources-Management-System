@@ -21,5 +21,6 @@ public class EmployeeDto {
     private Date hireDate;
     private String service;
     private String post;
+    private String role;
 
 }

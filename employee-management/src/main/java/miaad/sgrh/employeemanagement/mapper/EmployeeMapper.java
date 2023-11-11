@@ -14,7 +14,8 @@ public class EmployeeMapper {
                 employee.getCin(),
                 employee.getHireDate(),
                 employee.getService(),
-                employee.getPost()
+                employee.getPost(),
+                null
         );
     }
 

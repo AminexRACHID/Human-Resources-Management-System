@@ -36,12 +36,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeRepository.existsByCin(employeeDto.getCin())) {
             throw new RessourceNotFoundException("CIN is not unique. Please choose a different CIN.");
         }
+
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
         String password = employee.getLastName() + employee.getCin();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = new Account();
         account.setLogin(employee.getEmail());
         account.setPassword(passwordEncoder.encode(password));
+        account.setConfirmation(true);
+        account.setRole(employeeDto.getRole());
 
         employee.setAccount(account);
         account.setEmployee(employee);
@@ -118,6 +121,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RessourceNotFoundException("Employee not exists with given id: "+ employeeId));
 
+        Account account = accountRepository.findAccountByLogin(employee.getEmail());
+
+
         if (updatedEmployee.getFirstName() != null) employee.setFirstName(updatedEmployee.getFirstName());
         if (updatedEmployee.getLastName() != null) employee.setLastName(updatedEmployee.getLastName());
         if (updatedEmployee.getEmail() != null){
@@ -125,6 +131,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 throw new RessourceNotFoundException("Email is not unique. Please choose a different email address.");
             }
             employee.setEmail(updatedEmployee.getEmail());
+            account.setLogin(updatedEmployee.getEmail());
         }
         if (updatedEmployee.getBirthDay() != null) employee.setBirthDay(updatedEmployee.getBirthDay());
         if (updatedEmployee.getHireDate() != null) employee.setHireDate(updatedEmployee.getHireDate());
@@ -136,8 +143,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             employee.setCin(updatedEmployee.getCin());
         }
+        if (updatedEmployee.getRole() != null) account.setRole(updatedEmployee.getRole());
 
         Employee updatedEmployeeObj = employeeRepository.save(employee);
+        accountRepository.save(account);
         return EmployeeMapper.mapToEmployeeDTO(updatedEmployeeObj);
     }
 

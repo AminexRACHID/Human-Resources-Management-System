@@ -18,6 +18,8 @@ public class Account {
 
     private String login;
     private String password;
+    private String role;
+    private boolean confirmation;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Employee employee;
