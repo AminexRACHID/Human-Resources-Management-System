@@ -48,7 +48,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setAccount(account);
         account.setEmployee(employee);
-        System.out.println("After setting account:");
 
         Employee savedEmployee = employeeRepository.save(employee);
         accountRepository.save(account);
