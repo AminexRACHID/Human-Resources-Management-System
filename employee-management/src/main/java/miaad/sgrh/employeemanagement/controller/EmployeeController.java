@@ -55,11 +55,11 @@ public class EmployeeController {
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long employeeId){
+    public ResponseEntity<?> deleteEmplyee(@PathVariable("id") Long employeeId){
         try{
             employeeService.deleteEmployees(employeeId);
             return ResponseEntity.ok("Employee deleted successfully.");
-        } catch (Exception e){
+        } catch (RessourceNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

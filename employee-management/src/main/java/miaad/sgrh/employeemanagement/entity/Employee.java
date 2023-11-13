@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
@@ -30,12 +28,12 @@ public class Employee {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Column(name = "birth_day")
-    @DateTimeFormat(fallbackPatterns = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date birthDay;
     @Column(name = "cin", nullable = false, unique = true)
     private String cin;
     @Column(name = "hire_date")
-    @DateTimeFormat(fallbackPatterns = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date hireDate;
     private String service;
     private String post;
