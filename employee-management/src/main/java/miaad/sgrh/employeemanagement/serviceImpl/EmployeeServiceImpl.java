@@ -153,7 +153,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployees(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RessourceNotFoundException("Employee not exists with given id: "+ employeeId));
+<<<<<<< HEAD
 
+=======
+>>>>>>> Employee_Management
         try{
             accountRepository.deleteByLogin(employee.getEmail());
             employeeRepository.deleteById(employeeId);

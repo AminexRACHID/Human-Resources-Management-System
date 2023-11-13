@@ -1,10 +1,5 @@
 HELP.md
 target/
-<<<<<<< HEAD
-absence
-=======
-absence/
->>>>>>> ec5895aada4601346324acd978ac272b98f03192
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
