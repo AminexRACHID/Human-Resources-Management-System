@@ -24,9 +24,6 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL)
     private Employee employee;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private User user;
-
     @Column(name = "user_id", nullable = true, unique = true)
     private Long userId;
 

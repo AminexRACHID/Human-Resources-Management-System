@@ -5,4 +5,7 @@ import miaad.sgrh.employeemanagement.entity.Account;
 
 public interface AccountService {
     Account createAccount(UserDto userDto);
+    Account save(Account account);
+
+    Account resendVerification(String email);
 }
