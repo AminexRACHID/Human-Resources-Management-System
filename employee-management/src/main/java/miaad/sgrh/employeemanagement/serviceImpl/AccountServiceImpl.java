@@ -3,8 +3,10 @@ package miaad.sgrh.employeemanagement.serviceImpl;
 import lombok.AllArgsConstructor;
 import miaad.sgrh.employeemanagement.dto.UserDto;
 import miaad.sgrh.employeemanagement.entity.Account;
+import miaad.sgrh.employeemanagement.entity.Employee;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
 import miaad.sgrh.employeemanagement.repository.AccountRepository;
+import miaad.sgrh.employeemanagement.repository.VerificationRepository;
 import miaad.sgrh.employeemanagement.service.AccountService;
 import miaad.sgrh.employeemanagement.service.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
     private VerificationService verificationService;
+    private VerificationRepository verificationRepository;
     private EmailServiceImpl emailService;
 
     @Override
@@ -75,6 +78,22 @@ public class AccountServiceImpl implements AccountService {
 
             return account;
         } else {
+            throw new RessourceNotFoundException("Account not found.");
+        }
+    }
+
+    @Override
+    public void deleteAccount(String email) {
+        Account account = accountRepository.findAccountByLogin(email);
+
+        if (account != null){
+            try{
+                verificationRepository.deleteByAccountId(account.getId());
+                accountRepository.deleteByLogin(email);
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }else {
             throw new RessourceNotFoundException("Account not found.");
         }
     }

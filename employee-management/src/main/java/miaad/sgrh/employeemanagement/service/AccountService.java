@@ -8,4 +8,6 @@ public interface AccountService {
     Account save(Account account);
 
     Account resendVerification(String email);
+
+    void deleteAccount(String email);
 }

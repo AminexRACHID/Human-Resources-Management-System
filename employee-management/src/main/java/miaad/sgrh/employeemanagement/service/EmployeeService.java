@@ -3,6 +3,7 @@ package miaad.sgrh.employeemanagement.service;
 import miaad.sgrh.employeemanagement.dto.EmployeeDto;
 import miaad.sgrh.employeemanagement.entity.Document;
 import miaad.sgrh.employeemanagement.entity.Employee;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public interface EmployeeService {
     EmployeeDto updateEmployee(Long employeeId, EmployeeDto updatedEmployee);
     void deleteEmployees(Long employeeId);
 
+    @Query("SELECT e FROM Employee e WHERE e.lastName = :lastName AND e.firstName = :firstName")
     EmployeeDto getEmployeeByLastNameAndFirstName(String lastName, String firstName);
 
     Document uploadDocument(Employee employee, MultipartFile file);

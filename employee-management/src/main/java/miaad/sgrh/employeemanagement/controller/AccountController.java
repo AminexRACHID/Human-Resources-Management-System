@@ -74,4 +74,14 @@ public class AccountController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("{email}")
+    public ResponseEntity<?> deleteAccount(@PathVariable("email") String email){
+        try{
+            accountService.deleteAccount(email);
+            return ResponseEntity.ok("Account deleted successfully.");
+        } catch (RessourceNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
