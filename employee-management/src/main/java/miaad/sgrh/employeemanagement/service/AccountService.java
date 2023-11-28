@@ -10,4 +10,8 @@ public interface AccountService {
     Account resendVerification(String email);
 
     void deleteAccount(String email);
+
+    String getPasswordByEmail(String email);
+
+    void changePassword(String email, String newPass);
 }

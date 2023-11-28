@@ -84,4 +84,25 @@ public class AccountController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("{email}")
+    public ResponseEntity<?>  getPassword(@RequestParam("email") String email){
+        try{
+            accountService.getPasswordByEmail(email);
+            return ResponseEntity.ok("Email found.");
+        } catch (RessourceNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(String email, String newPass){
+        try{
+            accountService.changePassword(email,newPass);
+            return ResponseEntity.ok("Password has changed succefully.");
+        } catch (RessourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
