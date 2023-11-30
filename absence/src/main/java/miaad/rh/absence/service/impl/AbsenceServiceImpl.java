@@ -1,12 +1,20 @@
 package miaad.rh.absence.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.dto.EmployeeDto;
+import miaad.rh.absence.dto.StagaireDto;
 import miaad.rh.absence.entity.Absence;
 import miaad.rh.absence.exception.ResourceNotFoundException;
+import miaad.rh.absence.feign.EmployeeRestClient;
+import miaad.rh.absence.feign.StagaireRestClient;
 import miaad.rh.absence.mapper.AbsenceMapper;
 import miaad.rh.absence.repository.AbsenceRepository;
 import miaad.rh.absence.service.AbsenceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +25,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AbsenceServiceImpl implements AbsenceService {
     private AbsenceRepository absenceRepository;
+    private JavaMailSender javaMailSender;
+    private EmployeeRestClient employeeRestClient;
+    private StagaireRestClient stagaireRestClient;
+
     @Override
     public AbsenceDto createAbsence(AbsenceDto absenceDto) {
         Absence absence = AbsenceMapper.mapToAbsence(absenceDto);
@@ -25,11 +37,11 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public List<AbsenceDto> getAbsenceBycollaborateurId(Long collaborateurId) {
+    public List<AbsenceDto> getAbsenceBycollaborateurEmail(String collaborateurEmail) {
         List<Absence> absences = absenceRepository.findAll();
 
         return absences.stream()
-                .filter(absence -> absence.getCollaborateurId().equals(collaborateurId))
+                .filter(absence -> absence.getEmployeeId().equals(id))
                 .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
                 .collect(Collectors.toList());
     }
@@ -48,7 +60,7 @@ public class AbsenceServiceImpl implements AbsenceService {
         );
 
         absence.setAbsenceDate(updateAbsence.getAbsenceDate());
-        absence.setCollaborateurId(updateAbsence.getCollaborateurId());
+        absence.setEmployeeId(updateAbsence.getCollaborateurId());
         absence.setAbsenceNature(updateAbsence.getAbsenceNature());
         absence.setJustifie(updateAbsence.getJustifie());
         absence.setJustification(updateAbsence.getJustification());
@@ -65,6 +77,26 @@ public class AbsenceServiceImpl implements AbsenceService {
         );
 
         absenceRepository.deleteById(absenceId);
+    }
+
+    // Envoyer un email
+    public void sendEmailToCollaborateur(Long collaborateurId, String subject, String message, boolean employee) {
+        // Récupérez l'adresse e-mail du collaborateur à partir d'une fonction
+        if (employee == true){
+            EmployeeDto employeeDto = employeeRestClient.getEmployeeById(collaborateurId);
+            String collaborateurEmail = employeeDto.getEmail();
+        } else {
+            StagaireDto stagaireDto = stagaireRestClient.getStagaireById(collaborateurId);
+            String collaborateurEmail = stagaireDto.getEmail();
+        }
+
+
+        // Envoyer l'e-mail
+        SimpleMailMessage emailMessage = new SimpleMailMessage();
+        emailMessage.setTo(collaborateurEmail);
+        emailMessage.setSubject(subject);
+        emailMessage.setText(message);
+        javaMailSender.send(emailMessage);
     }
 }
 

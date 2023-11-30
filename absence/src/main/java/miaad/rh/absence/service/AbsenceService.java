@@ -4,6 +4,7 @@ import miaad.rh.absence.dto.AbsenceDto;
 
 import java.util.List;
 
+
 public interface AbsenceService {
     AbsenceDto createAbsence(AbsenceDto absenceDto);
     List<AbsenceDto> getAllAbsences();

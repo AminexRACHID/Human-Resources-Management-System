@@ -18,8 +18,10 @@ public class Absence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "id_collaborateur", nullable = false)
-    private Long collaborateurId;
+    @Column(name = "id_employee", nullable = true)
+    private Long employeeId;
+    @Column(name = "id_stagaire", nullable = true)
+    private Long stagaireId;
     @Column(name = "Date_absence")
     private Date absenceDate;
     @Column(name = "Nature_absence")

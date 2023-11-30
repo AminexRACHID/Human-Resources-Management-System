@@ -1,8 +1,12 @@
 package miaad.rh.absence.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.dto.EmployeeDto;
+import miaad.rh.absence.feign.EmployeeRestClient;
 import miaad.rh.absence.service.AbsenceService;
+import miaad.rh.absence.service.impl.AbsenceServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,12 +15,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.List;
 
-@AllArgsConstructor
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/absences")
 public class AbsenceController {
     private AbsenceService absenceService;
-    private JavaMailSender javaMailSender;
+    private AbsenceServiceImpl absenceServiceImpl;
+
+
 
     // Créer une absence et faire un test si le colaborateur à dépacer le max des absence on l'envoie un email
     @PostMapping
@@ -29,30 +35,19 @@ public class AbsenceController {
         if (numberOfAbsencesForCollaborateur >= 6) {
             String message = "Vous avez dépassé le seuil des absences.";
             String subject = "Dépassement du seuil d'absences";
-            sendEmailToCollaborateur(collaborateurId, subject, message);
+            absenceServiceImpl.sendEmailToCollaborateur(collaborateurId, subject, message, employee);
         }
 
         return new ResponseEntity<>(savedAbsence, HttpStatus.CREATED);
     }
 
 
-    // Envoyer un email
-    private void sendEmailToCollaborateur(Long collaborateurId, String subject, String message) {
-        // Récupérez l'adresse e-mail du collaborateur à partir d'une fonction
-        String collaborateurEmail = "touzouzadnane0@gmail.com";
 
-        // Envoyer l'e-mail
-        SimpleMailMessage emailMessage = new SimpleMailMessage();
-        emailMessage.setTo(collaborateurEmail);
-        emailMessage.setSubject(subject);
-        emailMessage.setText(message);
-        javaMailSender.send(emailMessage);
-    }
 
     // retourner les absences d'un colaborateur
-    @GetMapping("{collaborateurId}")
-    public ResponseEntity<List<AbsenceDto>> getAbsenceBycollaborateurId(@PathVariable("collaborateurId")Long collaborateurId) {
-        List<AbsenceDto> absences = absenceService.getAbsenceBycollaborateurId(collaborateurId);
+    @GetMapping("{collaborateurEmail}")
+    public ResponseEntity<List<AbsenceDto>> getAbsenceBycollaborateurEmail(@PathVariable("collaborateurEmail")Long collaborateurEmail) {
+        List<AbsenceDto> absences = absenceService.getAbsenceBycollaborateurId(collaborateurEmail);
         return ResponseEntity.ok(absences);
     }
 

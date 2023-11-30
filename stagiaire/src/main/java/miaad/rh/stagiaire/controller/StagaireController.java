@@ -3,19 +3,15 @@ package miaad.rh.stagiaire.controller;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import miaad.rh.stagiaire.dto.StagaireDto;
 import miaad.rh.stagiaire.service.PDFGeneratorService;
 import miaad.rh.stagiaire.service.StagaireService;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.sql.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -53,39 +49,5 @@ public class StagaireController {
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception appropriately
         }
-    }
-
-    @PostMapping
-    public ResponseEntity<StagaireDto> createStagaire(@RequestBody StagaireDto stagaireDto) {
-        StagaireDto savedStagaire = stagaireService.createStagaire(stagaireDto);
-        sendEmailAcceptation("touzouzadnane0@gmail.com", Date.valueOf("2023-12-09"));
-        return new ResponseEntity<>(savedStagaire, HttpStatus.CREATED);
-    }
-
-
-
-    @GetMapping("{stagaireId}")
-    public ResponseEntity<StagaireDto> getStagaireById(@PathVariable("stagaireId")Long stagaireId) {
-        StagaireDto stagaireDto = stagaireService.getStagaireById(stagaireId);
-        return ResponseEntity.ok(stagaireDto);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<StagaireDto>> getAllStagaires() {
-        List<StagaireDto> stagaires = stagaireService.getAllStagaires();
-        return ResponseEntity.ok(stagaires);
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<StagaireDto> updateStagaire(@PathVariable("id") Long stagaireId,
-                                                      @RequestBody StagaireDto updatedStagaire) {
-        StagaireDto stagaireDto = stagaireService.updateStagaire(stagaireId, updatedStagaire);
-        return ResponseEntity.ok(stagaireDto);
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteStagaire(@PathVariable("id") Long stagaireId){
-        stagaireService.deleteStagaire(stagaireId);
-        return ResponseEntity.ok("Stagaire suprimé avec succés");
     }
 }

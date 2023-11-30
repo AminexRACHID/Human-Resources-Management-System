@@ -14,7 +14,8 @@ import java.sql.Date;
 @AllArgsConstructor
 public class AbsenceDto {
     private Long id;
-    private Long collaborateurId;
+    private Long stagaireId;
+    private Long employeeId;
     private Date absenceDate;
     private String absenceNature;
     private String justifie;
