@@ -98,9 +98,24 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public String getPasswordByEmail(String email) {
+        Account account = accountRepository.findAccountByLogin(email);
+        return account.getPassword();
+    }
+
+    @Override
+    public void changePassword(String email, String newPass) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Account account = accountRepository.findAccountByLogin(email);
+        account.setPassword(passwordEncoder.encode(newPass));
+    }
+
 
     @Override
     public Account save(Account account){
         return accountRepository.save(account);
     }
+
+
 }
