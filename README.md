@@ -34,8 +34,17 @@
 </dependencyManagement>
 ```
 
-#### Step 4 : add im pom.xml
+#### Step 4 : add in properties
 ```xml
 spring.cloud.discovery.enabled=true
 spring.application.name=user-service
+```
+
+### Services Configuration for Feign Rest Client
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
 ```
