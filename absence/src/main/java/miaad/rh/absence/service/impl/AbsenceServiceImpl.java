@@ -31,19 +31,10 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public AbsenceDto createAbsence(AbsenceDto absenceDto) {
+
         Absence absence = AbsenceMapper.mapToAbsence(absenceDto);
         Absence savedAbsence = absenceRepository.save(absence);
         return AbsenceMapper.mapToAbsenceDto(savedAbsence);
-    }
-
-    @Override
-    public List<AbsenceDto> getAbsenceBycollaborateurEmail(String collaborateurEmail) {
-        List<Absence> absences = absenceRepository.findAll();
-
-        return absences.stream()
-                .filter(absence -> absence.getEmployeeId().equals(id))
-                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -54,13 +45,24 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
+    public List<AbsenceDto> getAbsenceBycollaborateurId(Long collaborateurId) {
+        List<Absence> absences = absenceRepository.findAll();
+
+        return absences.stream()
+                .filter(absence -> absence.getColaborateurId().equals(collaborateurId))
+                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
     public AbsenceDto updateAbsence(Long absenceId, AbsenceDto updateAbsence) {
         Absence absence = absenceRepository.findById(absenceId).orElseThrow(
                 () -> new ResourceNotFoundException("Pas d'absence avec cette id : " + absenceId)
         );
 
         absence.setAbsenceDate(updateAbsence.getAbsenceDate());
-        absence.setEmployeeId(updateAbsence.getCollaborateurId());
+        absence.setColaborateurId(updateAbsence.getColaborateurId());
         absence.setAbsenceNature(updateAbsence.getAbsenceNature());
         absence.setJustifie(updateAbsence.getJustifie());
         absence.setJustification(updateAbsence.getJustification());
@@ -82,12 +84,13 @@ public class AbsenceServiceImpl implements AbsenceService {
     // Envoyer un email
     public void sendEmailToCollaborateur(Long collaborateurId, String subject, String message, boolean employee) {
         // Récupérez l'adresse e-mail du collaborateur à partir d'une fonction
+        String collaborateurEmail = "";
         if (employee == true){
             EmployeeDto employeeDto = employeeRestClient.getEmployeeById(collaborateurId);
-            String collaborateurEmail = employeeDto.getEmail();
+            collaborateurEmail = employeeDto.getEmail();
         } else {
-            StagaireDto stagaireDto = stagaireRestClient.getStagaireById(collaborateurId);
-            String collaborateurEmail = stagaireDto.getEmail();
+            StagaireDto stagaireDto = stagaireRestClient.getStagiaireById(collaborateurId);
+            collaborateurEmail = stagaireDto.getEmail();
         }
 
 

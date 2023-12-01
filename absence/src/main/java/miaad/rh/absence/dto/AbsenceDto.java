@@ -14,10 +14,10 @@ import java.sql.Date;
 @AllArgsConstructor
 public class AbsenceDto {
     private Long id;
-    private Long stagaireId;
-    private Long employeeId;
+    private Long colaborateurId;
+    private boolean employee;
     private Date absenceDate;
     private String absenceNature;
     private String justifie;
-    private String justification;
+    private byte[] justification;
 }

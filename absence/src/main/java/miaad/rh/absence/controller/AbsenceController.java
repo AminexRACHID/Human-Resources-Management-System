@@ -28,14 +28,14 @@ public class AbsenceController {
     @PostMapping
     public ResponseEntity<AbsenceDto> createAbsence(@RequestBody AbsenceDto absenceDto) {
         AbsenceDto savedAbsence = absenceService.createAbsence(absenceDto);
-        Long collaborateurId = absenceDto.getCollaborateurId();
+        Long collaborateurId = absenceDto.getColaborateurId();
         List<AbsenceDto> collaborateurAbsences = absenceService.getAbsenceBycollaborateurId(collaborateurId);
         int numberOfAbsencesForCollaborateur = collaborateurAbsences.size();
 
         if (numberOfAbsencesForCollaborateur >= 6) {
             String message = "Vous avez dépassé le seuil des absences.";
             String subject = "Dépassement du seuil d'absences";
-            absenceServiceImpl.sendEmailToCollaborateur(collaborateurId, subject, message, employee);
+            absenceServiceImpl.sendEmailToCollaborateur(collaborateurId, subject, message, absenceDto.isEmployee());
         }
 
         return new ResponseEntity<>(savedAbsence, HttpStatus.CREATED);
@@ -46,8 +46,8 @@ public class AbsenceController {
 
     // retourner les absences d'un colaborateur
     @GetMapping("{collaborateurEmail}")
-    public ResponseEntity<List<AbsenceDto>> getAbsenceBycollaborateurEmail(@PathVariable("collaborateurEmail")Long collaborateurEmail) {
-        List<AbsenceDto> absences = absenceService.getAbsenceBycollaborateurId(collaborateurEmail);
+    public ResponseEntity<List<AbsenceDto>> getAbsenceBycollaborateurId(@PathVariable("collaborateurEmail")Long collaborateurId) {
+        List<AbsenceDto> absences = absenceService.getAbsenceBycollaborateurId(collaborateurId);
         return ResponseEntity.ok(absences);
     }
 

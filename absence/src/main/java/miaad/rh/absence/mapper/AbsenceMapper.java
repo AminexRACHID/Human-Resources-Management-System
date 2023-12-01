@@ -7,7 +7,8 @@ public class AbsenceMapper {
     public static AbsenceDto mapToAbsenceDto(Absence absence){
         return new AbsenceDto(
                 absence.getId(),
-                absence.getCollaborateurId(),
+                absence.getColaborateurId(),
+                absence.isEmployee(),
                 absence.getAbsenceDate(),
                 absence.getAbsenceNature(),
                 absence.getJustifie(),
@@ -18,7 +19,8 @@ public class AbsenceMapper {
     public static Absence mapToAbsence(AbsenceDto absenceDto){
         return new Absence(
                 absenceDto.getId(),
-                absenceDto.getCollaborateurId(),
+                absenceDto.getColaborateurId(),
+                absenceDto.isEmployee(),
                 absenceDto.getAbsenceDate(),
                 absenceDto.getAbsenceNature(),
                 absenceDto.getJustifie(),

@@ -18,16 +18,17 @@ public class Absence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "id_employee", nullable = true)
-    private Long employeeId;
-    @Column(name = "id_stagaire", nullable = true)
-    private Long stagaireId;
+    @Column(name = "id_colaborateur", nullable = false)
+    private Long colaborateurId;
+    @Column(name = "is_employee")
+    private boolean employee;
     @Column(name = "Date_absence")
     private Date absenceDate;
     @Column(name = "Nature_absence")
     private String absenceNature;
     @Column(name = "justification_absence")
     private String justifie;
-    @Column(name = "details_justification")
-    private String justification;
+    @Lob
+    @Column(name = "details_justification", columnDefinition = "LONGBLOB")
+    private byte[] justification;
 }
