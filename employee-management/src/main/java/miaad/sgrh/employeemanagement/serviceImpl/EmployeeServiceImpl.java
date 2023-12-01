@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
         String password = employee.getLastName() + employee.getCin();
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder passwordEncoder = SecurityConfig.passwordEncoder();
         Account account = new Account();
         account.setLogin(employee.getEmail());
         account.setPassword(passwordEncoder.encode(password));

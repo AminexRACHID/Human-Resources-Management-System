@@ -49,7 +49,7 @@ public class StageServiceImpl implements StageService {
         if (updatedStage.getStartDate() != null) stage.setStartDate(updatedStage.getStartDate());
         stage.setRemuneration(updatedStage.isRemuneration());
 
-        return StageMapper.mapToStageDto(stage);
+        return StageMapper.mapToStageDto(stageRepository.save(stage));
     }
 
 
