@@ -1,7 +1,6 @@
 package miaad.rh.absence.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
 import miaad.rh.absence.dto.EmployeeDto;
 import miaad.rh.absence.dto.StagaireDto;
@@ -12,13 +11,12 @@ import miaad.rh.absence.feign.StagaireRestClient;
 import miaad.rh.absence.mapper.AbsenceMapper;
 import miaad.rh.absence.repository.AbsenceRepository;
 import miaad.rh.absence.service.AbsenceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,12 +28,13 @@ public class AbsenceServiceImpl implements AbsenceService {
     private StagaireRestClient stagaireRestClient;
 
     @Override
-    public AbsenceDto createAbsence(AbsenceDto absenceDto) {
+    public AbsenceDto createAbsence(AbsenceDto absenceDto) throws IOException {
 
         Absence absence = AbsenceMapper.mapToAbsence(absenceDto);
         Absence savedAbsence = absenceRepository.save(absence);
         return AbsenceMapper.mapToAbsenceDto(savedAbsence);
     }
+
 
     @Override
     public List<AbsenceDto> getAllAbsences() {
@@ -65,7 +64,6 @@ public class AbsenceServiceImpl implements AbsenceService {
         absence.setColaborateurId(updateAbsence.getColaborateurId());
         absence.setAbsenceNature(updateAbsence.getAbsenceNature());
         absence.setJustifie(updateAbsence.getJustifie());
-        absence.setJustification(updateAbsence.getJustification());
 
         Absence updatedAbsenceObj = absenceRepository.save(absence);
 
@@ -80,6 +78,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
         absenceRepository.deleteById(absenceId);
     }
+
 
     // Envoyer un email
     public void sendEmailToCollaborateur(Long collaborateurId, String subject, String message, boolean employee) {
@@ -101,6 +100,8 @@ public class AbsenceServiceImpl implements AbsenceService {
         emailMessage.setText(message);
         javaMailSender.send(emailMessage);
     }
+
+
 }
 
 

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -28,7 +29,6 @@ public class Absence {
     private String absenceNature;
     @Column(name = "justification_absence")
     private String justifie;
-    @Lob
-    @Column(name = "details_justification", columnDefinition = "LONGBLOB")
-    private byte[] justification;
+    @Column(name = "justification_detailles")
+    private String justification;
 }
