@@ -1,14 +1,17 @@
 package miaad.sgrh.employeemanagement.controller;
 
 import lombok.AllArgsConstructor;
+import miaad.sgrh.employeemanagement.dto.PassDto;
 import miaad.sgrh.employeemanagement.dto.UserDto;
 import miaad.sgrh.employeemanagement.entity.Account;
 import miaad.sgrh.employeemanagement.entity.Verification;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
 import miaad.sgrh.employeemanagement.service.AccountService;
 import miaad.sgrh.employeemanagement.service.VerificationService;
+import miaad.sgrh.employeemanagement.serviceImpl.SecurityConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,8 +91,13 @@ public class AccountController {
     @GetMapping("{email}")
     public ResponseEntity<?>  getPassword(@RequestParam("email") String email){
         try{
-            accountService.getPasswordByEmail(email);
-            return ResponseEntity.ok("Email found.");
+            String pass = accountService.getPasswordByEmail(email);
+            BCryptPasswordEncoder encoder = SecurityConfig.passwordEncoder();
+            PassDto password = new PassDto();
+            password.setPass(pass);
+            password.setEncoder(encoder);
+            return new ResponseEntity<>(password, HttpStatus.OK);
+            //return ResponseEntity.ok("Email found.");
         } catch (RessourceNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

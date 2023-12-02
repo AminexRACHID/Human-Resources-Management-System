@@ -45,10 +45,10 @@ public class StageController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable("id") Long id,@RequestBody EmployeeDto updatedEmployeeDto){
+    public ResponseEntity<?> updateStage(@PathVariable("id") Long id, @RequestBody StageDto updatedStageDto){
         try{
-            EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, updatedEmployeeDto);
-            return ResponseEntity.ok(updatedEmployee);
+            StageDto updatedStage = stageService.updateStage(id, updatedStageDto);
+            return ResponseEntity.ok(updatedStage);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
