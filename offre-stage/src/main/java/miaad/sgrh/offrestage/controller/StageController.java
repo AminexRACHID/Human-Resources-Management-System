@@ -54,4 +54,13 @@ public class StageController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteStage(@PathVariable("id") Long id){
+        try{
+            stageService.deleteStage(id);
+            return ResponseEntity.ok("Stage deleted successfully.");
+        } catch (RessourceNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

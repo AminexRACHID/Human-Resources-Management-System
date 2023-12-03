@@ -52,7 +52,14 @@ public class StageServiceImpl implements StageService {
         return StageMapper.mapToStageDto(stageRepository.save(stage));
     }
 
-
+    @Override
+    public void deleteStage(Long id) {
+        Stage stage = stageRepository.findById(id)
+                .orElseThrow(() -> new RessourceNotFoundException("Stage not found with given id"+ id));
+        if (stage != null){
+            stageRepository.deleteById(id);
+        }
+    }
 
 
 }

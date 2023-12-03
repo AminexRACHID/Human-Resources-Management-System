@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(UserDto userDto) {
-        BCryptPasswordEncoder passwordEncoder = SecurityConfig.passwordEncoder();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = new Account();
         account.setLogin(userDto.getEmail());
         account.setRole("stagiaire");

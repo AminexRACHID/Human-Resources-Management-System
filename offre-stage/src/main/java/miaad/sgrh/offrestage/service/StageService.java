@@ -10,6 +10,6 @@ public interface StageService {
 
     StageDto updateStage(Long id, StageDto stageDto);
 
-
+    void deleteStage(Long id);
 
 }
