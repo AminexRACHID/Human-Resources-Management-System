@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +80,6 @@ public class AbsenceController {
     public ResponseEntity<?> downloadJustification(@PathVariable Long absenceId) {
         Optional<Absence> absenceOptional = absenceService.getAbsenceById(absenceId);
 
-
         if (absenceOptional.isPresent()) {
             Absence absence = absenceOptional.get();
 
@@ -85,7 +87,16 @@ public class AbsenceController {
 
             if (justificationBytes != null) {
                 HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_PDF);
+
+                // Determine the content type based on your logic
+                MediaType contentType;
+                if (isImage(justificationBytes)) {
+                    contentType = MediaType.IMAGE_JPEG; // Change to the appropriate image media type
+                } else {
+                    contentType = MediaType.APPLICATION_PDF;
+                }
+
+                headers.setContentType(contentType);
 
                 return new ResponseEntity<>(justificationBytes, headers, HttpStatus.OK);
             } else {
@@ -94,6 +105,17 @@ public class AbsenceController {
         }
 
         return ResponseEntity.ok("Absence not found");
+    }
+
+    private boolean isImage(byte[] bytes) {
+        try {
+            // Attempt to read the bytes as an image
+            BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
+            return bufferedImage != null;
+        } catch (IOException e) {
+            // An exception occurred, indicating that the bytes are not a valid image
+            return false;
+        }
     }
 }
 
