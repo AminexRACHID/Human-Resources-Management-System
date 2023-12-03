@@ -2,15 +2,19 @@ package miaad.rh.absence.controller;
 
 import lombok.AllArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.entity.Absence;
 import miaad.rh.absence.service.AbsenceService;
 import miaad.rh.absence.service.impl.AbsenceServiceImpl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -23,7 +27,7 @@ public class AbsenceController {
 
     // Créer une absence et faire un test si le colaborateur à dépacer le max des absence on l'envoie un email
     @PostMapping
-    public ResponseEntity<AbsenceDto> createAbsence(@RequestBody AbsenceDto absenceDto) throws IOException {
+    public ResponseEntity<AbsenceDto> createAbsence(@ModelAttribute AbsenceDto absenceDto) throws IOException {
         AbsenceDto savedAbsence = absenceService.createAbsence(absenceDto);
         Long collaborateurId = absenceDto.getColaborateurId();
         List<AbsenceDto> collaborateurAbsences = absenceService.getAbsenceBycollaborateurId(collaborateurId);
@@ -67,6 +71,29 @@ public class AbsenceController {
     public ResponseEntity<String> deleteAbsence(@PathVariable("id") Long absenceId){
         absenceService.deleteAbsence(absenceId);
         return ResponseEntity.ok("Absence suprimé avec sucées");
+    }
+
+    @GetMapping("/{absenceId}/justification")
+    public ResponseEntity<?> downloadJustification(@PathVariable Long absenceId) {
+        Optional<Absence> absenceOptional = absenceService.getAbsenceById(absenceId);
+
+
+        if (absenceOptional.isPresent()) {
+            Absence absence = absenceOptional.get();
+
+            byte[] justificationBytes = absence.getJustification();
+
+            if (justificationBytes != null) {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+
+                return new ResponseEntity<>(justificationBytes, headers, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        return ResponseEntity.ok("Absence not found");
     }
 }
 

@@ -15,7 +15,7 @@ public class AbsenceMapper {
                 absence.getAbsenceDate(),
                 absence.getAbsenceNature(),
                 absence.getJustifie(),
-                absence.getJustification()
+                null
         );
     }
 
@@ -27,7 +27,7 @@ public class AbsenceMapper {
                 absenceDto.getAbsenceDate(),
                 absenceDto.getAbsenceNature(),
                 absenceDto.getJustifie(),
-                absenceDto.getJustification()
+                absenceDto.getJustificationFile().getBytes()
         );
     }
 }

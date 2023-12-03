@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +31,17 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public AbsenceDto createAbsence(AbsenceDto absenceDto) throws IOException {
 
-        Absence absence = AbsenceMapper.mapToAbsence(absenceDto);
+        byte[] justification = absenceDto.getJustificationFile().getBytes();
+
+        Absence absence = new Absence();
+        absence.setColaborateurId(absenceDto.getColaborateurId());
+        absence.setEmployee(absenceDto.isEmployee());
+        absence.setAbsenceDate(absenceDto.getAbsenceDate());
+        absence.setAbsenceNature(absenceDto.getAbsenceNature());
+        absence.setJustifie(absenceDto.getJustifie());
+        absence.setJustification(justification);
+
+
         Absence savedAbsence = absenceRepository.save(absence);
         return AbsenceMapper.mapToAbsenceDto(savedAbsence);
     }
@@ -101,7 +112,12 @@ public class AbsenceServiceImpl implements AbsenceService {
         javaMailSender.send(emailMessage);
     }
 
+    public Optional<Absence> getAbsenceById(Long absenceId) {
+        Optional<Absence> absence = Optional.ofNullable(absenceRepository.findById(absenceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Absence not Found with given id" + absenceId)));
 
+        return  absence;
+    }
 }
 
 

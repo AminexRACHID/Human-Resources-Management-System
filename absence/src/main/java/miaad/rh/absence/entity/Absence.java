@@ -29,6 +29,7 @@ public class Absence {
     private String absenceNature;
     @Column(name = "justification_absence")
     private String justifie;
-    @Column(name = "justification_detailles")
-    private String justification;
+    @Column(name = "justification_detailles", columnDefinition = "LONGBLOB")
+    @Lob
+    private byte[] justification;
 }

@@ -21,5 +21,5 @@ public class AbsenceDto {
     private Date absenceDate;
     private String absenceNature;
     private String justifie;
-    private String Justification;
+    private MultipartFile justificationFile;
 }
