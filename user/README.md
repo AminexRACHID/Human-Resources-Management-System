@@ -3,7 +3,7 @@
 ### Add Stagiaire
 
 http://localhost:8090/user-service/api/user
-
+```xml
 {
     "firstName" : "Amine",
     "lastName" : "Rachid",
@@ -12,3 +12,4 @@ http://localhost:8090/user-service/api/user
     "phone" : "0506060704",
     "password" : "test123"
 }
+```
