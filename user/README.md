@@ -2,7 +2,7 @@
 
 ### Add Stagiaire
 
-http://localhost:8090/user-service/api/user
+Post : http://localhost:8090/user-service/api/user
 ```xml
 {
     "firstName" : "Amine",
