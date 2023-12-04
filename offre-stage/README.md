@@ -15,3 +15,17 @@ POST : http://localhost:8090/offre-stage/api/stage
 }
 ```
 
+### Apply Intership
+
+POST : http://localhost:8090/offre-stage/api/stage/applyIntership
+```xml
+{
+    "id" : 1,
+    "stageId" : 2,
+    "city" : "Meknes",
+    "levelStudies" : "BAC+5",
+    "linkedin": "http://teeeest.com",
+    "email" : "amine.rcd.ar@gmail.com",
+    "phone" : "06836719"
+}
+```
