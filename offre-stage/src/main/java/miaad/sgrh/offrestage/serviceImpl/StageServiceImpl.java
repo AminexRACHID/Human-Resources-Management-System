@@ -105,5 +105,4 @@ public class StageServiceImpl implements StageService {
         return stagiaireDto;
     }
 
-
 }

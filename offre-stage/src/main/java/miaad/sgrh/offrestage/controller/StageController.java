@@ -78,10 +78,10 @@ public class StageController {
     }
 
     @PostMapping("/applyIntership")
-    public ResponseEntity<?> applyIntership(@RequestBody StagiaireDto stagiaireDto) {
+    public ResponseEntity<?> applyIntership(@ModelAttribute StagiaireDto stagiaireDto) {
         try {
-            StagiaireDto stagiaireDto1  = stageService.applyIntership(stagiaireDto);
-            return new ResponseEntity<>(stagiaireDto1, HttpStatus.OK);
+            stageService.applyIntership(stagiaireDto);
+            return ResponseEntity.ok("Applied to this internship successfully.");
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

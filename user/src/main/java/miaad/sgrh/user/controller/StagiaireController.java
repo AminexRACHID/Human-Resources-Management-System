@@ -90,10 +90,10 @@ public class StagiaireController {
         }
     }
 
-    @PutMapping("update/{email}")
+    @PutMapping("/update/{email}")
     public ResponseEntity<?> updateStagiaireByEmail(
             @PathVariable("email") String email,
-            @RequestPart(value = "cv", required = false) MultipartFile cvFile,
+            @RequestParam(value = "cv", required = false) MultipartFile cvFile,
             @ModelAttribute StagiaireDto updatedStagiaireDto) {
         try {
             updatedStagiaireDto.setCv(cvFile);
