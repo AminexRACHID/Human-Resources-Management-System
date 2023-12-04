@@ -33,5 +33,7 @@ POST : http://localhost:8090/offre-stage/api/stage/applyIntership
 ### Accept or Interview or Reject an Intership Apply
 
 PUT : http://localhost:8090/offre-stage/api/stage/accept/1
+
 PUT : http://localhost:8090/offre-stage/api/stage/interview/1
+
 PUT : http://localhost:8090/offre-stage/api/stage/reject/1
