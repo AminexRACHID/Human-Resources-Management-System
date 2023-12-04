@@ -1,50 +1,17 @@
-# Systeme-de-Gestion-des-Ressources-Humaines
+# Offre Stage Service
 
-### Services Configuration for Eureka and gateway
+### Add Intership
 
-#### Step 1: Add spring-cloud.version tag in pom.xml as show below. Ofcourse you can change the version or use below mention version.
+POST : http://localhost:8090/offre-stage/api/stage
 ```xml
-<properties>
-    ...
-    <spring-cloud.version>2022.0.2</spring-cloud.version>
-    ...
-</properties>
+{
+    "title" : "Data Science",
+    "type" : "stage preembauche",
+    "duration" : 12,
+    "startDate" : "2023-04-23",
+    "remuneration" : true,
+    "diploma" : "BAC+5",
+    "description" : "blablabla"
+}
 ```
 
-#### Step 2: Add dependency as show below
-```xml
-<dependency>
-   <groupId>org.springframework.cloud</groupId> 
-   <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-</dependency>
-```
-
-#### Step 3: Add dependency management tag just below dependencies tag
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>2022.0.3</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
-#### Step 4 : add in properties
-```xml
-spring.cloud.discovery.enabled=true
-spring.application.name=user-service
-```
-
-### Services Configuration for Feign Rest Client
-
-```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-openfeign</artifactId>
-</dependency>
-```
