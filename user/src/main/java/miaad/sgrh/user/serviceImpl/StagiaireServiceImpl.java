@@ -2,7 +2,6 @@ package miaad.sgrh.user.serviceImpl;
 
 import lombok.AllArgsConstructor;
 import miaad.sgrh.user.dto.StagiaireDto;
-import miaad.sgrh.user.dto.UserDto;
 import miaad.sgrh.user.entity.Stagiaire;
 import miaad.sgrh.user.entity.User;
 import miaad.sgrh.user.exception.RessourceNotFoundException;
@@ -69,12 +68,12 @@ public class StagiaireServiceImpl implements StagiaireService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<StagiaireDto> getStagiaireByStatus(String status) {
-        List<Stagiaire> stagiaireDtos = stagiaireRepository.getStagiaireByStatus(status);
-        return stagiaireDtos.stream().map((s) -> StagiaireMapper.mapToStagiaireDto(s))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<StagiaireDto> getStagiaireByStatus(String status) {
+//        List<Stagiaire> stagiaireDtos = stagiaireRepository.getStagiaireByStatus(status);
+//        return stagiaireDtos.stream().map((s) -> StagiaireMapper.mapToStagiaireDto(s))
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public void deleteStagiaires(Long id) {
@@ -116,4 +115,5 @@ public class StagiaireServiceImpl implements StagiaireService {
         Stagiaire updatedStagiaireObj = stagiaireRepository.save(stagiaire);
         return StagiaireMapper.mapToStagiaireDto(updatedStagiaireObj);
     }
+
 }

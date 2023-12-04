@@ -1,7 +1,6 @@
 package miaad.sgrh.user.mapper;
 
 import miaad.sgrh.user.dto.StagiaireDto;
-import miaad.sgrh.user.dto.UserDto;
 import miaad.sgrh.user.entity.Stagiaire;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ public class StagiaireMapper {
                 stagiaire.getLevelStudies(),
                 stagiaire.getLinkedin(),
                 null,
-                stagiaire.getStatus(),
                 stagiaire.getFirstName(),
                 stagiaire.getLastName(),
                 stagiaire.getEmail(),
@@ -29,8 +27,7 @@ public class StagiaireMapper {
                 stagiaireDto.getCity(),
                 stagiaireDto.getLevelStudies(),
                 stagiaireDto.getLinkedin(),
-                stagiaireDto.getCv().getBytes(),
-                stagiaireDto.getStatus()
+                stagiaireDto.getCv().getBytes()
         );
     }
 

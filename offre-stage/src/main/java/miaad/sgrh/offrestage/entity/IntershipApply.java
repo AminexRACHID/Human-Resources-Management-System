@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "intershipApply")
-public class intershipApply {
+public class IntershipApply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -14,6 +14,6 @@ import java.util.List;
 public interface StagiaireRepository extends JpaRepository<Stagiaire,Long> {
     Stagiaire findStagiaireByEmail(String email);
 
-    @Query("SELECT s FROM Stagiaire s WHERE s.status = :status")
-    List<Stagiaire> getStagiaireByStatus(String status);
+//    @Query("SELECT s FROM Stagiaire s WHERE s.status = :status")
+//    List<Stagiaire> getStagiaireByStatus(String status);
 }

@@ -2,11 +2,14 @@ package miaad.sgrh.offrestage.controller;
 
 import lombok.AllArgsConstructor;
 import miaad.sgrh.offrestage.dto.StageDto;
+import miaad.sgrh.offrestage.dto.StagiaireDto;
 import miaad.sgrh.offrestage.exception.RessourceNotFoundException;
 import miaad.sgrh.offrestage.service.StageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/stage")
@@ -37,7 +40,7 @@ public class StageController {
     @GetMapping("/stage/{title}")
     public ResponseEntity<?> getStageByTitle(@RequestParam("title") String title){
         try {
-            StageDto stage  = stageService.getStageByTitle(title);
+            List<StageDto> stage  = stageService.getStageByTitle(title);
             return new ResponseEntity<>(stage, HttpStatus.OK);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -63,4 +66,25 @@ public class StageController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAllStage(){
+        try {
+            List<StageDto> stage  = stageService.getAllStage();
+            return new ResponseEntity<>(stage, HttpStatus.OK);
+        } catch (RessourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/applyIntership")
+    public ResponseEntity<?> applyIntership(@RequestBody StagiaireDto stagiaireDto) {
+        try {
+            StagiaireDto stagiaireDto1  = stageService.applyIntership(stagiaireDto);
+            return new ResponseEntity<>(stagiaireDto1, HttpStatus.OK);
+        } catch (RessourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

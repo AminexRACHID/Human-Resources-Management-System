@@ -25,6 +25,5 @@ public class Stagiaire extends User {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] cv;
 
-    private String status;
 
 }

@@ -56,15 +56,15 @@ public class StagiaireController {
         }
     }
 
-    @GetMapping("/search/status/{status}")
-    public ResponseEntity<?> getStagiaireByStatus(@PathVariable("status") String status){
-        try{
-            List<StagiaireDto> stagiaireDto = stagiaireService.getStagiaireByStatus(status);
-            return ResponseEntity.ok(stagiaireDto);
-        } catch (RessourceNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    @GetMapping("/search/status/{status}")
+//    public ResponseEntity<?> getStagiaireByStatus(@PathVariable("status") String status){
+//        try{
+//            List<StagiaireDto> stagiaireDto = stagiaireService.getStagiaireByStatus(status);
+//            return ResponseEntity.ok(stagiaireDto);
+//        } catch (RessourceNotFoundException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteStagiaire(@PathVariable("id") Long id){
@@ -84,6 +84,21 @@ public class StagiaireController {
         try {
             updatedStagiaireDto.setCv(cvFile);
             StagiaireDto updatedStagiaire = stagiaireService.updateStagiaire(id, updatedStagiaireDto, cvFile);
+            return ResponseEntity.ok(updatedStagiaire);
+        } catch (RessourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("update/{email}")
+    public ResponseEntity<?> updateStagiaireByEmail(
+            @PathVariable("email") String email,
+            @RequestPart(value = "cv", required = false) MultipartFile cvFile,
+            @ModelAttribute StagiaireDto updatedStagiaireDto) {
+        try {
+            updatedStagiaireDto.setCv(cvFile);
+            StagiaireDto stagiaire = stagiaireService.getStagiaireInfoByEmail(email);
+            StagiaireDto updatedStagiaire = stagiaireService.updateStagiaire(stagiaire.getId(), updatedStagiaireDto, cvFile);
             return ResponseEntity.ok(updatedStagiaire);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

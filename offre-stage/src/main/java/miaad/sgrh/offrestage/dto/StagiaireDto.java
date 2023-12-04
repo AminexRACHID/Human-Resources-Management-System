@@ -1,4 +1,4 @@
-package miaad.sgrh.user.dto;
+package miaad.sgrh.offrestage.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StagiaireDto implements Serializable {
+    private Long stageId;
     private Long id;
     private String city;
     private String levelStudies;
