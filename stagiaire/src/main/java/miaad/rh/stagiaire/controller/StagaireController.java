@@ -3,6 +3,7 @@ package miaad.rh.stagiaire.controller;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import miaad.rh.stagiaire.dto.EmailInfoDto;
 import miaad.rh.stagiaire.service.PDFGeneratorService;
 import miaad.rh.stagiaire.service.StagaireService;
 import org.springframework.core.io.ByteArrayResource;
@@ -30,20 +31,24 @@ public class StagaireController {
         javaMailSender.send(emailMessage);
     }
 
-    @GetMapping("/sendAttestation/{email}")
-    private void sendEmailWithAttachment(@PathVariable("email") String email) {
+    @PostMapping("/sendAttestation")
+    public void sendEmailWithAttachment(@RequestBody EmailInfoDto emailInfoDto) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         String subject = "attestation de stage";
         String message = "Je vous félicite pour la terminaison de votre stage.";
         String attachmentName = "attestation.pdf";
 
         try {
-            // Générer le PDF
-            byte[] attestationPdf = pdfGeneratorService.generateAttestation("TOUZOUZ Adnane", Date.valueOf("2023-12-09"), Date.valueOf("2024-12-09"));
+            // Générer le PDF avec les informations de EmailInfoDto
+            byte[] attestationPdf = pdfGeneratorService.generateAttestation(
+                    emailInfoDto.getNomStagaire(),
+                    emailInfoDto.getDateDebut(),
+                    emailInfoDto.getDateFin()
+            );
 
             // Préparer le message MIME
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setTo(email);
+            helper.setTo(emailInfoDto.getEmail());
             helper.setSubject(subject);
             helper.setText(message);
 
