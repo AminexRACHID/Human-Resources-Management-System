@@ -1,5 +1,6 @@
 package miaad.sgrh.offrestage.feign;
 
+import miaad.sgrh.offrestage.dto.Stagiaire;
 import miaad.sgrh.offrestage.dto.StagiaireDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -19,4 +20,7 @@ public interface UserRestClient {
             @RequestParam(value = "cv", required = false) MultipartFile cvFile,
             @ModelAttribute StagiaireDto updatedStagiaireDto
     );
+
+    @GetMapping("/api/stagiaire/{id}")
+    Stagiaire getStagiaireById(@PathVariable("id") Long stagiaireId);
 }

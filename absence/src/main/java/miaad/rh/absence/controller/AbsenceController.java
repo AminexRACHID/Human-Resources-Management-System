@@ -88,10 +88,9 @@ public class AbsenceController {
             if (justificationBytes != null) {
                 HttpHeaders headers = new HttpHeaders();
 
-                // Determine the content type based on your logic
                 MediaType contentType;
                 if (isImage(justificationBytes)) {
-                    contentType = MediaType.IMAGE_JPEG; // Change to the appropriate image media type
+                    contentType = MediaType.IMAGE_JPEG;
                 } else {
                     contentType = MediaType.APPLICATION_PDF;
                 }
@@ -109,11 +108,9 @@ public class AbsenceController {
 
     private boolean isImage(byte[] bytes) {
         try {
-            // Attempt to read the bytes as an image
             BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
             return bufferedImage != null;
         } catch (IOException e) {
-            // An exception occurred, indicating that the bytes are not a valid image
             return false;
         }
     }

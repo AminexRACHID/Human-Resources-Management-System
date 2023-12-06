@@ -12,4 +12,6 @@ public interface IntershipApplyRepository extends JpaRepository<IntershipApply, 
 
     @Query("SELECT i FROM IntershipApply i WHERE i.stageId = :stageId AND i.stagiaireId = :stagiaireId")
     IntershipApply getIntershipApplies(Long stageId, Long stagiaireId);
+
+    List<IntershipApply> findIntershipAppliesByStageId(Long stageId);
 }

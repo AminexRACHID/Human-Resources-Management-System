@@ -1,6 +1,7 @@
 package miaad.sgrh.offrestage.controller;
 
 import lombok.AllArgsConstructor;
+import miaad.sgrh.offrestage.dto.IntershipApplyStagiaireDto;
 import miaad.sgrh.offrestage.dto.StageDto;
 import miaad.sgrh.offrestage.dto.StagiaireDto;
 import miaad.sgrh.offrestage.exception.RessourceNotFoundException;
@@ -87,4 +88,31 @@ public class StageController {
         }
     }
 
+    @GetMapping("/stagiaire/{id}")
+    public ResponseEntity<?> getCandidatesForStage(@PathVariable Long id){
+        try {
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.getCandidatesForStage(id);
+            return new ResponseEntity<>(stagiaires, HttpStatus.OK);
+        } catch (RessourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/interview/{intershipApplyId}")
+    public ResponseEntity<?> acceptIntershipApplyForInterview(@PathVariable Long intershipApplyId) {
+        stageService.acceptIntershipApplyForInterview(intershipApplyId);
+        return ResponseEntity.ok("Intership apply set to interview successfully");
+    }
+
+    @PutMapping("/accept/{intershipApplyId}")
+    public ResponseEntity<?> acceptIntershipApply(@PathVariable Long intershipApplyId) {
+        stageService.acceptIntershipApply(intershipApplyId);
+        return ResponseEntity.ok("Intership apply accepted successfully");
+    }
+
+    @PutMapping("/reject/{intershipApplyId}")
+    public ResponseEntity<?> rejectIntershipApply(@PathVariable Long intershipApplyId) {
+        stageService.rejectIntershipApply(intershipApplyId);
+        return ResponseEntity.ok("Intership apply rejected successfully");
+    }
 }
