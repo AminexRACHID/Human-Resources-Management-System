@@ -31,23 +31,33 @@ public class StagaireController {
     }
 
     @GetMapping("/sendAttestation/{email}")
-    private void sendEmailWithAttachment(@PathVariable("email")String email) {
+    private void sendEmailWithAttachment(@PathVariable("email") String email) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         String subject = "attestation de stage";
         String message = "Je vous félicite pour la terminaison de votre stage.";
         String attachmentName = "attestation.pdf";
+
         try {
-            byte[] attestationPdf = pdfGeneratorService.generateAttestation("ZYADI Youness", Date.valueOf("2023-12-09"), Date.valueOf("2024-12-09"));
+            // Générer le PDF
+            byte[] attestationPdf = pdfGeneratorService.generateAttestation("TOUZOUZ Adnane", Date.valueOf("2023-12-09"), Date.valueOf("2024-12-09"));
+
+            // Préparer le message MIME
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(message);
-            helper.addAttachment(attachmentName, new ByteArrayResource(attestationPdf));
+
+            // Ajouter le PDF en pièce jointe
+            ByteArrayResource pdfAttachment = new ByteArrayResource(attestationPdf);
+            helper.addAttachment(attachmentName, pdfAttachment);
+
+            // Envoyer l'email
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace(); // Gérer l'exception de manière appropriée
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace(); // Gérer l'exception de manière appropriée
         }
     }
+
 }
