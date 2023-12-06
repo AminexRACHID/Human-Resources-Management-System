@@ -26,8 +26,7 @@ public class PDFGeneratorService {
 
         // Ajout du logo à gauche
         try {
-            Image imgLeft = Image.getInstance("C:/Users/Adnane/Desktop/MIAAD_S3/projetRH/Systeme-de-Gestion-des-Ressources-Humaines/umi.jpg");
-            imgLeft.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
+            Image imgLeft = Image.getInstance("src/main/resources/asset/umi.jpg");            imgLeft.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
             PdfPCell cellLeft = new PdfPCell(imgLeft);
             cellLeft.setBorder(Rectangle.NO_BORDER);
             table.addCell(cellLeft);
@@ -37,7 +36,7 @@ public class PDFGeneratorService {
 
         // Ajout du logo à droite
         try {
-            Image imgRight = Image.getInstance("C:/Users/Adnane/Desktop/MIAAD_S3/projetRH/Systeme-de-Gestion-des-Ressources-Humaines/fsm.png");
+            Image imgRight = Image.getInstance("src/main/resources/asset/fsm.png");
             imgRight.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
             PdfPCell cellRight = new PdfPCell(imgRight);
             cellRight.setBorder(Rectangle.NO_BORDER);
@@ -96,7 +95,7 @@ public class PDFGeneratorService {
 
         // Ajout de l'image contenant la signature du responsable en bas à droite
         try {
-            Image imgRightbtm = Image.getInstance("C:/Users/Adnane/Desktop/MIAAD_S3/projetRH/Systeme-de-Gestion-des-Ressources-Humaines/signature.png");
+            Image imgRightbtm = Image.getInstance("src/main/resources/asset/signature.png");
             imgRightbtm.scaleToFit(150, 50);
             imgRightbtm.setAlignment(Element.ALIGN_RIGHT);
             document.add(imgRightbtm);
