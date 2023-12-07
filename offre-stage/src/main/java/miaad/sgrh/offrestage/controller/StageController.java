@@ -23,7 +23,7 @@ public class StageController {
         try {
             StageDto stage  = stageService.createStage(stageDto);
             return new ResponseEntity<>(stage, HttpStatus.OK);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -33,7 +33,7 @@ public class StageController {
         try {
             StageDto stage  = stageService.getStageById(id);
             return new ResponseEntity<>(stage, HttpStatus.OK);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -43,7 +43,7 @@ public class StageController {
         try {
             List<StageDto> stage  = stageService.getStageByTitle(title);
             return new ResponseEntity<>(stage, HttpStatus.OK);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -53,7 +53,7 @@ public class StageController {
         try{
             StageDto updatedStage = stageService.updateStage(id, updatedStageDto);
             return ResponseEntity.ok(updatedStage);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -63,7 +63,7 @@ public class StageController {
         try{
             stageService.deleteStage(id);
             return ResponseEntity.ok("Stage deleted successfully.");
-        } catch (RessourceNotFoundException e){
+        } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -73,7 +73,7 @@ public class StageController {
         try {
             List<StageDto> stage  = stageService.getAllStage();
             return new ResponseEntity<>(stage, HttpStatus.OK);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -83,7 +83,7 @@ public class StageController {
         try {
             stageService.applyIntership(stagiaireDto);
             return ResponseEntity.ok("Applied to this internship successfully.");
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -93,7 +93,7 @@ public class StageController {
         try {
             List<IntershipApplyStagiaireDto>  stagiaires  = stageService.getCandidatesForStage(id);
             return new ResponseEntity<>(stagiaires, HttpStatus.OK);
-        } catch (RessourceNotFoundException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

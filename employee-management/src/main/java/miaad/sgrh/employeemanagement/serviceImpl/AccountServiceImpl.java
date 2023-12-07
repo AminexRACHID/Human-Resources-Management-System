@@ -106,9 +106,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void changePassword(String email, String newPass) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = accountRepository.findAccountByLogin(email);
-        account.setPassword(passwordEncoder.encode(newPass));
+        account.setPassword(newPass);
+        accountRepository.save(account);
     }
 
 

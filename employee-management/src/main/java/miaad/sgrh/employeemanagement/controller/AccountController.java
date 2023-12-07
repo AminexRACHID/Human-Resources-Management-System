@@ -61,7 +61,7 @@ public class AccountController {
             }
         }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("activation");  // Adjust the path as needed
+        modelAndView.setViewName("activation");
         modelAndView.addObject("message", model.getAttribute("message"));
         return modelAndView;
     }
@@ -97,10 +97,10 @@ public class AccountController {
     }
 
     @PostMapping("/changePassword")
-    public ResponseEntity<?> changePassword(String email, String newPass){
+    public ResponseEntity<String> changePassword(@RequestParam("email") String email,@RequestBody String newPass){
         try{
             accountService.changePassword(email,newPass);
-            return ResponseEntity.ok("Password has changed succefully.");
+            return ResponseEntity.ok("Password changed successfully.");
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
