@@ -1,7 +1,7 @@
-# Stagaire Service
+# Administration Service
 
 
-### générer et envoyer une attestation de stage 
+### générer et envoyer une attestation de travaille 
 
 POST : http://localhost:8090/administration-service/api/administration/generateAttestation
 ```xml
