@@ -1,18 +1,22 @@
-package miaad.rh.stagiaire.service;
+package miaad.rh.administration.service;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import miaad.rh.administration.dto.AttestationInfoDto;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.util.Calendar;
 
-
-public class PDFGeneratorService {
-
-    public byte[] generateAttestation(String stagiaireName, Date startDate, Date endDate) throws DocumentException {
+public class AttestationGeneratorService {
+    public byte[] generateAttestation(AttestationInfoDto attestationInfoDto) throws DocumentException {
+        String nomPrenom = attestationInfoDto.getNomPrenom();
+        String cin = attestationInfoDto.getCin();
+        String poste = attestationInfoDto.getPoste();
+        Date dateOccupation = attestationInfoDto.getDateOccupation();
+        String nomEtablissement = attestationInfoDto.getNomEtablissement();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Document document = new Document();
         PdfWriter.getInstance(document, byteArrayOutputStream);
@@ -26,7 +30,8 @@ public class PDFGeneratorService {
 
         // Ajout du logo à gauche
         try {
-            Image imgLeft = Image.getInstance("src/main/resources/asset/umi.jpg");            imgLeft.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
+            Image imgLeft = Image.getInstance("src/main/resources/asset/umi.jpg");
+            imgLeft.scaleToFit(150, 50);
             PdfPCell cellLeft = new PdfPCell(imgLeft);
             cellLeft.setBorder(Rectangle.NO_BORDER);
             table.addCell(cellLeft);
@@ -54,7 +59,7 @@ public class PDFGeneratorService {
 
         // Titre centré et en gras
         Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-        Paragraph title = new Paragraph("Attestation de Stage", titleFont);
+        Paragraph title = new Paragraph("Attestation de Travail", titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
 
@@ -64,12 +69,16 @@ public class PDFGeneratorService {
         // Contenu de l'attestation
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
         Paragraph content = new Paragraph();
-        content.add(new Phrase("Je soussigné, responsable du département informatique, certifie que M/Mme "));
-        content.add(new Phrase(stagiaireName, boldFont));
-        content.add(new Phrase(" a effectué son stage au département d'Informatique de la Faculté des Sciences de Meknès du "));
-        content.add(new Phrase(startDate.toString(), boldFont));
-        content.add(new Phrase(" au "));
-        content.add(new Phrase(endDate.toString(), boldFont));
+        content.add(new Phrase("Je soussigné, responsable du département informatique au sein de "));
+        content.add(new Phrase(nomEtablissement, boldFont));
+        content.add(new Phrase(" atteste par la présente que Monsieur/Madame "));
+        content.add(new Phrase(nomPrenom, boldFont));
+        content.add(new Phrase(" titulaire de la carte d'identité nationale numéro "));
+        content.add(new Phrase(cin, boldFont));
+        content.add(new Phrase(" est actuellement employé(e) au sein de notre département de l'informatique depuis le "));
+        content.add(new Phrase(dateOccupation.toString(), boldFont));
+        content.add(new Phrase(" en qualité de "));
+        content.add(new Phrase(poste, boldFont));
         content.add(new Phrase("."));
         content.add((new Phrase("\n\n")));
         content.add((new Phrase("Cette attestation est délivrée à l'intéressé(e) afin de servir et valoir ce que de droit.\n\n")));
@@ -108,4 +117,6 @@ public class PDFGeneratorService {
         document.close();
         return byteArrayOutputStream.toByteArray();
     }
+
+
 }
