@@ -6,6 +6,7 @@ import miaad.sgrh.employeemanagement.entity.Document;
 import miaad.sgrh.employeemanagement.entity.Employee;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
 import miaad.sgrh.employeemanagement.mapper.EmployeeMapper;
+import miaad.sgrh.employeemanagement.repository.DocumentRepository;
 import miaad.sgrh.employeemanagement.service.EmployeeService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,11 @@ import java.util.List;
 public class EmployeeController {
 
     private EmployeeService employeeService;
+    private DocumentRepository documentRepository;
     @PostMapping
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<?> createEmployee(@ModelAttribute EmployeeDto employeeDto,@RequestParam("file") MultipartFile file){
         try{
-            EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto);
+            EmployeeDto savedEmployee = employeeService.createEmployee(employeeDto, file);
             return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -58,6 +60,12 @@ public class EmployeeController {
     public void deleteEmplyee(@PathVariable("id") Long employeeId) {
 
         employeeService.deleteEmployees(employeeId);
+    }
+
+    @DeleteMapping("/doc/{id}")
+    public void deleteDocument(@PathVariable("id") Long employeeId) {
+
+        documentRepository.deleteByEmployee_Id(employeeId);
     }
 
     @GetMapping("/search/email/{email}")

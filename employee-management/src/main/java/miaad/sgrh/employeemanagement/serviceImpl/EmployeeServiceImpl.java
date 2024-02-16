@@ -3,6 +3,7 @@ package miaad.sgrh.employeemanagement.serviceImpl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import miaad.sgrh.employeemanagement.controller.AccountController;
+import miaad.sgrh.employeemanagement.controller.EmployeeController;
 import miaad.sgrh.employeemanagement.dto.EmployeeDto;
 import miaad.sgrh.employeemanagement.entity.Account;
 import miaad.sgrh.employeemanagement.entity.Document;
@@ -33,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private AccountController accountController;
 
     @Override
-    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+    public EmployeeDto createEmployee(EmployeeDto employeeDto, MultipartFile file) {
         if (employeeRepository.existsByEmail(employeeDto.getEmail())) {
             throw new RessourceNotFoundException("Email is not unique. Please choose a different email address.");
         }
@@ -55,6 +56,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee savedEmployee = employeeRepository.save(employee);
         accountRepository.save(account);
+
+        if (file != null) {
+            try {
+                uploadDocument(employee, file);
+            } catch (Exception e) {
+                throw new RessourceNotFoundException("Failed to update CV file for Stagiaire with id: " + employee.getId());
+            }
+        }
+
+
+
         return EmployeeMapper.mapToEmployeeDTO(savedEmployee);
     }
 
@@ -152,7 +164,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         accountRepository.save(account);
         return EmployeeMapper.mapToEmployeeDTO(updatedEmployeeObj);
     }
-
+    @Transactional
     @Override
     public void deleteEmployees(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
@@ -160,6 +172,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         try{
             accountRepository.deleteByLogin(employee.getEmail());
+            documentRepository.deleteByEmployee_Id(employeeId);
             employeeRepository.deleteById(employeeId);
         } catch (Exception e){
             System.out.println(e.getMessage());
