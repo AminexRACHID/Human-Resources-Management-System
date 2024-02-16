@@ -5,6 +5,7 @@ import miaad.sgrh.employeemanagement.dto.UserDto;
 import miaad.sgrh.employeemanagement.entity.Account;
 import miaad.sgrh.employeemanagement.entity.Verification;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
+import miaad.sgrh.employeemanagement.repository.AccountRepository;
 import miaad.sgrh.employeemanagement.service.AccountService;
 import miaad.sgrh.employeemanagement.service.VerificationService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.sql.Timestamp;
 public class AccountController {
     private AccountService accountService;
     private VerificationService verificationService;
+    private AccountRepository accountRepository;
 
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody UserDto userDto){
@@ -104,6 +106,20 @@ public class AccountController {
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/acc/{email}")
+    public ResponseEntity<?>  getaccount(@PathVariable("email") String email){
+        try{
+            Account account = accountRepository.findAccountByLogin(email);
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/accc/{email}")
+    public Account  getaccounte(@PathVariable("email") String email){
+        return accountRepository.findAccountByLogin(email);
     }
 
 }

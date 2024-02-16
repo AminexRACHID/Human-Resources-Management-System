@@ -1,6 +1,8 @@
 package miaad.sgrh.employeemanagement.serviceImpl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import miaad.sgrh.employeemanagement.controller.AccountController;
 import miaad.sgrh.employeemanagement.dto.EmployeeDto;
 import miaad.sgrh.employeemanagement.entity.Account;
 import miaad.sgrh.employeemanagement.entity.Document;
@@ -11,6 +13,7 @@ import miaad.sgrh.employeemanagement.repository.AccountRepository;
 import miaad.sgrh.employeemanagement.repository.DocumentRepository;
 import miaad.sgrh.employeemanagement.repository.EmployeeRepository;
 import miaad.sgrh.employeemanagement.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     private AccountRepository accountRepository;
     private DocumentRepository documentRepository;
+    private AccountController accountController;
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
@@ -58,7 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RessourceNotFoundException("Employee not exists with given id: "+ employeeId));
-        return EmployeeMapper.mapToEmployeeDTO(employee);
+        Account account = accountController.getaccounte(employee.getEmail());
+        EmployeeDto employeeDto = EmployeeMapper.mapToEmployeeDTO(employee);
+        employeeDto.setRole(account.getRole());
+        return employeeDto;
     }
 
     @Override
@@ -126,9 +133,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (updatedEmployee.getFirstName() != null) employee.setFirstName(updatedEmployee.getFirstName());
         if (updatedEmployee.getLastName() != null) employee.setLastName(updatedEmployee.getLastName());
         if (updatedEmployee.getEmail() != null){
-            if (employeeRepository.existsByEmail(updatedEmployee.getEmail())) {
-                throw new RessourceNotFoundException("Email is not unique. Please choose a different email address.");
-            }
+//            if (employeeRepository.existsByEmail(updatedEmployee.getEmail())) {
+//                throw new RessourceNotFoundException("Email is not unique. Please choose a different email address.");
+//            }
             employee.setEmail(updatedEmployee.getEmail());
             account.setLogin(updatedEmployee.getEmail());
         }
@@ -137,9 +144,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (updatedEmployee.getService() != null) employee.setService(updatedEmployee.getService());
         if (updatedEmployee.getPost() != null) employee.setPost(updatedEmployee.getPost());
         if (updatedEmployee.getCin() != null){
-            if (employeeRepository.existsByCin(updatedEmployee.getCin())) {
-                throw new RessourceNotFoundException("CIN is not unique. Please choose a different CIN.");
-            }
             employee.setCin(updatedEmployee.getCin());
         }
         if (updatedEmployee.getRole() != null) account.setRole(updatedEmployee.getRole());

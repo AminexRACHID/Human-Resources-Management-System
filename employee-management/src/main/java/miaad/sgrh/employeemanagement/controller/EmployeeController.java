@@ -55,13 +55,9 @@ public class EmployeeController {
         }
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteEmplyee(@PathVariable("id") Long employeeId){
-        try{
-            employeeService.deleteEmployees(employeeId);
-            return ResponseEntity.ok("Employee deleted successfully.");
-        } catch (RessourceNotFoundException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public void deleteEmplyee(@PathVariable("id") Long employeeId) {
+
+        employeeService.deleteEmployees(employeeId);
     }
 
     @GetMapping("/search/email/{email}")
@@ -151,7 +147,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/documents")
-    public List<Document> getAllDocumentsByEmployee(@PathVariable Long employeeId) {
-        return employeeService.getAllDocumentsByEmployee(employeeId);
+    public ResponseEntity<?> getAllDocumentsByEmployee(@PathVariable Long employeeId) {
+
+        try {
+            List<Document> documents = employeeService.getAllDocumentsByEmployee(employeeId);
+
+            if (documents != null) {
+                Document document = documents.get(0);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+
+                return new ResponseEntity<>(document.getContent(), headers, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 }
