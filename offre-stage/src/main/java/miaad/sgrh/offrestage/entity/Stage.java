@@ -31,5 +31,7 @@ public class Stage {
 
     private String diploma;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String  description;
 }

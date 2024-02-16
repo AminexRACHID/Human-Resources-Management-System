@@ -29,7 +29,7 @@ public class StageController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getStageById(@RequestParam("id") Long id){
+    public ResponseEntity<?> getStageById(@PathVariable("id") Long id){
         try {
             StageDto stage  = stageService.getStageById(id);
             return new ResponseEntity<>(stage, HttpStatus.OK);
@@ -39,7 +39,7 @@ public class StageController {
     }
 
     @GetMapping("/stage/{title}")
-    public ResponseEntity<?> getStageByTitle(@RequestParam("title") String title){
+    public ResponseEntity<?> getStageByTitle(@PathVariable("title") String title){
         try {
             List<StageDto> stage  = stageService.getStageByTitle(title);
             return new ResponseEntity<>(stage, HttpStatus.OK);
