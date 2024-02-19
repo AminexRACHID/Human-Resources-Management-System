@@ -25,7 +25,7 @@ public class AccountController {
     private VerificationService verificationService;
     private AccountRepository accountRepository;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody UserDto userDto){
         try{
             Account account = accountService.createAccount(userDto);
