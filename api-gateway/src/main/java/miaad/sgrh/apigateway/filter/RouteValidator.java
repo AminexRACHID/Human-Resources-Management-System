@@ -13,6 +13,10 @@ public class RouteValidator {
             "/api/account/create",
             "/api/auth/login",
             "/api/auth/validate",
+            "/api/stage/offers",
+//            "/api/employees",  // create admin or Employee User
+            "/manage/user",
+            "/api/absences/allDemandes",
             "/eureka"
     );
 

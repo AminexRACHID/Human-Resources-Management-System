@@ -29,6 +29,7 @@ public class AdministrationController {
     @PostMapping(value = "/generateAttestation", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> generateAttestationPDF(@RequestBody AttestationInfoDto attestationInfoDto) throws IOException, DocumentException {
         byte[] pdfContent = attestationGeneratorService.generateAttestation(attestationInfoDto);
+        System.out.println("----------------------------------------------");
 
         InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(pdfContent));
 

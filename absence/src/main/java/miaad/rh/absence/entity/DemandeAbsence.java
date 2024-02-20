@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 
@@ -14,8 +13,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "absences")
-public class Absence {
+@Table(name = "demandesAbsences")
+public class DemandeAbsence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

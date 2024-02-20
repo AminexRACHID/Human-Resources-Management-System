@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("EMPLOYEE-MANAGEMENT")
 public interface AccountRestClient {
-    @PostMapping("/api/account")
+    @PostMapping("/api/account/create")
     ResponseEntity<?> createAccount(@RequestBody UserDto userDto);
 
     @DeleteMapping("/api/account/{email}")

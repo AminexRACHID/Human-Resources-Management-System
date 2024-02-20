@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import miaad.sgrh.offrestage.dto.IntershipApplyStagiaireDto;
 import miaad.sgrh.offrestage.dto.StageDto;
 import miaad.sgrh.offrestage.dto.StagiaireDto;
+import miaad.sgrh.offrestage.entity.IntershipApply;
 import miaad.sgrh.offrestage.exception.RessourceNotFoundException;
 import miaad.sgrh.offrestage.service.StageService;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class StageController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/offers/{id}")
     public ResponseEntity<?> getStageById(@PathVariable("id") Long id){
         try {
             StageDto stage  = stageService.getStageById(id);
@@ -38,7 +39,7 @@ public class StageController {
         }
     }
 
-    @GetMapping("/stage/{title}")
+    @GetMapping("/offers/title/{title}")
     public ResponseEntity<?> getStageByTitle(@PathVariable("title") String title){
         try {
             List<StageDto> stage  = stageService.getStageByTitle(title);
@@ -68,7 +69,17 @@ public class StageController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/intershipApplies")
+    public ResponseEntity<?> getIntershipApplies(){
+        try {
+            List<IntershipApply> intershipApplies  = stageService.getIntershipApplies();
+            return new ResponseEntity<>(intershipApplies, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/offers")
     public ResponseEntity<?> getAllStage(){
         try {
             List<StageDto> stage  = stageService.getAllStage();
@@ -88,10 +99,50 @@ public class StageController {
         }
     }
 
-    @GetMapping("/stagiaire/{id}")
-    public ResponseEntity<?> getCandidatesForStage(@PathVariable Long id){
+    @GetMapping("/stagiaire")
+    public ResponseEntity<?> getCandidatesForStage(){
         try {
-            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.getCandidatesForStage(id);
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.getCandidatesForStage();
+            return new ResponseEntity<>(stagiaires, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/stagiaire/pending")
+    public ResponseEntity<?> getCandidatesForStagePending(){
+        try {
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.findAllPendingIntershipApplies();
+            return new ResponseEntity<>(stagiaires, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/stagiaire/entretien")
+    public ResponseEntity<?> getCandidatesForStageEntretien(){
+        try {
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.findAllEntretienIntershipApplies();
+            return new ResponseEntity<>(stagiaires, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/stagiaire/accepted")
+    public ResponseEntity<?> getCandidatesForStageAccepted(){
+        try {
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.findAllAcceptedIntershipApplies();
+            return new ResponseEntity<>(stagiaires, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/stagiaire/rejected")
+    public ResponseEntity<?> getCandidatesForStageRejected(){
+        try {
+            List<IntershipApplyStagiaireDto>  stagiaires  = stageService.findAllRejectedIntershipApplies();
             return new ResponseEntity<>(stagiaires, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -100,19 +151,25 @@ public class StageController {
 
     @PutMapping("/interview/{intershipApplyId}")
     public ResponseEntity<?> acceptIntershipApplyForInterview(@PathVariable Long intershipApplyId) {
-        stageService.acceptIntershipApplyForInterview(intershipApplyId);
-        return ResponseEntity.ok("Intership apply set to interview successfully");
+        IntershipApply intershipApply = stageService.acceptIntershipApplyForInterview(intershipApplyId);
+        return new ResponseEntity<>(intershipApply, HttpStatus.OK);
     }
 
     @PutMapping("/accept/{intershipApplyId}")
     public ResponseEntity<?> acceptIntershipApply(@PathVariable Long intershipApplyId) {
-        stageService.acceptIntershipApply(intershipApplyId);
-        return ResponseEntity.ok("Intership apply accepted successfully");
+        IntershipApply intershipApply = stageService.acceptIntershipApply(intershipApplyId);
+        return new ResponseEntity<>(intershipApply, HttpStatus.OK);
     }
 
     @PutMapping("/reject/{intershipApplyId}")
     public ResponseEntity<?> rejectIntershipApply(@PathVariable Long intershipApplyId) {
-        stageService.rejectIntershipApply(intershipApplyId);
-        return ResponseEntity.ok("Intership apply rejected successfully");
+        IntershipApply intershipApply = stageService.rejectIntershipApply(intershipApplyId);
+        return new ResponseEntity<>(intershipApply, HttpStatus.OK);
+    }
+
+    @PutMapping("/delete/{intershipApplyId}")
+    public ResponseEntity<?> deleteInterAccepted(@PathVariable Long intershipApplyId) {
+        IntershipApply intershipApply = stageService.deleteIntershipAccepted(intershipApplyId);
+        return new ResponseEntity<>(intershipApply, HttpStatus.OK);
     }
 }

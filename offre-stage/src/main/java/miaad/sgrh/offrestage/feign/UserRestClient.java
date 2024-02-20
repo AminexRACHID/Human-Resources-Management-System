@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient("USER-SERVICE")
 public interface UserRestClient {
     @RequestMapping(
-            value = "/api/stagiaire/update/{email}",
+            value = "/manage/stagiaire/update/{email}",
             method = RequestMethod.PUT,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
@@ -21,6 +21,6 @@ public interface UserRestClient {
             @ModelAttribute StagiaireDto updatedStagiaireDto
     );
 
-    @GetMapping("/api/stagiaire/{id}")
+    @GetMapping("/manage/stagiaire/{id}")
     Stagiaire getStagiaireById(@PathVariable("id") Long stagiaireId);
 }

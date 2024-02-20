@@ -2,6 +2,7 @@ package miaad.rh.absence.controller;
 
 import lombok.AllArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.dto.DemandeAbsenceDto;
 import miaad.rh.absence.entity.Absence;
 import miaad.rh.absence.service.AbsenceService;
 import miaad.rh.absence.service.impl.AbsenceServiceImpl;
@@ -114,6 +115,42 @@ public class AbsenceController {
             return false;
         }
     }
+
+    // la fonction pour créer une demande d'absence
+    @PostMapping("/demandeAbsence")
+    public ResponseEntity<DemandeAbsenceDto> createDemandeAbsence(@ModelAttribute DemandeAbsenceDto demandeAbsenceDto) throws IOException {
+        DemandeAbsenceDto demandeAbsence = absenceService.createDemande(demandeAbsenceDto);
+        return new ResponseEntity<>(demandeAbsence, HttpStatus.CREATED);
+    }
+
+    // methode pour retourner tous les demandes
+    @GetMapping("/allDemandes")
+    public ResponseEntity<List<DemandeAbsenceDto>> getAllDemandes(){
+        List<DemandeAbsenceDto> demandeAbsenceDtos = absenceService.getAllDemandes();
+        return ResponseEntity.ok(demandeAbsenceDtos);
+    }
+
+    // méthode pour suprimer une demande
+    @DeleteMapping("/demandes/{id}")
+    public ResponseEntity<String> deleteDemande(@PathVariable("id") Long demandeId){
+        absenceService.deleteDemande(demandeId);
+        return ResponseEntity.ok("Demande d'absence suprimé avec sucées");
+    }
+
+    // la méthode pour enregistrer l'absence et suprimer la demande accéptrer
+    @PostMapping("/accepterDemande")
+    public ResponseEntity<String> accepterDemande(@ModelAttribute DemandeAbsenceDto demandeAbsenceDto) throws IOException {
+        try {
+            absenceService.createAbsenceFromDemande(demandeAbsenceDto);
+            absenceService.deleteDemande(demandeAbsenceDto.getId());
+            return ResponseEntity.ok("Demande d'absence suprimé avec sucées");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
+
 }
 
 

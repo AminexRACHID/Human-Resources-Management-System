@@ -29,12 +29,10 @@ public class AccountServiceImpl implements AccountService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = new Account();
         account.setLogin(userDto.getEmail());
-        account.setRole("stagiaire");
+        account.setRole("Stagiaire");
         account.setConfirmation(false);
         account.setPassword(passwordEncoder.encode(userDto.getPassword()));
         account.setUserId(userDto.getId());
-
-        account.setConfirmation(false);
         Optional<Account> saved = Optional.of(accountRepository.save(account));
 
         saved.ifPresent( a -> {

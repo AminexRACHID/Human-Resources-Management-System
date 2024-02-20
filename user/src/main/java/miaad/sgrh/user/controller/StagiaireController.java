@@ -2,8 +2,12 @@ package miaad.sgrh.user.controller;
 
 import lombok.AllArgsConstructor;
 import miaad.sgrh.user.dto.StagiaireDto;
+import miaad.sgrh.user.entity.Stagiaire;
 import miaad.sgrh.user.exception.RessourceNotFoundException;
 import miaad.sgrh.user.service.StagiaireService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/stagiaire")
+@RequestMapping("/manage/stagiaire")
 public class StagiaireController {
 
     StagiaireService stagiaireService;
@@ -79,11 +83,10 @@ public class StagiaireController {
     @PutMapping("{id}")
     public ResponseEntity<?> updateStagiaire(
             @PathVariable("id") Long id,
-            @RequestPart(value = "cv", required = false) MultipartFile cvFile,
-            @ModelAttribute StagiaireDto updatedStagiaireDto) {
+            @RequestBody StagiaireDto updatedStagiaireDto) {
         try {
-            updatedStagiaireDto.setCv(cvFile);
-            StagiaireDto updatedStagiaire = stagiaireService.updateStagiaire(id, updatedStagiaireDto, cvFile);
+            updatedStagiaireDto.setCv(updatedStagiaireDto.getCv());
+            StagiaireDto updatedStagiaire = stagiaireService.updateStagiaire(id, updatedStagiaireDto, updatedStagiaireDto.getCv());
             return ResponseEntity.ok(updatedStagiaire);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -102,6 +105,20 @@ public class StagiaireController {
             return ResponseEntity.ok(updatedStagiaire);
         } catch (RessourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/cv/{id}")
+    public ResponseEntity<byte[]> downloadDocument(@PathVariable Long id) {
+        Stagiaire stagiaire = stagiaireService.getStagiaireDocument(id);
+
+        if (stagiaire != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+
+            return new ResponseEntity<>(stagiaire.getCv(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

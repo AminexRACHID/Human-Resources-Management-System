@@ -34,7 +34,11 @@ public class UserServiceImpl implements UserService {
 
         Stagiaire sg = stagiaireRepository.save(stagiaire);
         userDto.setId(sg.getId());
-        accountRestClient.createAccount(userDto);
+        try{
+            accountRestClient.createAccount(userDto);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return StagiaireMapper.mapToStagiaireDto(sg);
     }
 

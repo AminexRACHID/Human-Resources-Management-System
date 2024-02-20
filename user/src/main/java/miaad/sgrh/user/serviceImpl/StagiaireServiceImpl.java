@@ -93,27 +93,41 @@ public class StagiaireServiceImpl implements StagiaireService {
     @Override
     public StagiaireDto updateStagiaire(Long id, StagiaireDto updatedStagiaire, MultipartFile cvFile) {
 
-        Stagiaire stagiaire = stagiaireRepository.findById(id)
-                .orElseThrow(() -> new RessourceNotFoundException("Stagiaire not exists with given id: "+ id));
+        Stagiaire updatedStagiaireObj = null;
+        try {
+            Stagiaire stagiaire = stagiaireRepository.findById(id)
+                    .orElseThrow(() -> new RessourceNotFoundException("Stagiaire not exists with given id: " + id));
 
-        if (updatedStagiaire.getFirstName() != null) stagiaire.setFirstName(updatedStagiaire.getFirstName());
-        if (updatedStagiaire.getLastName() != null) stagiaire.setLastName(updatedStagiaire.getLastName());
-        if (updatedStagiaire.getCity() != null) stagiaire.setCity(updatedStagiaire.getCity());
-        if (updatedStagiaire.getLevelStudies() != null) stagiaire.setLevelStudies(updatedStagiaire.getLevelStudies());
-        if (updatedStagiaire.getLinkedin() != null) stagiaire.setLinkedin(updatedStagiaire.getLinkedin());
-        if (updatedStagiaire.getGender() != null) stagiaire.setGender(updatedStagiaire.getGender());
-        if (updatedStagiaire.getPhone() != null) stagiaire.setPhone(updatedStagiaire.getPhone());
+            if (updatedStagiaire.getFirstName() != null) stagiaire.setFirstName(updatedStagiaire.getFirstName());
+            if (updatedStagiaire.getLastName() != null) stagiaire.setLastName(updatedStagiaire.getLastName());
+            if (updatedStagiaire.getCity() != null) stagiaire.setCity(updatedStagiaire.getCity());
+            if (updatedStagiaire.getLevelStudies() != null)
+                stagiaire.setLevelStudies(updatedStagiaire.getLevelStudies());
+            if (updatedStagiaire.getLinkedin() != null) stagiaire.setLinkedin(updatedStagiaire.getLinkedin());
+            if (updatedStagiaire.getGender() != null) stagiaire.setGender(updatedStagiaire.getGender());
+            if (updatedStagiaire.getPhone() != null) stagiaire.setPhone(updatedStagiaire.getPhone());
 
-        if (cvFile != null) {
-            try {
-                stagiaire.setCv(cvFile.getBytes());
-            } catch (IOException e) {
-                throw new RessourceNotFoundException("Failed to update CV file for Stagiaire with id: " + id);
+            if (cvFile != null) {
+                try {
+                    stagiaire.setCv(cvFile.getBytes());
+                } catch (IOException e) {
+                    throw new RessourceNotFoundException("Failed to update CV file for Stagiaire with id: " + id);
+                }
             }
-        }
 
-        Stagiaire updatedStagiaireObj = stagiaireRepository.save(stagiaire);
+            System.out.println("------------------------------------");
+
+            updatedStagiaireObj = stagiaireRepository.save(stagiaire);
+            Stagiaire stagiaire1 = userRepository.save(stagiaire);
+            return StagiaireMapper.mapToStagiaireDto(stagiaire1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return StagiaireMapper.mapToStagiaireDto(updatedStagiaireObj);
     }
 
+    @Override
+    public Stagiaire getStagiaireDocument(Long id) {
+        return stagiaireRepository.findStagiaireById(id);
+    }
 }

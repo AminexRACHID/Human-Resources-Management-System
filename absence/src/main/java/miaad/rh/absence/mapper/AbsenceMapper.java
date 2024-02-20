@@ -13,6 +13,7 @@ public class AbsenceMapper {
                 absence.getColaborateurId(),
                 absence.isEmployee(),
                 absence.getAbsenceDate(),
+                absence.getDuration(),
                 absence.getAbsenceNature(),
                 absence.getJustifie(),
                 null
@@ -25,6 +26,7 @@ public class AbsenceMapper {
                 absenceDto.getColaborateurId(),
                 absenceDto.isEmployee(),
                 absenceDto.getAbsenceDate(),
+                absenceDto.getDuration(),
                 absenceDto.getAbsenceNature(),
                 absenceDto.getJustifie(),
                 absenceDto.getJustificationFile().getBytes()

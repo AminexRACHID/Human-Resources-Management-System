@@ -26,7 +26,7 @@ public class EmailServiceImpl {
             String token = verification.getToken();
             Context context = new Context();
             context.setVariable("title", "Verify your email address");
-            context.setVariable("link", "http://localhost:8080/api/account/activation?token="+token);
+            context.setVariable("link", "http://localhost:8021/api/account/activation?token="+token);
             // create an HTML template and pass it
             String body = templateEngine.process("verification", context);
 

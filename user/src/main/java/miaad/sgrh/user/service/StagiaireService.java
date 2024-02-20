@@ -1,6 +1,7 @@
 package miaad.sgrh.user.service;
 
 import miaad.sgrh.user.dto.StagiaireDto;
+import miaad.sgrh.user.entity.Stagiaire;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface StagiaireService {
     void deleteStagiaires(Long id);
     StagiaireDto updateStagiaire(Long id, StagiaireDto updatedStagiaire, MultipartFile cvFile);
 
+    Stagiaire getStagiaireDocument(Long id);
 }

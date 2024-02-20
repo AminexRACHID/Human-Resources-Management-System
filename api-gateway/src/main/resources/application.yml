@@ -1,7 +1,45 @@
-
 spring:
+  application:
+    name: api-gateway
   cloud:
     gateway:
+      routes:
+        - id: absence-service
+          uri: lb://ABSENCE-SERVICE
+          predicates:
+            - Path=/api/absences/**
+          filters:
+            - AuthenticationFilter
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/manage/**
+          filters:
+            - AuthenticationFilter
+        - id: offre-stage
+          uri: lb://OFFRE-STAGE
+          predicates:
+            - Path=/api/stage/**
+          filters:
+            - AuthenticationFilter
+        - id: stagaire-service
+          uri: lb://STAGAIRE-SERVICE
+          predicates:
+            - Path=/api/stagaires/**
+          filters:
+            - AuthenticationFilter
+        - id: administration-service
+          uri: lb://ADMINISTRATION-SERVICE
+          predicates:
+            - Path=/api/administration/**
+          filters:
+            - AuthenticationFilter
+        - id: employee-management
+          uri: lb://EMPLOYEE-MANAGEMENT
+          predicates:
+            - Path=/api/**
+          filters:
+            - AuthenticationFilter
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -12,36 +50,7 @@ spring:
               - POST
               - PUT
               - DELETE
-      routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/api/stagiaire/**
-          filters:
-            - AuthenticationFilter
-
-
-        - id: offre-stage
-          uri: lb://OFFRE-STAGE
-          predicates:
-            - Path=/api/stage/**
-          filters:
-            - AuthenticationFilter
-
-        - id: employee-management
-          uri: lb://EMPLOYEE-MANAGEMENT
-          predicates:
-#            - Path=/auth/**
-            - Path=/api/**
-#            - Path=/api/account/**
-          filters:
-            - AuthenticationFilter
-
-  application:
-    name: api-gateway
-
 eureka:
   client:
     service-url:
-      defaultZone : http://localhost:8761/eureka/
-
+      defaultZone: http://localhost:8761/eureka/

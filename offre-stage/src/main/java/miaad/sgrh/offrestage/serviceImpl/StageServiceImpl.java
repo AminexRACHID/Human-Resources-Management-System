@@ -45,7 +45,7 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public List<StageDto> getStageByTitle(String title) {
-        List<Stage> stages = stageRepository.findStagesByTitle(title);
+        List<Stage> stages = stageRepository.findByTitleContainingIgnoreCase(title);
         if (stages == null) {
             throw new RessourceNotFoundException("Stage not exists with given title: " + title);
         }
@@ -119,15 +119,18 @@ public class StageServiceImpl implements StageService {
         return stagiaireDto;
     }
     @Override
-    public List<IntershipApplyStagiaireDto> getCandidatesForStage(Long stageId) {
-        List<IntershipApply> applies = intershipApplyRepository.findIntershipAppliesByStageId(stageId);
+    public List<IntershipApplyStagiaireDto> getCandidatesForStage() {
+        List<IntershipApply> applies = intershipApplyRepository.findAll();
 
         List<IntershipApplyStagiaireDto> candidates = applies.stream()
                 .map(intershipApply -> {
                     Stagiaire stagiaire = userRestClient.getStagiaireById(intershipApply.getStagiaireId());
+                    Stage stage = stageRepository.findStagesById(intershipApply.getStageId());
                     IntershipApplyStagiaireDto dto = new IntershipApplyStagiaireDto();
                     dto.setIntershipApplyId(intershipApply.getId());
+                    dto.setStatus(intershipApply.getStatus());
                     dto.setStagiaire(stagiaire);
+                    dto.setStage(stage);
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -136,7 +139,7 @@ public class StageServiceImpl implements StageService {
     }
 
     @Override
-    public void acceptIntershipApplyForInterview(Long intershipApplyId) {
+    public IntershipApply acceptIntershipApplyForInterview(Long intershipApplyId) {
         IntershipApply intershipApply = intershipApplyRepository.findById(intershipApplyId)
                 .orElseThrow(() -> new RessourceNotFoundException("Intership Apply not found"));
         intershipApply.setStatus("Interview");
@@ -150,9 +153,10 @@ public class StageServiceImpl implements StageService {
                 + "We look forward to meeting you and discussing your potential contribution to our team.\n\n"
                 + "Best regards,\nMaster IAAD";
         sendEmail(stagiaire.getEmail(), subj, message);
+        return intershipApply;
     }
     @Override
-    public void acceptIntershipApply(Long intershipApplyId) {
+    public IntershipApply acceptIntershipApply(Long intershipApplyId) {
         IntershipApply intershipApply = intershipApplyRepository.findById(intershipApplyId)
                 .orElseThrow(() -> new RessourceNotFoundException("Intership Apply not found"));
         intershipApply.setStatus("Accepted");
@@ -166,9 +170,10 @@ public class StageServiceImpl implements StageService {
                 + "If you have any questions or need further information, feel free to contact us.\n\n"
                 + "Best Regards,\nMaster IAAD";
         sendEmail(stagiaire.getEmail(), subj, message);
+        return intershipApply;
     }
     @Override
-    public void rejectIntershipApply(Long intershipApplyId) {
+    public IntershipApply rejectIntershipApply(Long intershipApplyId) {
         IntershipApply intershipApply = intershipApplyRepository.findById(intershipApplyId)
                 .orElseThrow(() -> new RessourceNotFoundException("Intership Apply not found"));
         intershipApply.setStatus("Rejected");
@@ -182,6 +187,16 @@ public class StageServiceImpl implements StageService {
                 + "If you have any questions or would like feedback on your application, feel free to reach out.\n\n"
                 + "Best regards,\nMaster IAAD";
         sendEmail(stagiaire.getEmail(), subj, message);
+        return intershipApply;
+    }
+
+    @Override
+    public IntershipApply deleteIntershipAccepted(Long intershipApplyId) {
+        IntershipApply intershipApply = intershipApplyRepository.findById(intershipApplyId)
+                .orElseThrow(() -> new RessourceNotFoundException("Intership Apply not found"));
+        intershipApply.setStatus("Deleted");
+        intershipApplyRepository.save(intershipApply);
+        return intershipApply;
     }
 
     @Override
@@ -192,5 +207,92 @@ public class StageServiceImpl implements StageService {
         emailMessage.setText(message);
         javaMailSender.send(emailMessage);
     }
+
+    @Override
+    public List<IntershipApply> getIntershipApplies() {
+        List<IntershipApply> intershipApplies = intershipApplyRepository.findAll();
+        return intershipApplies;
+    }
+
+    @Override
+    public List<IntershipApplyStagiaireDto> findAllPendingIntershipApplies() {
+        List<IntershipApply> applies = intershipApplyRepository.findAllPendingIntershipApplies();
+
+        List<IntershipApplyStagiaireDto> candidates = applies.stream()
+                .map(intershipApply -> {
+                    Stagiaire stagiaire = userRestClient.getStagiaireById(intershipApply.getStagiaireId());
+                    Stage stage = stageRepository.findStagesById(intershipApply.getStageId());
+                    IntershipApplyStagiaireDto dto = new IntershipApplyStagiaireDto();
+                    dto.setIntershipApplyId(intershipApply.getId());
+                    dto.setStatus(intershipApply.getStatus());
+                    dto.setStagiaire(stagiaire);
+                    dto.setStage(stage);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return candidates;
+    }
+
+    @Override
+    public List<IntershipApplyStagiaireDto> findAllEntretienIntershipApplies() {
+        List<IntershipApply> applies = intershipApplyRepository.findAllEntretienIntershipApplies();
+
+        List<IntershipApplyStagiaireDto> candidates = applies.stream()
+                .map(intershipApply -> {
+                    Stagiaire stagiaire = userRestClient.getStagiaireById(intershipApply.getStagiaireId());
+                    Stage stage = stageRepository.findStagesById(intershipApply.getStageId());
+                    IntershipApplyStagiaireDto dto = new IntershipApplyStagiaireDto();
+                    dto.setIntershipApplyId(intershipApply.getId());
+                    dto.setStatus(intershipApply.getStatus());
+                    dto.setStagiaire(stagiaire);
+                    dto.setStage(stage);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return candidates;
+    }
+
+    @Override
+    public List<IntershipApplyStagiaireDto> findAllAcceptedIntershipApplies() {
+        List<IntershipApply> applies = intershipApplyRepository.findAllAcceptedIntershipApplies();
+
+        List<IntershipApplyStagiaireDto> candidates = applies.stream()
+                .map(intershipApply -> {
+                    Stagiaire stagiaire = userRestClient.getStagiaireById(intershipApply.getStagiaireId());
+                    Stage stage = stageRepository.findStagesById(intershipApply.getStageId());
+                    IntershipApplyStagiaireDto dto = new IntershipApplyStagiaireDto();
+                    dto.setIntershipApplyId(intershipApply.getId());
+                    dto.setStatus(intershipApply.getStatus());
+                    dto.setStagiaire(stagiaire);
+                    dto.setStage(stage);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return candidates;
+    }
+
+    @Override
+    public List<IntershipApplyStagiaireDto> findAllRejectedIntershipApplies() {
+        List<IntershipApply> applies = intershipApplyRepository.findAllRejectedIntershipApplies();
+
+        List<IntershipApplyStagiaireDto> candidates = applies.stream()
+                .map(intershipApply -> {
+                    Stagiaire stagiaire = userRestClient.getStagiaireById(intershipApply.getStagiaireId());
+                    Stage stage = stageRepository.findStagesById(intershipApply.getStageId());
+                    IntershipApplyStagiaireDto dto = new IntershipApplyStagiaireDto();
+                    dto.setIntershipApplyId(intershipApply.getId());
+                    dto.setStatus(intershipApply.getStatus());
+                    dto.setStagiaire(stagiaire);
+                    dto.setStage(stage);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return candidates;
+    }
+
 
 }

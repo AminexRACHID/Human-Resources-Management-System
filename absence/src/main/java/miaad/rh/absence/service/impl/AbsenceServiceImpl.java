@@ -2,14 +2,18 @@ package miaad.rh.absence.service.impl;
 
 import lombok.AllArgsConstructor;
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.dto.DemandeAbsenceDto;
 import miaad.rh.absence.dto.EmployeeDto;
 import miaad.rh.absence.dto.StagaireDto;
 import miaad.rh.absence.entity.Absence;
+import miaad.rh.absence.entity.DemandeAbsence;
 import miaad.rh.absence.exception.ResourceNotFoundException;
 import miaad.rh.absence.feign.EmployeeRestClient;
 import miaad.rh.absence.feign.StagaireRestClient;
 import miaad.rh.absence.mapper.AbsenceMapper;
+import miaad.rh.absence.mapper.DemandeMapper;
 import miaad.rh.absence.repository.AbsenceRepository;
+import miaad.rh.absence.repository.DemandeRepository;
 import miaad.rh.absence.service.AbsenceService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,6 +31,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     private JavaMailSender javaMailSender;
     private EmployeeRestClient employeeRestClient;
     private StagaireRestClient stagaireRestClient;
+    private DemandeRepository demandeRepository;
 
     @Override
     public AbsenceDto createAbsence(AbsenceDto absenceDto) throws IOException {
@@ -37,6 +42,27 @@ public class AbsenceServiceImpl implements AbsenceService {
         absence.setColaborateurId(absenceDto.getColaborateurId());
         absence.setEmployee(absenceDto.isEmployee());
         absence.setAbsenceDate(absenceDto.getAbsenceDate());
+        absence.setDuration(absenceDto.getDuration());
+        absence.setAbsenceNature(absenceDto.getAbsenceNature());
+        absence.setJustifie(absenceDto.getJustifie());
+        absence.setJustification(justification);
+
+
+        Absence savedAbsence = absenceRepository.save(absence);
+        return AbsenceMapper.mapToAbsenceDto(savedAbsence);
+    }
+
+
+    @Override
+    public AbsenceDto createAbsenceFromDemande(DemandeAbsenceDto absenceDto) throws IOException {
+
+        byte[] justification = absenceDto.getJustificationFile().getBytes();
+
+        Absence absence = new Absence();
+        absence.setColaborateurId(absenceDto.getColaborateurId());
+        absence.setEmployee(absenceDto.isEmployee());
+        absence.setAbsenceDate(absenceDto.getAbsenceDate());
+        absence.setDuration(absenceDto.getDuration());
         absence.setAbsenceNature(absenceDto.getAbsenceNature());
         absence.setJustifie(absenceDto.getJustifie());
         absence.setJustification(justification);
@@ -117,6 +143,39 @@ public class AbsenceServiceImpl implements AbsenceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Absence not Found with given id" + absenceId)));
 
         return  absence;
+    }
+
+    @Override
+    public DemandeAbsenceDto createDemande(DemandeAbsenceDto demandeAbsenceDto) throws IOException {
+        byte[] justification = demandeAbsenceDto.getJustificationFile().getBytes();
+
+        DemandeAbsence demandeAbsence = new DemandeAbsence();
+        demandeAbsence.setColaborateurId(demandeAbsenceDto.getColaborateurId());
+        demandeAbsence.setEmployee(demandeAbsenceDto.isEmployee());
+        demandeAbsence.setAbsenceDate(demandeAbsenceDto.getAbsenceDate());
+        demandeAbsence.setDuration(demandeAbsenceDto.getDuration());
+        demandeAbsence.setAbsenceNature(demandeAbsenceDto.getAbsenceNature());
+        demandeAbsence.setJustifie(demandeAbsenceDto.getJustifie());
+        demandeAbsence.setJustification(justification);
+
+
+        DemandeAbsence savedDemande = demandeRepository.save(demandeAbsence);
+        return DemandeMapper.mapToDemandeDto(savedDemande);
+    }
+
+    @Override
+    public List<DemandeAbsenceDto> getAllDemandes() {
+        List<DemandeAbsence> demandeAbsences = demandeRepository.findAll();
+        return demandeAbsences.stream().map((demandeAbsence -> DemandeMapper.mapToDemandeDto(demandeAbsence)))
+                .collect(Collectors.toList());    }
+
+    @Override
+    public void deleteDemande(Long demandeId) {
+        DemandeAbsence demandeAbsence = demandeRepository.findById(demandeId).orElseThrow(
+                () -> new ResourceNotFoundException("Pas de demande avec cette id : " + demandeId)
+        );
+
+        demandeRepository.deleteById(demandeId);
     }
 }
 

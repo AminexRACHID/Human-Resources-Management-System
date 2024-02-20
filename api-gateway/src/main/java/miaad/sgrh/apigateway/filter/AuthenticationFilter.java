@@ -65,31 +65,36 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         String role = (String) rolesObject;
                         URI originalUri = exchange.getRequest().getURI();
                         String path = originalUri.getPath();
+                        System.out.println("----------------------------------------");
+
                         if ("Admin".equals(role)) {
+
                             // If Admin, allow access to /api/stagiaire/**, /api/employee/**, and /api/admin/**
-                            if (path.startsWith("/api")) {
+//                            api/administration
+                            if (path.startsWith("/api") || path.startsWith("/manage") ) {
+                                System.out.println(path);
                                 exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, originalUri);
                             } else {
-                                throw new UnauthorizedException("Unauthorized access to application");
+                                throw new UnauthorizedException("Unauthorized 1 access to application");
                             }
                         } else if ("Employee".equals(role)) {
                             if (path.startsWith("/api/stagiaire")) {
                                 exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, originalUri);
                             } else {
-                                throw new UnauthorizedException("Unauthorized access to application");
+                                throw new UnauthorizedException("Unauthorized 2 access to application");
                             }
                         } else if ("Stagiaire".equals(role)) {
                             if (path.startsWith("/api/stage")) {
                                 exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, originalUri);
                             } else {
-                                throw new UnauthorizedException("Unauthorized access to application");
+                                throw new UnauthorizedException("Unauthorized 3 access to application");
                             }
                         }
                     }
 
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    throw new UnauthorizedException("Unauthorized access to application");
+                    throw new UnauthorizedException("Unauthorized 4 access to application");
                 }
             }
             return chain.filter(exchange);

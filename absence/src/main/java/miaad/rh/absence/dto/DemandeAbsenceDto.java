@@ -1,7 +1,5 @@
 package miaad.rh.absence.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +12,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbsenceDto {
+public class DemandeAbsenceDto {
     private Long id;
     private Long colaborateurId;
     private boolean employee;
