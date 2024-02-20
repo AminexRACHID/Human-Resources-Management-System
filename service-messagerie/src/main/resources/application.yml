@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      username: sgrh
+      password: sgrh
+      host: localhost
+      port: 27017
+      database: chat_app
+      authentication-database: admin
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 256MB
+      enabled: true
+server:
+  port: 8088
+
