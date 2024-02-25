@@ -66,6 +66,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         URI originalUri = exchange.getRequest().getURI();
                         String path = originalUri.getPath();
                         System.out.println("----------------------------------------");
+                        System.out.println(path);
 
                         if ("Admin".equals(role)) {
 
@@ -78,13 +79,13 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                                 throw new UnauthorizedException("Unauthorized 1 access to application");
                             }
                         } else if ("Employee".equals(role)) {
-                            if (path.startsWith("/api/stagiaire")) {
+                            if (path.startsWith("/api") || path.startsWith("/manage")) {
                                 exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, originalUri);
                             } else {
                                 throw new UnauthorizedException("Unauthorized 2 access to application");
                             }
                         } else if ("Stagiaire".equals(role)) {
-                            if (path.startsWith("/api/stage")) {
+                            if (path.startsWith("/api") || path.startsWith("/manage")) {
                                 exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, originalUri);
                             } else {
                                 throw new UnauthorizedException("Unauthorized 3 access to application");

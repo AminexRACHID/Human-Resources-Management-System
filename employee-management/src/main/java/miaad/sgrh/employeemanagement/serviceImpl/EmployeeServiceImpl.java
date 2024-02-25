@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             try {
                 uploadDocument(employee, file);
             } catch (Exception e) {
-                throw new RessourceNotFoundException("Failed to update CV file for Stagiaire with id: " + employee.getId());
+                throw new RessourceNotFoundException("Failed to update file with id: " + employee.getId());
             }
         }
 

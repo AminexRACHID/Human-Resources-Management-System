@@ -1,0 +1,107 @@
+.output {
+  justify-content: center;
+  align-content: start;
+  padding-top: 1rem;
+}
+
+.ac-card {
+  display: grid;
+  grid-template-columns: 173px 1fr 50px;
+  background-color: #fff;
+  width: 412.5px;
+  height: 250px;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0,0,0, 0.5);
+}
+
+.ac-icon {
+  width: 40px;
+  margin-top: 10px;
+}
+
+.ac-card-image {
+  height: 140px;
+  width: 130px;
+  margin: 10px 10px 10px 10px;
+  border: 2px solid #000;
+  /*overflow: hidden;*/
+  border-radius: 10%; /* Make it a circle */
+  background-size: 100% 100%; /* Stretch the background image to fill the div */
+  position: relative;
+}
+
+.ac-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10%; /* Apply the border-radius to the image as well */
+}
+
+.ac-card-info {
+  font-size: 1rem;
+  /*margin-top: 30px;*/
+}
+
+.ac-card-info p {
+  margin-top: 5px;
+  /*line-height: 1.3;*/
+}
+
+.ac-card-footer {
+  display: grid;
+  align-content: center;
+  grid-column: 1/-1;
+  align-self: end;
+  height: 56.5px;
+  background-color: #0080A5;
+}
+.ac-card-footer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /*border-radius: 10%; /* Apply the border-radius to the image as well */
+}
+
+.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Additional Styles for Bootstrap Modal and Image Input */
+.modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.image-upload-label {
+  cursor: pointer;
+  display: block;
+  width: 130px;
+  height: 130px;
+  border: 2px dashed #000;
+  margin: 10px 10px 10px 10px;
+  border-radius: 10%;
+  overflow: hidden;
+}
+
+.image-upload-label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+#name-modal {
+  position: absolute;
+  margin-top: 145px;
+  color: #000;
+  font-size: 16px;
+}

@@ -26,6 +26,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(UserDto userDto) {
+        if (accountRepository.existsAccountByLogin(userDto.getEmail())){
+            throw new RessourceNotFoundException("Email already used. Please choose a different email address.");
+
+        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account account = new Account();
         account.setLogin(userDto.getEmail());

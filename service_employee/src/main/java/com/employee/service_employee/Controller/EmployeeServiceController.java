@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @AllArgsConstructor
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/test/employee")
 public class EmployeeServiceController {
 
     @Autowired
@@ -21,12 +24,16 @@ public class EmployeeServiceController {
 
     // Change password :
     @PostMapping("/change-password/{email}")
-    public ResponseEntity<String> changePassword(@PathVariable String email, @RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<?> changePassword(@PathVariable String email, @RequestBody PasswordDTO passwordDTO) {
+        Map<String, String> responseMap = new HashMap<>();
+
         try{
             employeeService.changePassword(email, passwordDTO);
-            return ResponseEntity.ok("Password changed successfully.");
+            responseMap.put("message", "Password changed successfully.");
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            responseMap.put("message", "Password incorrect.");
+            return ResponseEntity.badRequest().body(responseMap);
         }
 
     }

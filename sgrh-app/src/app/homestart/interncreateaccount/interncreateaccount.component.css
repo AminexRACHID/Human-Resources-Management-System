@@ -1,0 +1,27 @@
+/* Add custom styles for border classes */
+.border-success {
+  border: 2px solid #28a745; /* Green border with 2px width */
+}
+
+.border-danger {
+  border: 2px solid #dc3545; /* Red border with 2px width */
+}
+
+#img-new-intern {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+/* Adjust style for screens less than 800px */
+@media (max-width: 990px) {
+  #img-new-intern {
+    display: none;
+  }
+}
+/* Additional media query to target screens less than 576px */
+@media (max-width: 575.99px) {
+  .img-new-intern {
+    display: block; /* Show the image at this breakpoint if needed */
+  }
+}

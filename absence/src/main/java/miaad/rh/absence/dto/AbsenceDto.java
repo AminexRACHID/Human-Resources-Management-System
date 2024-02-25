@@ -1,7 +1,5 @@
 package miaad.rh.absence.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +21,6 @@ public class AbsenceDto {
     private String absenceNature;
     private String justifie;
     private MultipartFile justificationFile;
+
+
 }

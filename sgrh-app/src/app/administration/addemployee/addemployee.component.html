@@ -1,0 +1,283 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class='sidebar-title'>Employee</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Employee</span>
+            </a>
+
+            <ul class="submenu ">
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-absence" routerLink="/employee/demande-absence">Demande Absence</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/consulter-absences" routerLink="/employee/consulter-absences">Absences</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-formation" routerLink='/employee/demande-formation'>Demande Formation</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/status-demande-formation" routerLink='/employee/status-demande-formation'>Status Formations</a>
+              </li>
+            </ul>
+
+          </li>
+          <li class='sidebar-title'>Administration</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="briefcase" width="20"></i>
+              <span>Employees</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/all-employees">Afficher Employees</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-employee">Ajouter Employee</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="users" width="20"></i>
+              <span>Stagiaires</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-Stage">Demandes</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/entretien">Entretien</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink='/admin/stagiaire'>Accepter</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-refusees">Refuser</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stagiaire-carte">Carte Des Stagiaires</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="clock" width="20"></i>
+              <span>Absences</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-absences">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-justifier">Justifier</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-non-justifier">Non Justifier</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="file-text" width="20"></i>
+              <span>Formations</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-plan">Plan de formations</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-plan">Ajouter un Plan</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-demande-formation">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/employee-formation">Formations</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+  </div>
+  <div id="main">
+    <app-adminheader>
+
+    </app-adminheader>
+    <div class="main-content container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>Add Employee</h3>
+          </div>
+          <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class='breadcrumb-header'>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add-Employee</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <section id="multiple-column-form">
+        <div class="row match-height">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body">
+                  <form class="form"  (ngSubmit)="onSubmit()">
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="prenom-column">Prenom</label>
+                          <input type="text" id="prenom-column" class="form-control" placeholder="prenom" [(ngModel)]="employees.firstName" [ngModelOptions]="{standalone: true}"
+                                 name="firstName">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="nom-column">Nom</label>
+                          <input type="text" id="nom-column" class="form-control" placeholder="nom" [(ngModel)]="employees.lastName" [ngModelOptions]="{standalone: true}"
+                                 name="lastName">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="email-id-column">Email</label>
+                          <input type="email" id="email-id-column" class="form-control" placeholder="email" [(ngModel)]="employees.email" [ngModelOptions]="{standalone: true}"
+                                 name="email">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="cin-column">CIN</label>
+                          <input type="text" id="cin-column" class="form-control" name="cin-column" [(ngModel)]="employees.cin" [ngModelOptions]="{standalone: true}"
+                                 placeholder="cin">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="service-column">Service</label>
+                          <input type="text" id="service-column" class="form-control" name="service" [(ngModel)]="employees.service" [ngModelOptions]="{standalone: true}"
+                                 placeholder="service">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="poste-column">Poste</label>
+                          <input type="text" id="poste-column" class="form-control" name="poste-column" [(ngModel)]="employees.post" [ngModelOptions]="{standalone: true}"
+                                 placeholder="post">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label>Role</label>
+                          <select class="choices form-select" name="role" [(ngModel)]="employees.role" [ngModelOptions]="{standalone: true}">
+                            <option value="Admin">Admin</option>
+                            <option value="Employee">Employee</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group ">
+                          <label for="date-naissance">Date de naissance</label>
+                          <div class="input-group date custom-datepicker" id="datepicker">
+                            <input type="date" class="form-control" id="date-naissance" name="birthDay"  [(ngModel)]="employees.birthDay" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                        </div>
+                      </div>
+<!--                      <div class="col-lg-6 col-md-12">-->
+<!--                        <p>Document</p>-->
+                        <!--                        <div class="form-file">-->
+<!--                        <input type="file" (change)="changeFile($event)" name="file" >-->
+                        <!--                          <label class="form-file-label" for="customFile">-->
+                        <!--                            <span class="form-file-text">Selectionner un fichier...</span>-->
+                        <!--                            <span class="form-file-button btn-primary " style="cursor: pointer;"><i data-feather="upload"></i></span>-->
+                        <!--                          </label>-->
+                        <!--                        </div>-->
+<!--                      </div>-->
+                      <div class="col-lg-6 col-md-12">
+                        <p>Document</p>
+                        <div class="form-file">
+                          <input type="file" class="form-file-input" id="customFile" (change)="changeFile($event)" name="file">
+                          <label class="form-file-label" for="customFile">
+                            <span class="form-file-text">Selectionner un fichier...</span>
+                            <span class="form-file-button btn-primary " style="cursor: pointer;"><i><svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#fafafa" d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg></i></span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="date-embauche">Date d'embauche</label>
+                          <div class="input-group date custom-datepicker" id="datepicker1">
+                            <input type="date" class="form-control " id="date-embauche" name="hireDate"  [(ngModel)]="employees.hireDate" [ngModelOptions]="{standalone: true}"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                        <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Reset</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <app-adminfooter>
+
+    </app-adminfooter>
+  </div>
+</div>
+
+
+<style>
+  .input-group-append {
+    cursor: pointer;
+  }
+  .custom-datepicker .datepicker-dropdown {
+    width: 300px; /* Adjust the width as needed */
+  }
+</style>

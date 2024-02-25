@@ -1,0 +1,239 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class='sidebar-title'>Employee</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Employee</span>
+            </a>
+
+            <ul class="submenu ">
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-absence" routerLink="/employee/demande-absence">Demande Absence</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/consulter-absences" routerLink="/employee/consulter-absences">Absences</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-formation" routerLink='/employee/demande-formation'>Demande Formation</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/status-demande-formation" routerLink='/employee/status-demande-formation'>Status Formations</a>
+              </li>
+            </ul>
+
+          </li>
+          <li class='sidebar-title'>Administration</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="briefcase" width="20"></i>
+              <span>Employees</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/all-employees">Afficher Employees</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-employee">Ajouter Employee</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="users" width="20"></i>
+              <span>Stagiaires</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-Stage">Demandes</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/entretien">Entretien</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink='/admin/stagiaire'>Accepter</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-refusees">Refuser</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stagiaire-carte">Carte Des Stagiaires</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="clock" width="20"></i>
+              <span>Absences</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-absences">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-justifier">Justifier</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-non-justifier">Non Justifier</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="file-text" width="20"></i>
+              <span>Formations</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-plan">Plan de formations</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-plan">Ajouter un Plan</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-demande-formation">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/employee-formation">Formations</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+  </div>
+  <div id="main">
+    <app-adminheader>
+
+    </app-adminheader>
+    <div class="row match-height">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title fs-3">Ajouter Un Plan</h1>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <form [formGroup]="form" class="form">
+                <div class="row border-gray p-3">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="username">Name</label>
+                      <input formControlName="name" type="text" class="form-control" id="username" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="date">Date</label>
+                      <input formControlName="date" type="date" class="form-control" id="date" placeholder="Date">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="responsable">Responsable</label>
+                      <input formControlName="responsable" type="text" class="form-control" id="responsable" placeholder="Responsable">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <h1>Formations
+                      <button type="button" (click)="addFormation()" class="btn btn-primary mb-1">Add Formation</button>
+                    </h1>
+                  </div>
+                  <div formArrayName="formations" class="col-12">
+                    <div *ngFor="let control of formations; let i = index" class="row border border-gray p-3 mb-3">
+                      <ng-container [formGroupName]="i">
+                        <div class="col-12">
+                          <h2 class="fs-4">Formation {{ i + 1 }}</h2>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="formationname">Name</label>
+                            <input formControlName="formationname" type="text" class="form-control" id="formationname" placeholder="Formation Name">
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="formationobjectif">Objectif</label>
+                            <textarea formControlName="formationobjectif" rows="4" class="form-control" id="formationobjectif" placeholder="Formation Objectif"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-group">
+                            <label for="collaborateurs">Collaborateurs</label>
+                            <textarea formControlName="collaborateurs" rows="4" class="form-control" id="collaborateurs" placeholder="Collaborateurs"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="formationdate">Date</label>
+                            <input formControlName="formationdate" type="date" class="form-control" id="formationdate" placeholder="Date">
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                          <div class="form-group">
+                            <label for="formationduree">Duree (semaines)</label>
+                            <input formControlName="formationduree" type="number" class="form-control" id="formationduree" placeholder="Duree">
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div class="col-12">
+                        <button type="button" (click)="removeFormation(i)" class="btn btn-danger">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 d-flex justify-content-end">
+                    <button type="button" (click)="onSubmit()" class="btn btn-primary mr-1 mb-1">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  /* Add this CSS to your component's styles */
+  .border-gray {
+    border-color: #ccc; /* Change the color as needed */
+  }
+  .p-3 {
+    padding: 1rem; /* Adjust padding as needed */
+  }
+</style>

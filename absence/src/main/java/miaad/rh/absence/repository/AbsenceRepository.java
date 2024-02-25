@@ -10,4 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface AbsenceRepository extends JpaRepository<Absence, Long> {
+    List<Absence> findByAbsenceNature(String justifiée);
+    List<Absence> findByColaborateurId(Long id);
 }

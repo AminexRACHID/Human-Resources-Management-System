@@ -1,0 +1,264 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class='sidebar-title'>Employee</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Employee</span>
+            </a>
+
+            <ul class="submenu ">
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-absence" routerLink="/employee/demande-absence">Demande Absence</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/consulter-absences" routerLink="/employee/consulter-absences">Absences</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-formation" routerLink='/employee/demande-formation'>Demande Formation</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/status-demande-formation" routerLink='/employee/status-demande-formation'>Status Formations</a>
+              </li>
+            </ul>
+
+          </li>
+          <li class='sidebar-title'>Administration</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="briefcase" width="20"></i>
+              <span>Employees</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/all-employees">Afficher Employees</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-employee">Ajouter Employee</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="users" width="20"></i>
+              <span>Stagiaires</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-Stage">Demandes</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/entretien">Entretien</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink='/admin/stagiaire'>Accepter</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-refusees">Refuser</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stagiaire-carte">Carte Des Stagiaires</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="clock" width="20"></i>
+              <span>Absences</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-absences">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-justifier">Justifier</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-non-justifier">Non Justifier</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="file-text" width="20"></i>
+              <span>Formations</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-plan">Plan de formations</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-plan">Ajouter un Plan</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-demande-formation">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/employee-formation">Formations</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></i></button>
+    </div>
+  </div>
+  <div id="main">
+    <app-adminheader>
+
+    </app-adminheader>
+    <div class="main-content container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>Demandes d'Absences</h3>
+          </div>
+          <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class='breadcrumb-header'>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Demandes d'Absences</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <section class="section">
+        <div class="card">
+          <div class="card-body">
+            <table class='table table-hover' id="table1">
+              <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Date d'absence</th>
+                <th>Durée</th>
+                <th>Justification</th>
+                <th>Document</th>
+                <th colspan="2">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let d of demandes; let i = index">
+                <td>{{d.employee.lastName}}</td>
+                <td>{{d.employee.firstName}}</td>
+                <td>{{d.absence.absenceDate}}</td>
+                <td>{{d.absence.duration}}</td>
+                <td>{{d.absence.justifie}}</td>
+                <td>
+                  <a type="button" (click)="viewJustification(d.absence.id)">
+                    <span class="badge bg-secondary"><i><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 144-208 0c-35.3 0-64 28.7-64 64l0 144-48 0c-35.3 0-64-28.7-64-64L0 64zm384 64l-128 0L256 0 384 128zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/></svg></i></span>
+                  </a>
+
+                <td>
+                  <a type="button" data-toggle="modal" data-target="#danger">
+                    <span class="badge bg-danger"><i><svg xmlns="http://www.w3.org/2000/svg" height="20" width="17.5" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></i></span>
+                  </a>
+
+
+                  <!--Danger theme Modal -->
+                  <div class="modal fade text-left" id="danger" tabindex="-1" role="dialog"
+                       aria-labelledby="myModalLabel120" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                          <h5 class="modal-title white" id="myModalLabel120">Attention !!</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Êtes-vous sûr de vouloir Refuser cette demande ?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                          </button>
+                          <button type="button" class="btn btn-danger ml-1" data-dismiss="modal" (click)="rejectDemande(d.absence.id)">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Refuser</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <a type="button" data-toggle="modal" data-target="#success">
+                    <span class="badge bg-success"><i><svg xmlns="http://www.w3.org/2000/svg" height="20" width="17.5" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></i></span>
+                  </a>
+
+                  <!--Success theme Modal -->
+                  <div class="modal fade text-left" id="success" tabindex="-1" role="dialog"
+                       aria-labelledby="myModalLabel110" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-success">
+                          <h5 class="modal-title white" id="myModalLabel110">Acceptation</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Êtes-vous sûr de vouloir accepter cette demande ?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                          </button>
+
+                          <button type="button" class="btn btn-success ml-1" data-dismiss="modal" (click)="accepterDemande(d.absence.id)">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Accept</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</div>

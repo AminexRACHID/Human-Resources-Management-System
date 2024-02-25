@@ -1,5 +1,6 @@
 package com.employee.service_employee.Feign;
 
+import com.employee.service_employee.Dto.EmployeeDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,4 +14,7 @@ public interface AccountFeignClient {
     //2
     @PostMapping("/api/account/changePassword")
     ResponseEntity<String> changePassword(@RequestParam("email") String email,@RequestBody String newPass);
+
+    @GetMapping("/api/employees/{id}")
+    EmployeeDto getEmployeeById(@RequestParam("id") Long id);
 }

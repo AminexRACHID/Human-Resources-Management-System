@@ -25,7 +25,7 @@ public class PlanFormation {
     private LocalDate date;
     private String responsable;
 
-    @OneToMany(mappedBy = "planFormation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "planFormation", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Formation> formations;
 }

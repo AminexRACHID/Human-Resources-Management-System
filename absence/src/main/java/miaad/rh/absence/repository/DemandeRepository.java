@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DemandeRepository extends JpaRepository<DemandeAbsence, Long> {
+
+    DemandeAbsence findDemandeAbsenceById(Long id);
 }

@@ -1,0 +1,63 @@
+<app-header></app-header>
+<section id="hero" class="vh-100" style="background: linear-gradient(#ffffff, #ffffff);">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block h-100">
+              <img src="assets/img/login_img_intern_lbl.svg"
+                   alt="login form" class="img-fluid img-fluidd h-100" style="border-radius: 1rem 0 0 1rem;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <img src="assets/img/umi_logo.svg" style="zoom:10%;" alt="logo">
+                  </div>
+
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Connectez-vous à votre compte</h5>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example17">Email address</label>
+                    <input type="email" id="form2Example17" class="form-control form-control-lg" placeholder="sgrh.miaad@umi.edu.ac.ma" formControlName="email" />
+                    <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
+                         class="text-danger">
+                      Email address is required and must be a valid email format.
+                    </div>
+                  </div>
+                  <label class="form-label mr-1" for="password">Password</label>
+                  <div class="input-group form-outline mb-3">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" id="password" class="form-control form-control-lg" placeholder="password1@" formControlName="password"/>
+                    <span class="input-group-text"><i class="fa fa-eye-slash" id="togglePasswordIcon"></i></span>
+                  </div>
+                  <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
+                       class="text-danger">
+                    Password is required.
+                  </div>
+
+                  <div class="pt-1 mb-4 mt-2">
+                    <div class="text-center text-lg-start">
+                      <button type="submit" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center"
+                              [disabled]="!loginForm.valid">
+                        <span>Se Connecter</span>
+                        <i class="bi bi-arrow-right"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <a class="fw-medium text-muted mb-2" href="#!" style="color: #FB921C;">Mot de passe oublié ?</a>
+                  <p class="mb-5 pb-lg-2 mt-2" style="color: #23282f;">Vous n'avez pas de compte ? <a href="." style="color: #4154F1;" routerLink="/interns/create-account"> Créer Un Compte</a></p>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

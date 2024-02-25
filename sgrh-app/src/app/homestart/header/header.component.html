@@ -1,0 +1,26 @@
+<app-homestartassets></app-homestartassets>
+<header id="header" class="header fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a href="/" class="logo d-flex align-items-center">
+      <img src="assets/img/umi_logo.svg" id="umilogoid" alt="logo">
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" class="nav-link scrollto active" href="/">Home</a></li>
+        <li><a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" class="nav-link scrollto" href="/#contact">Contact</a></li>
+        <li class="dropdown"><a href="#"><span>Stagiaires ?</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/interns/create-account">Créer un compte</a></li>
+            <li><a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/interns/login">Login</a></li>
+            <li><a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/interns/offers">Offres de Stages</a></li>
+          </ul>
+        </li>
+        <li><a class="getstarted scrollto" routerLink="/login">Se Connecter</a></li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+
+  </div>
+</header><!-- End Header -->

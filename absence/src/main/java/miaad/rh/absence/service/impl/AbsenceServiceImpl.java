@@ -1,10 +1,7 @@
 package miaad.rh.absence.service.impl;
 
 import lombok.AllArgsConstructor;
-import miaad.rh.absence.dto.AbsenceDto;
-import miaad.rh.absence.dto.DemandeAbsenceDto;
-import miaad.rh.absence.dto.EmployeeDto;
-import miaad.rh.absence.dto.StagaireDto;
+import miaad.rh.absence.dto.*;
 import miaad.rh.absence.entity.Absence;
 import miaad.rh.absence.entity.DemandeAbsence;
 import miaad.rh.absence.exception.ResourceNotFoundException;
@@ -15,9 +12,11 @@ import miaad.rh.absence.mapper.DemandeMapper;
 import miaad.rh.absence.repository.AbsenceRepository;
 import miaad.rh.absence.repository.DemandeRepository;
 import miaad.rh.absence.service.AbsenceService;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,9 +33,9 @@ public class AbsenceServiceImpl implements AbsenceService {
     private DemandeRepository demandeRepository;
 
     @Override
-    public AbsenceDto createAbsence(AbsenceDto absenceDto) throws IOException {
+    public AbsenceDto createAbsence(AbsenceDto absenceDto, MultipartFile file) throws IOException {
 
-        byte[] justification = absenceDto.getJustificationFile().getBytes();
+        System.out.println(absenceDto.getColaborateurId()+" "+absenceDto.getAbsenceDate());
 
         Absence absence = new Absence();
         absence.setColaborateurId(absenceDto.getColaborateurId());
@@ -44,8 +43,12 @@ public class AbsenceServiceImpl implements AbsenceService {
         absence.setAbsenceDate(absenceDto.getAbsenceDate());
         absence.setDuration(absenceDto.getDuration());
         absence.setAbsenceNature(absenceDto.getAbsenceNature());
+        if (file != null){
+            byte[] justification = file.getBytes();
+            absence.setJustification(justification);
+        }
         absence.setJustifie(absenceDto.getJustifie());
-        absence.setJustification(justification);
+
 
 
         Absence savedAbsence = absenceRepository.save(absence);
@@ -54,18 +57,10 @@ public class AbsenceServiceImpl implements AbsenceService {
 
 
     @Override
-    public AbsenceDto createAbsenceFromDemande(DemandeAbsenceDto absenceDto) throws IOException {
+    public AbsenceDto createAbsenceFromDemande(Long id) throws IOException {
 
-        byte[] justification = absenceDto.getJustificationFile().getBytes();
-
-        Absence absence = new Absence();
-        absence.setColaborateurId(absenceDto.getColaborateurId());
-        absence.setEmployee(absenceDto.isEmployee());
-        absence.setAbsenceDate(absenceDto.getAbsenceDate());
-        absence.setDuration(absenceDto.getDuration());
-        absence.setAbsenceNature(absenceDto.getAbsenceNature());
-        absence.setJustifie(absenceDto.getJustifie());
-        absence.setJustification(justification);
+        DemandeAbsence demandeAbsenceDto = demandeRepository.findDemandeAbsenceById(id);
+        Absence absence = AbsenceMapper.mapFromDemandeDtoToAbsence1(demandeAbsenceDto);
 
 
         Absence savedAbsence = absenceRepository.save(absence);
@@ -81,11 +76,38 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public List<AbsenceDto> getAbsenceBycollaborateurId(Long collaborateurId) {
+    public List<AbsenceDto> getAllAbsencesJustier() {
+        List<Absence> absences = absenceRepository.findByAbsenceNature("Justifier");
+        return absences.stream()
+                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AbsenceDto> getAllAbsencesNonJustifier() {
+        List<Absence> absences = absenceRepository.findByAbsenceNature("Non Justifier");
+        return absences.stream()
+                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<AbsenceDto> getAbsenceByEmployeeId(Long collaborateurId) {
         List<Absence> absences = absenceRepository.findAll();
 
         return absences.stream()
-                .filter(absence -> absence.getColaborateurId().equals(collaborateurId))
+                .filter(absence -> absence.getColaborateurId().equals(collaborateurId) && absence.isEmployee() )
+                .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AbsenceDto> getAbsenceByStagiaireId(Long collaborateurId) {
+        List<Absence> absences = absenceRepository.findAll();
+
+        return absences.stream()
+                .filter(absence -> absence.getColaborateurId().equals(collaborateurId) && !absence.isEmployee() )
                 .map(absence -> AbsenceMapper.mapToAbsenceDto(absence))
                 .collect(Collectors.toList());
     }
@@ -176,6 +198,44 @@ public class AbsenceServiceImpl implements AbsenceService {
         );
 
         demandeRepository.deleteById(demandeId);
+    }
+
+    @Override
+    public AbsenceJustifierNonJutifierDto getNobreAbsencesJustifierNonJustifier(Long id) {
+        List<Absence> absences = absenceRepository.findByColaborateurId(id);
+
+        long absencesJustifiees = absences.stream()
+                .filter(absence -> absence.isEmployee() && "Justifier".equals(absence.getAbsenceNature()))
+                .count();
+
+        long absencesNonJustifiees = absences.stream()
+                .filter(absence -> absence.isEmployee() && "Non Justifier".equals(absence.getAbsenceNature()))
+                .count();
+
+        AbsenceJustifierNonJutifierDto abs = new AbsenceJustifierNonJutifierDto();
+        abs.setNbrJustifier(absencesJustifiees);
+        abs.setNbrNonJustifier(absencesNonJustifiees);
+
+        return abs;
+    }
+
+    @Override
+    public AbsenceJustifierNonJutifierDto getNobreAbsencesJustifierNonJustifierStagaire(Long id) {
+        List<Absence> absences = absenceRepository.findByColaborateurId(id);
+
+        long absencesJustifiees = absences.stream()
+                .filter(absence -> !absence.isEmployee() && "Justifier".equals(absence.getAbsenceNature()))
+                .count();
+
+        long absencesNonJustifiees = absences.stream()
+                .filter(absence -> !absence.isEmployee() && "Non Justifier".equals(absence.getAbsenceNature()))
+                .count();
+
+        AbsenceJustifierNonJutifierDto abs = new AbsenceJustifierNonJutifierDto();
+        abs.setNbrJustifier(absencesJustifiees);
+        abs.setNbrNonJustifier(absencesNonJustifiees);
+
+        return abs;
     }
 }
 

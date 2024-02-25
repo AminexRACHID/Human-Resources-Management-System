@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/plans-formation")
+@RequestMapping("/api/miaad/plans-formation")
 public class PlanFormationController {
     @Autowired
     private PlanFormationService planFormationService;
@@ -30,9 +32,17 @@ public class PlanFormationController {
     }
 
     @DeleteMapping("/{planId}")
-    public ResponseEntity<String> deletePlanFormation(@PathVariable Long planId) {
-        planFormationService.deletePlanFormation(planId);
-        return ResponseEntity.ok("PlanFormation deleted successfully");
+    public ResponseEntity<?> deletePlanFormation(@PathVariable Long planId) {
+        Map<String, String> responseMap = new HashMap<>();
+        try{
+            planFormationService.deletePlanFormation(planId);
+            responseMap.put("message", "Suppression du programme de formation réalisée.");
+            return ResponseEntity.ok(responseMap);
+
+        } catch (Exception e){
+            responseMap.put("message", "Une erreur est survenue. Veuillez réessayer ultérieurement.");
+            return ResponseEntity.badRequest().body(responseMap);
+        }
     }
 
     @PutMapping("/{planId}")
@@ -42,5 +52,10 @@ public class PlanFormationController {
     ) {
         PlanFormation updatedPlan = planFormationService.updatePlanFormation(planId, updatedPlanFormation);
         return ResponseEntity.ok(updatedPlan);
+    }
+
+    @GetMapping("/planFormation/{id}")
+    public PlanFormation getPlanFormationsId(@PathVariable("id") Long id) {
+        return planFormationService.getPlanById(id);
     }
 }

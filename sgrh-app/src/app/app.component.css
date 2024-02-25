@@ -1,0 +1,52 @@
+/*!* In your component's style file (e.g., styles.scss or styles.css) *!*/
+
+/*::ng-deep .datepicker-dropdown {*/
+/*  width: 300px; !* Adjust the width as needed *!*/
+/*  text-align: center; !* Align the content in the center *!*/
+/*  cursor: pointer; !* Add a pointer cursor *!*/
+/*}*/
+
+/*::ng-deep .datepicker-days table {*/
+/*  width: 100%; !* Make the table fill the width of the dropdown *!*/
+/*}*/
+
+/*::ng-deep .datepicker-months table,*/
+/*::ng-deep .datepicker-years table,*/
+/*::ng-deep .datepicker-decades table,*/
+/*::ng-deep .datepicker-centuries table {*/
+/*  width: 100%; !* Make the other tables fill the width as well *!*/
+/*}*/
+
+
+/*::ng-deep .dropdown-menu.dropdown-menu-right.show {*/
+/*  width: 180px; !* Adjust the width as needed *!*/
+/*  text-align: center; !* Align the content in the center *!*/
+/*  cursor: pointer; !* Add a pointer cursor *!*/
+/*}*/
+/*!* In your component's style file (e.g., styles.scss or styles.css) *!*/
+
+/*::ng-deep .dropdown-menu {*/
+/*  text-align: center; !* Align the content in the center *!*/
+/*  cursor: pointer; !* Add a pointer cursor *!*/
+/*}*/
+
+/*::ng-deep .dropdown-item {*/
+/*  width: 100%; !* Make the items fill the width of the dropdown *!*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: normal;*/
+
+/*}*/
+
+/*::ng-deep .dropdown-item a {*/
+/*  width: 80%; !* Adjust the width of the <a> element *!*/
+/*  text-align: center; !* Optionally center-align the text inside <a> *!*/
+/*  display: flex;*/
+/*  align-items: center; !* Center align items inside <a> *!*/
+/*}*/
+
+/*::ng-deep .dropdown-item svg {*/
+/*  margin-right: 0; !* Remove margin between the icon and the label *!*/
+/*}*/
+
+

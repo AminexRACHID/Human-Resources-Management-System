@@ -2,13 +2,15 @@ package com.formations.service_formation.Controllers;
 
 import com.formations.service_formation.Entity.Formation;
 import com.formations.service_formation.Services.FormationService;
+import com.formations.service_formation.dto.CollaborateursDto;
+import com.formations.service_formation.dto.FormationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/formations")
+@RequestMapping("/api/miaad/formations")
 public class FormationController {
     @Autowired
     private FormationService formationService;
@@ -23,6 +25,12 @@ public class FormationController {
         return formationService.getFormationsByCollaborateur(collaborateur);
     }
 
+    @GetMapping("/formation/{id}")
+    public FormationDto getFormationsByid(@PathVariable("id") Long id) {
+        return formationService.getFormationsById(id);
+    }
+
+
     @PostMapping
     public Formation addFormation(@RequestBody Formation formation) {
         return formationService.addFormation(formation);
@@ -33,9 +41,9 @@ public class FormationController {
         return formationService.addFormationToPlan(formation, planId);
     }
 
-    @GetMapping("/search")
-    public List<Formation> searchFormations(@RequestParam String keyword) {
-        return formationService.searchFormations(keyword);
+    @GetMapping("/search/{keyword}")
+    public List<Formation> searchFormations(@PathVariable("keyword") String keyword) {
+        return formationService.searchFormation(keyword);
     }
 
     @PutMapping("/{id}")
@@ -55,4 +63,10 @@ public class FormationController {
     ) {
         return formationService.updateFormationPlan(formationId, newPlanId);
     }
+
+    @GetMapping("/allformation/collaborateurs")
+    public List<CollaborateursDto> getAllFormationByCollaborateurs() {
+        return formationService.getAllFormationByCollaborateurs();
+    }
+
 }

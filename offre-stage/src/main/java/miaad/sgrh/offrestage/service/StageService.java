@@ -42,4 +42,6 @@ public interface StageService {
     List<IntershipApplyStagiaireDto> findAllAcceptedIntershipApplies();
 
     List<IntershipApplyStagiaireDto> findAllRejectedIntershipApplies();
+
+    List<Stage> getCondidateStage(Long stagiaireId);
 }

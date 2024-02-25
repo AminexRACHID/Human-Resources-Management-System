@@ -1,0 +1,68 @@
+.logo img{
+  width: 60px;
+  height: 60px;
+}
+.card{
+  display: block;
+  padding: 3vh 2vh 7vh 5vh;
+  border: none;
+  border-radius: 15px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  max-width: 500px;
+}
+.header{
+  margin-bottom: 5vh;
+  margin-right: 2vh;
+  float: right;
+  margin-left: auto;
+}
+
+.far{
+  color: rgba(15, 198, 239, 0.97)!important;
+  font-size: 16px!important;
+}
+p.heading{
+  font-weight: bold;
+  font-size: 25px;
+}
+p.text-muted{
+  font-size: 17px;
+  font-weight: bold;
+  color: #a1a7ae!important;
+}
+.btn-sm{
+  border-radius: 8px;
+}
+.fas.fa-users{
+  color: rgba(15, 198, 239, 0.97)!important;
+}
+.mutual span{
+  font-size: 14px;
+  color: #adb5bd;
+  font-weight: bold;
+}
+.btn-primary.btn-lg{
+  border-radius: 10px;
+  width: 90%;
+  border: none;
+  background: #0080A5;
+}
+.btn-dark.btn-lg{
+  border-radius: 10px;
+  width: 90%;
+  border: none;
+  background: #FB921C;
+}
+.btn-dark span{
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+.btn-primary span{
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+}

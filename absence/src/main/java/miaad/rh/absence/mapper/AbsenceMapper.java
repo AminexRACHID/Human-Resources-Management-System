@@ -1,8 +1,9 @@
 package miaad.rh.absence.mapper;
 
 import miaad.rh.absence.dto.AbsenceDto;
+import miaad.rh.absence.dto.DemandeAbsenceDto;
 import miaad.rh.absence.entity.Absence;
-import org.springframework.web.multipart.MultipartFile;
+import miaad.rh.absence.entity.DemandeAbsence;
 
 import java.io.IOException;
 
@@ -30,6 +31,32 @@ public class AbsenceMapper {
                 absenceDto.getAbsenceNature(),
                 absenceDto.getJustifie(),
                 absenceDto.getJustificationFile().getBytes()
+        );
+    }
+
+    public static AbsenceDto mapFromDemandeDtoToAbsence(DemandeAbsenceDto absenceDto) throws IOException {
+        return new AbsenceDto(
+                absenceDto.getId(),
+                absenceDto.getColaborateurId(),
+                absenceDto.isEmployee(),
+                absenceDto.getAbsenceDate(),
+                absenceDto.getDuration(),
+                absenceDto.getAbsenceNature(),
+                absenceDto.getJustifie(),
+                absenceDto.getJustificationFile()
+        );
+    }
+
+    public static Absence mapFromDemandeDtoToAbsence1(DemandeAbsence absenceDto) throws IOException {
+        return new Absence(
+                absenceDto.getId(),
+                absenceDto.getColaborateurId(),
+                absenceDto.isEmployee(),
+                absenceDto.getAbsenceDate(),
+                absenceDto.getDuration(),
+                absenceDto.getAbsenceNature(),
+                absenceDto.getJustifie(),
+                absenceDto.getJustification()
         );
     }
 }

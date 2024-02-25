@@ -12,6 +12,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsUserByEmail(String email);
 
+    User findUserByEmail(String email);
+
     @Query("SELECT u FROM User u WHERE u.lastName = :lastName AND u.firstName = :firstName")
     List<User> getUserByLastNameAndFirstName(String lastName, String firstName);
 }

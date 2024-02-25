@@ -34,6 +34,18 @@ spring:
             - Path=/api/administration/**
           filters:
             - AuthenticationFilter
+        - id: formation-service
+          uri: lb://FORMATION-SERVICE
+          predicates:
+            - Path=/api/miaad/**
+#          filters:
+#            - AuthenticationFilter
+        - id: employee-service
+          uri: lb://EMPLOYEE-SERVICE
+          predicates:
+            - Path=/test/**
+      #          filters:
+      #            - AuthenticationFilter
         - id: employee-management
           uri: lb://EMPLOYEE-MANAGEMENT
           predicates:

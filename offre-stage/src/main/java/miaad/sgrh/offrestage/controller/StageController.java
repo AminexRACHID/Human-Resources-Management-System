@@ -5,13 +5,16 @@ import miaad.sgrh.offrestage.dto.IntershipApplyStagiaireDto;
 import miaad.sgrh.offrestage.dto.StageDto;
 import miaad.sgrh.offrestage.dto.StagiaireDto;
 import miaad.sgrh.offrestage.entity.IntershipApply;
+import miaad.sgrh.offrestage.entity.Stage;
 import miaad.sgrh.offrestage.exception.RessourceNotFoundException;
 import miaad.sgrh.offrestage.service.StageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stage")
@@ -93,7 +96,11 @@ public class StageController {
     public ResponseEntity<?> applyIntership(@ModelAttribute StagiaireDto stagiaireDto) {
         try {
             stageService.applyIntership(stagiaireDto);
-            return ResponseEntity.ok("Applied to this internship successfully.");
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("message", "Training Request submitted successfully");
+
+
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -172,4 +179,15 @@ public class StageController {
         IntershipApply intershipApply = stageService.deleteIntershipAccepted(intershipApplyId);
         return new ResponseEntity<>(intershipApply, HttpStatus.OK);
     }
+
+    @GetMapping("/intershipStagiaire/{id}")
+    public ResponseEntity<?> getIntershipByStagiaire(@PathVariable("id") Long id){
+        try {
+            List<Stage> stages  = stageService.getCondidateStage(id);
+            return new ResponseEntity<>(stages, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

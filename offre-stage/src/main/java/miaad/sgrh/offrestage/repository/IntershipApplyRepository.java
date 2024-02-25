@@ -24,6 +24,9 @@ public interface IntershipApplyRepository extends JpaRepository<IntershipApply, 
 
     @Query("SELECT ia FROM IntershipApply ia WHERE ia.status = 'Accepted'")
     List<IntershipApply> findAllAcceptedIntershipApplies();
+
+    @Query("SELECT ia FROM IntershipApply ia WHERE ia.status = 'Accepted' AND ia.stagiaireId = :stagiaireId")
+    List<IntershipApply> getCondidateStage(@Param("stagiaireId") Long stagiaireId);
     @Query("SELECT ia FROM IntershipApply ia WHERE ia.status = 'Rejected'")
     List<IntershipApply> findAllRejectedIntershipApplies();
 }

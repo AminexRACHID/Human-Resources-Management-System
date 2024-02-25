@@ -1,0 +1,196 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class='sidebar-title'>Employee</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Employee</span>
+            </a>
+
+            <ul class="submenu ">
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-absence" routerLink="/employee/demande-absence">Demande Absence</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/consulter-absences" routerLink="/employee/consulter-absences">Absences</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-formation" routerLink='/employee/demande-formation'>Demande Formation</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/status-demande-formation" routerLink='/employee/status-demande-formation'>Status Formations</a>
+              </li>
+            </ul>
+
+          </li>
+          <li class='sidebar-title'>Administration</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="briefcase" width="20"></i>
+              <span>Employees</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/all-employees">Afficher Employees</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-employee">Ajouter Employee</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="users" width="20"></i>
+              <span>Stagiaires</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-Stage">Demandes</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/entretien">Entretien</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink='/admin/stagiaire'>Accepter</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-refusees">Refuser</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stagiaire-carte">Carte Des Stagiaires</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="clock" width="20"></i>
+              <span>Absences</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-absences">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-justifier">Justifier</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-non-justifier">Non Justifier</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="file-text" width="20"></i>
+              <span>Formations</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-plan">Plan de formations</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-plan">Ajouter un Plan</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-demande-formation">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/employee-formation">Formations</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+  </div>
+  <div id="main">
+    <app-adminheader>
+
+    </app-adminheader>
+    <!-- slider Area End-->
+    <!-- Featured_job_start -->
+    <div class="container">
+      <div class="row m-5">
+        <div class="col-lg-12">
+          <div class="section-tittle text-center">
+            <span>Formations récents</span>
+            <h2>List Des Formations</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-xl-8">
+          <!-- Bootstrap form -->
+<!--          <form class="form-inline">-->
+            <div class="input-group">
+              <input type="text" class="form-control" id="intituleDeFormation" style="height: 55px; font-size: 18px" placeholder="Intitulé De Formation" [(ngModel)]="search">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-primary" style="height: 55px;" (click)="searchFormations()">
+                  <i class="fas fa-search"></i>
+                  <a  class="text-white">Trouver une Formation</a>
+                </button>
+              </div>
+            </div>
+<!--          </form>-->
+        </div>
+      </div>
+      <div class="row mt-4" >
+        <div class="col-md-6"  *ngFor="let f of formations; let i = index">
+          <div class="card mb-4 mx-auto p-0 bg-transparent">
+            <div class="card mx-auto w-100 m-0 p-3">
+              <div class="card-title">
+                <p class="heading">{{f.nomFormation}}<i class="far fa-compass"></i></p>
+              </div>
+              <p class="text-muted">{{f.objectif}}</p>
+              <p class="text-muted">Les Colaborateurs<br>{{f.collaborateurs}}</p>
+              <div class="row btnrow my-4">
+                <div class="col-6 col-md-3"><button type="button" class="btn btn-outline-success btn-sm" style="background: #00ff002b; width: max-content;">{{f.duree}} semaines</button></div>
+                <div class="col-6 col-md-3"><button type="button" class="btn btn-outline-primary btn-sm" style="background: #007bff33; width: max-content;">{{f.date}}</button></div>
+              </div>
+              <div class="row btnsubmit mt-4">
+                <div class="col-md-6 col-6">
+                  <button type="button" class="btn btn-primary btn-lg" (click)="submitToTrainig(f.id)"><span>Envoyer Demande</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

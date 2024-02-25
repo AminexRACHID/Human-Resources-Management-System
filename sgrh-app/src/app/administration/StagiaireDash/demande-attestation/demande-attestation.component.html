@@ -1,0 +1,87 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+
+          <li class='sidebar-title'>Stagiaire</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Stagiaire</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="stagiaire/consulter-absences" routerLink="/stagiaire/consulter-absences">Absences</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="stagiaire/postuler-stage" routerLink='/stagiaire/postuler-stage'>Postuler Un Stage</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="stagiaire/demande-attestation" routerLink="/stagiaire/demande-attestation">Demande Attestation</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+  </div>
+  <div id="main">
+
+    <app-adminheader>
+
+    </app-adminheader>
+
+    <div class="container">
+      <div class="row m-5 justify-content-center"> <!-- Center the content -->
+        <div class="col-lg-12">
+          <div class="section-tittle text-center">
+            <span>Demande Attestation</span>
+            <h2>Votre Stage</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-4"> <!-- Center the content -->
+        <div class="col-md-6" *ngFor="let s of stages; let i = index">
+          <div class="card mb-4 mx-auto p-0 bg-transparent">
+            <div class="card mx-auto w-100 m-0 p-3">
+              <div class="card-title">
+                <p class="heading">{{s.title}}<i class="far fa-compass"></i></p>
+              </div>
+              <p class="text-muted">{{s.description}}</p>
+              <div class="row btnrow my-4">
+                <div class="col-6 col-md-3"><button type="button" class="btn btn-outline-success btn-sm" style="background: #00ff002b; width: max-content;">Full Time</button></div>
+                <div class="col-6 col-md-3"><button type="button" class="btn btn-outline-primary btn-sm" style="background: #007bff33; width: max-content;">{{s.duration}} mois</button></div>
+              </div>
+              <div class="row btnsubmit mt-4">
+                <div class="col-md-6 col-12 text-center"> <!-- Center the button -->
+                  <button type="button" class="btn btn-primary btn-lg"><span>Demande Attestation</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ... (remaining code) -->
+
+  </div>
+
+</div>

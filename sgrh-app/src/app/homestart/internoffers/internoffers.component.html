@@ -1,0 +1,261 @@
+<app-header></app-header>
+<main>
+  <!-- slider Area Start-->
+  <div class="slider-area">
+    <!-- Mobile Menu -->
+    <div class="slider-active">
+      <div class="single-slider slider-height d-flex align-items-center" style="background-image: url(assets/img/login_img_intern_offers.svg)">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-6 col-lg-9 col-md-10">
+              <div class="hero__caption">
+                <h1>Trouvez<br>Votre Stage</h1>
+              </div>
+            </div>
+          </div>
+          <!-- Search Box -->
+          <div class="row">
+            <div class="col-xl-8">
+              <!-- form -->
+              <form action="#" class="search-box">
+                <div class="input-form">
+                  <input type="text" placeholder="Intitulé De Stage" name="keyword" [(ngModel)]="keyword">
+                </div>
+                <div class="search-form">
+                  <a type="button" (click)="searchOffers()" >Trouver un stage</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- slider Area End-->
+  <!-- Featured_job_start -->
+  <section class="featured-job-area feature-padding" >
+    <div class="container" id="targetSection">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-tittle text-center">
+            <span>Stages récents</span>
+            <h2>Les Stages</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-xl-10" >
+          <div class="single-job-items mb-30" *ngFor="let o of offers; let i = index">
+            <div class="job-items">
+              <div class="company-img">
+                <a href="job_details.html"><img src="assets/interns/img/icon/job-list2.png" alt=""></a>
+              </div>
+              <div class="job-tittle">
+                <a href="job_details.html"><h4>{{o.title}}</h4></a>
+                <ul>
+                  <li>UMI FSM</li>
+                  <li><i class="fas fa-map-marker-alt"></i>Meknès, Maroc</li>
+                  <li *ngIf="o.remuneration !== true">Non Rémunéré</li>
+                  <li *ngIf="o.remuneration !== false">Rémunéré</li>
+                </ul>
+              </div>
+            </div>
+            <div class="items-link f-right">
+              <a type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModalLong' + i">Détails</a>
+              <span>{{o.type}}</span>
+            </div>
+
+            <!-- ------------------------------------ model Start ------------------------------------------ -->
+
+            <!-- The Modal -->
+            <div class="modal fade" [id]="'exampleModalLong' + i" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Opportunité passionnante pour {{o.title}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <!-- Modal Body -->
+                  <div class="modal-body">
+                    <!-- Job Post Company Start -->
+                    <div class="job-post-company pt-20 pb-20">
+                      <div class="container">
+                        <div class="row justify-content-between">
+                          <!-- Left Content -->
+                          <div class="col-xl-7 col-lg-8">
+                            <!-- Job Single -->
+                            <div class="single-job-items mb-50">
+                              <div class="job-items">
+                                <div class="company-img company-img-details">
+                                  <a href="#"><img src="../../../assets/interns/img/icon/job-list1.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle mt-1" >
+                                  <a href="#">
+                                    <h4>{{o.title}}</h4>
+                                  </a>
+                                  <ul>
+                                    <li>UMI FSM</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>Meknès, Maroc</li>
+                                    <li *ngIf="o.remuneration !== true">Non Rémunéré</li>
+                                    <li *ngIf="o.remuneration !== false">Rémunéré</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Job Single End -->
+
+                            <div class="job-post-details">
+                              <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                  <h4>Description de Stage </h4>
+                                </div>
+                                <p> {{o.description}}</p>
+                              </div>
+                            </div>
+                            <div class="post-details4  mb-50">
+                              <!-- Small Section Tittle -->
+                              <div class="small-section-tittle">
+                                <h4>Company Information</h4>
+                              </div>
+                              <span>FSM</span>
+                              <p>
+                                Créée en 1982, la Faculté des Sciences de Meknès (FSM) en tant que premier établissement universitaire à accès ouvert dans la région Meknès-Tafilalt, peut être fière de ses 37 ans d’expérience cumulée qui font d’elle la locomotive du système éducatif universitaire à l’échelle de la région.                              </p>
+
+                            </div>
+                          </div>
+                          <!-- Right Content -->
+                          <div class="col-xl-5 col-lg-5">
+                            <div class="post-details3  mb-50">
+                              <!-- Small Section Tittle -->
+                              <div class="small-section-tittle">
+                                <h4>Details</h4>
+                              </div>
+                              <ul>
+                                <li>Date de début:<span>{{o.startDate}}</span></li>
+                                <li>Lieu: <span>Meknès, Maroc</span></li>
+                                <li>Type: <span>{{o.type}}</span></li>
+                                <li>Niveau: <span>{{o.diploma}}</span></li>
+                                <li>Durée:  <span>{{o.duration}} mois</span></li>
+                                <li>Rémunération:
+                                  <span *ngIf="o.remuneration !== true">Non</span>
+                                  <span *ngIf="o.remuneration !== false">Oui</span>
+                                </li>
+                              </ul>
+                              <div class="apply-btn2">
+                                <a href="#" class="btn">Postuler</a>
+                              </div>
+                            </div>
+                            <div class="post-details4  mb-50 ml-20" >
+                              <!-- Small Section Tittle -->
+                              <div class="small-section-tittle">
+                                <ul>
+                                  <li>Nom: <span>UMI FSM </span></li>
+                                  <li>Web: <span>www.fs-umi.ac.ma</span></li>
+                                  <li>Email: <span>fs-contact&commat;umi.ac.ma</span></li>
+                                  <li>Tele: <span>+212 5 35 53 73 21</span></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Job Post Company End -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- ------------------------------------ model finish ------------------------------------------ -->
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <!-- Featured_job_end -->
+  </section>
+
+  <!-- Online CV Area Start -->
+  <div class="online-cv cv-bg section-overly pt-90 pb-120"  data-background="assets/interns/img/gallery/cv_bg.jpg">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-10">
+          <div class="cv-caption text-center">
+            <p class="pera1">Stages À La Une</p>
+            <p class="pera2">Faites la Différence avec Votre CV en Ligne !</p>
+            <a href="#" class="border-btn2 border-btn4">Envoyer Votre CV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Online CV Area End-->
+  <!-- How  Apply Process Start-->
+  <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/interns/img/gallery/how-applybg.png">
+    <div class="container">
+      <!-- Section Tittle -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-tittle white-text text-center">
+            <span>Processus de candidature</span>
+            <h2 style="color: #28395A">Comment ça marche</h2>
+          </div>
+        </div>
+      </div>
+      <!-- Apply Process Caption -->
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="single-process text-center mb-30">
+            <div class="process-ion">
+              <span class="flaticon-search"></span>
+            </div>
+            <div class="process-cap">
+              <h5>1. Recherchez un stage</h5>
+              <p>Recherchez des opportunités de stage correspondant à vos intérêts.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-process text-center mb-30">
+            <div class="process-ion">
+              <span class="flaticon-curriculum-vitae"></span>
+            </div>
+            <div class="process-cap">
+              <h5>2. Postulez pour un stage</h5>
+              <p>Postulez aux offres de stage qui vous intéressent en envoyant votre CV.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="single-process text-center mb-30">
+            <div class="process-ion">
+              <span class="flaticon-tour"></span>
+            </div>
+            <div class="process-cap">
+              <h5>3. Obtenez votre stage</h5>
+              <p>Recevez une réponse et obtenez le stage de vos rêves.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- How  Apply Process End-->
+  <!-- intern details -->
+
+
+
+
+
+
+
+</main>
+
+<app-footer></app-footer>

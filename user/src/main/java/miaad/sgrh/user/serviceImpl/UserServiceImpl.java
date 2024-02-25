@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsUserByEmail(userDto.getEmail())) {
             throw new RessourceNotFoundException("Email already used. Please choose a different email address.");
         }
+        try{
+            accountRestClient.createAccount(userDto);
+        }catch (Exception e){
+            throw new RessourceNotFoundException("Email already used. Please choose a different email address.");
+        }
 
         Stagiaire stagiaire = new Stagiaire();
         stagiaire.setEmail(userDto.getEmail());
@@ -34,11 +39,7 @@ public class UserServiceImpl implements UserService {
 
         Stagiaire sg = stagiaireRepository.save(stagiaire);
         userDto.setId(sg.getId());
-        try{
-            accountRestClient.createAccount(userDto);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+
         return StagiaireMapper.mapToStagiaireDto(sg);
     }
 

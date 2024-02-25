@@ -115,6 +115,7 @@ public class StageServiceImpl implements StageService {
             sendEmail(stagiaire.getEmail(), subj, message);
         } catch (Exception e){
             System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         return stagiaireDto;
     }
@@ -292,7 +293,22 @@ public class StageServiceImpl implements StageService {
                 .collect(Collectors.toList());
 
         return candidates;
+
     }
 
+    @Override
+    public List<Stage> getCondidateStage(Long stagiaireId){
+        List<IntershipApply> intershipApply = intershipApplyRepository.getCondidateStage(stagiaireId);
+
+        List<Stage> stageDtos = intershipApply.stream()
+                .map(intershipApply1 -> {
+                    Stage stage = stageRepository.findStagesById(intershipApply1.getStageId());
+                    return stage;
+                })
+                .collect(Collectors.toList());
+
+        return stageDtos;
+
+    }
 
 }
