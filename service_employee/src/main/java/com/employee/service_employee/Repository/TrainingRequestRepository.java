@@ -19,4 +19,8 @@ public interface TrainingRequestRepository extends JpaRepository<TrainingRequest
     @Query("SELECT t FROM TrainingRequest t WHERE t.status = 'Pending'")
     List<TrainingRequest> getTrainingRequestByStatus();
 
+    List<TrainingRequest> findByFormationId(Long formationId);
+    List<TrainingRequest> findByEmployeeId(Long employeeId);
+
+
 }

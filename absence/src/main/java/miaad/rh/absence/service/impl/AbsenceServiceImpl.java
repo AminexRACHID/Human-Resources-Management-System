@@ -237,6 +237,26 @@ public class AbsenceServiceImpl implements AbsenceService {
 
         return abs;
     }
+
+    @Override
+    public void deleteDemandeAbsenceByCollaborateurId(Long id) {
+        List<DemandeAbsence> demandeAbsences = demandeRepository.findByColaborateurId(id);
+
+        for (DemandeAbsence demandeAbsence : demandeAbsences) {
+            demandeRepository.delete(demandeAbsence);
+        }
+    }
+
+    @Override
+    public void deleteAbsenceByCollaborateurId(Long id) {
+        List<Absence> absences = absenceRepository.findByColaborateurId(id);
+
+        for (Absence absence : absences) {
+            absenceRepository.delete(absence);
+        }
+    }
+
+
 }
 
 

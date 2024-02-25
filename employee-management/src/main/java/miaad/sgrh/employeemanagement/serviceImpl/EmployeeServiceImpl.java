@@ -9,6 +9,8 @@ import miaad.sgrh.employeemanagement.entity.Account;
 import miaad.sgrh.employeemanagement.entity.Document;
 import miaad.sgrh.employeemanagement.entity.Employee;
 import miaad.sgrh.employeemanagement.exception.RessourceNotFoundException;
+import miaad.sgrh.employeemanagement.feign.AbsenceFeignClient;
+import miaad.sgrh.employeemanagement.feign.TrainingRequestFeignClient;
 import miaad.sgrh.employeemanagement.mapper.EmployeeMapper;
 import miaad.sgrh.employeemanagement.repository.AccountRepository;
 import miaad.sgrh.employeemanagement.repository.DocumentRepository;
@@ -32,6 +34,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private AccountRepository accountRepository;
     private DocumentRepository documentRepository;
     private AccountController accountController;
+    private TrainingRequestFeignClient trainingRequestFeignClient;
+    private AbsenceFeignClient absenceFeignClient;
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto, MultipartFile file) {
@@ -171,6 +175,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new RessourceNotFoundException("Employee not exists with given id: "+ employeeId));
 
         try{
+            absenceFeignClient.deleteAbsenceByCollaborateurId(employee.getId());
+            absenceFeignClient.deleteDemandeAbsenceByCollaborateurId(employee.getId());
+            trainingRequestFeignClient.deleteTrainingRequestsByEmployeeId(employee.getId());
             accountRepository.deleteByLogin(employee.getEmail());
             documentRepository.deleteByEmployee_Id(employeeId);
             employeeRepository.deleteById(employeeId);

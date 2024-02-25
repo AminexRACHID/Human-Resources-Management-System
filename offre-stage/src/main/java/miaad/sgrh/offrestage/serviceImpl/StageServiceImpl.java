@@ -76,6 +76,15 @@ public class StageServiceImpl implements StageService {
                 .orElseThrow(() -> new RessourceNotFoundException("Stage not found with given id"+ id));
         if (stage != null){
             stageRepository.deleteById(id);
+            deleteIntershipApply(stage.getId());
+        }
+    }
+
+    @Override
+    public void deleteIntershipApply(Long id) {
+        List<IntershipApply> intershipApplies = intershipApplyRepository.findByStageId(id);
+        for (IntershipApply intershipApply : intershipApplies) {
+            intershipApplyRepository.delete(intershipApply);
         }
     }
 
@@ -310,5 +319,7 @@ public class StageServiceImpl implements StageService {
         return stageDtos;
 
     }
+
+
 
 }

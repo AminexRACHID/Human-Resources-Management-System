@@ -348,6 +348,30 @@ public class AbsenceController {
         return ResponseEntity.ok(nbrs);
     }
 
+    @DeleteMapping("/deleteByCollaborateurId/{id}")
+    public ResponseEntity<?> deleteDemandeAbsenceByCollaborateurId(@PathVariable Long id) {
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            absenceService.deleteDemandeAbsenceByCollaborateurId(id);
+            responseMap.put("message", "Demande absence deleted successfully");
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deleteAbsenceByCollaborateurId/{id}")
+    public ResponseEntity<?> deleteAbsenceByCollaborateurId(@PathVariable Long id) {
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            absenceService.deleteAbsenceByCollaborateurId(id);
+            responseMap.put("message", "Demande absence deleted successfully");
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
 
 

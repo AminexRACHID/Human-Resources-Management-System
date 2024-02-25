@@ -44,4 +44,6 @@ public interface StageService {
     List<IntershipApplyStagiaireDto> findAllRejectedIntershipApplies();
 
     List<Stage> getCondidateStage(Long stagiaireId);
+
+    void deleteIntershipApply(Long id);
 }

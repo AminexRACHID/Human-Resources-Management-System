@@ -109,4 +109,19 @@ public class TrainingRequestService {
         return TrainingRequestMapper.mapToTrainingRequestDTO(trainingRequest);
     }
 
+    public void deleteTrainingRequestsByFormationId(Long formationId) {
+        List<TrainingRequest> trainingRequests = trainingRequestRepository.findByFormationId(formationId);
+
+        for (TrainingRequest trainingRequest : trainingRequests) {
+            trainingRequestRepository.delete(trainingRequest);
+        }
+    }
+
+    public void deleteTrainingRequestsByEmployeeId(Long formationId) {
+        List<TrainingRequest> trainingRequests = trainingRequestRepository.findByEmployeeId(formationId);
+
+        for (TrainingRequest trainingRequest : trainingRequests) {
+            trainingRequestRepository.delete(trainingRequest);
+        }
+    }
 }

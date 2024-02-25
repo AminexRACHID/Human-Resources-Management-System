@@ -7,7 +7,9 @@ import com.formations.service_formation.Repositories.FormationRepository;
 import com.formations.service_formation.Repositories.PlanFormationRepository;
 import com.formations.service_formation.dto.CollaborateursDto;
 import com.formations.service_formation.dto.FormationDto;
+import com.formations.service_formation.feign.TrainingRequestFeignClient;
 import com.formations.service_formation.mapper.FormationMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-
+@AllArgsConstructor
 public class FormationService {
-    @Autowired
     private FormationRepository formationRepository;
-    @Autowired
     private PlanFormationRepository planFormationRepository;
+    private TrainingRequestFeignClient trainingRequestFeignClient;
 
     public List<Formation> getFormationsByCollaborateur(String collaborateur) {
         return formationRepository.findByCollaborateursContaining(collaborateur);
@@ -67,8 +68,12 @@ public class FormationService {
         Formation existingFormation = formationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Formation not found with id: " + id));
 
-        // Delete the Formation
-        formationRepository.delete(existingFormation);
+        try {
+            trainingRequestFeignClient.deleteTrainingRequestsByFormationId(existingFormation.getId());
+            formationRepository.delete(existingFormation);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public Formation updateFormationPlan(Long formationId, Long newPlanId) {

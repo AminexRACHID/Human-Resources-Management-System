@@ -31,6 +31,8 @@ public interface AbsenceService {
     DemandeAbsenceDto createDemande(DemandeAbsenceDto demandeAbsenceDto) throws IOException;
     List<DemandeAbsenceDto> getAllDemandes();
     void deleteDemande(Long demandeId);
+    void deleteDemandeAbsenceByCollaborateurId(Long id);
+    void deleteAbsenceByCollaborateurId(Long id);
 }
 
 

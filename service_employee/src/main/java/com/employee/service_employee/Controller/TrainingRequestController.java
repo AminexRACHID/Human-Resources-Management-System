@@ -73,4 +73,28 @@ public class TrainingRequestController {
         TrainingRequestDto trainingRequestDto = trainingRequestService.rejectTrainingRequest(id);
         return ResponseEntity.ok(trainingRequestDto);
     }
+
+    @DeleteMapping("/deleteByFormationId/{formationId}")
+    public ResponseEntity<?> deleteTrainingRequestsByFormationId(@PathVariable Long formationId) {
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            trainingRequestService.deleteTrainingRequestsByFormationId(formationId);
+            responseMap.put("message", "Training requests deleted successfully");
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deleteByEmployeeId/{employeeId}")
+    public ResponseEntity<?> deleteTrainingRequestsByEmployeeId(@PathVariable Long employeeId) {
+        Map<String, String> responseMap = new HashMap<>();
+        try {
+            trainingRequestService.deleteTrainingRequestsByEmployeeId(employeeId);
+            responseMap.put("message", "Training requests deleted successfully");
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
