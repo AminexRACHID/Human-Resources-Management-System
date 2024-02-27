@@ -1,7 +1,8 @@
-import {Component, ElementRef, HostBinding, OnInit, Renderer2} from '@angular/core';
+import {Component, ElementRef, HostBinding, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {OffreStageService} from "../../services/stages/offre-stage.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/authentification/auth.service";
+import {AlertluncherService} from "../../services/alerts/alertluncher.service";
 
 @Component({
   selector: 'app-internoffers',
@@ -12,6 +13,7 @@ import {AuthService} from "../../services/authentification/auth.service";
 })
 export class InternoffersComponent implements OnInit {
   @HostBinding('attr.ngSkipHydration') skipHydration = true;
+
   private scriptUrls: string[] = [
     "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
     "https://code.jquery.com/jquery-3.6.4.min.js"
@@ -32,7 +34,7 @@ export class InternoffersComponent implements OnInit {
 
   offers:any;
   keyword: any;
-  constructor(private renderer: Renderer2, private el: ElementRef, private offre :OffreStageService,private router: Router, private authService:AuthService) {}
+  constructor(private renderer: Renderer2, private el: ElementRef, private offre :OffreStageService,private router: Router, private authService:AuthService, private alertService:AlertluncherService) {}
 
   ngOnInit(): void {
     this.authService.deleteToken();
@@ -101,5 +103,6 @@ export class InternoffersComponent implements OnInit {
         });
     }
   }
+
 
 }

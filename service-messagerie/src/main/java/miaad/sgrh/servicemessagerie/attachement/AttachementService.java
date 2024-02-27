@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AttachementService {
@@ -18,6 +19,12 @@ public class AttachementService {
         attachement.setTitle(originalFilename);
         attachement.setAttachement(new Binary(BsonBinarySubType.BINARY, attach.getBytes()));
         return attachementRepository.save(attachement).getId();
+    }
+
+    public String getAttachementName(String id){
+        Attachement attachement = attachementRepository.findById(id).get();
+        String name = attachement.getTitle();
+        return name;
     }
 
     public Attachement getAttachement(String id) {

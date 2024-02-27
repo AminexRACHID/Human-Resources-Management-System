@@ -60,6 +60,17 @@ public class StagiaireController {
         }
     }
 
+    @GetMapping("/search/emails/{email}")
+    public StagiaireDto getStagiaireByEmails(@PathVariable("email") String email){
+        try{
+            StagiaireDto stagiaireDto = stagiaireService.getStagiaireInfoByEmail(email);
+            return stagiaireDto;
+        } catch (RessourceNotFoundException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+
 //    @GetMapping("/search/status/{status}")
 //    public ResponseEntity<?> getStagiaireByStatus(@PathVariable("status") String status){
 //        try{

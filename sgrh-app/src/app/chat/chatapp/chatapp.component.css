@@ -1,0 +1,327 @@
+/*.global-app {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center; !* Centrage horizontal *!*/
+/*  justify-content: center; !* Centrage vertical *!*/
+/*  width: 100%;*/
+/*  margin: auto; !* Pour centrer horizontalement *!*/
+/*  padding: 20px;*/
+/*  box-sizing: border-box;*/
+/*  max-width: 80%;*/
+/*  min-width: 80%;*/
+/*  min-height: 600px;*/
+/*  max-height: 600px;*/
+/*  background-color: #fff;*/
+/*  overflow: hidden;*/
+/*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*  border-radius: 8px;*/
+/*  position: absolute;*/
+/*  top: 50%;*/
+/*  left: 50%;*/
+/*  transform: translate(-50%, -50%);*/
+/*}*/
+
+
+/* Style du champ d'entrée de texte */
+.message-input input[type="text"] {
+  width: 80%; /* Largeur du champ d'entrée de texte */
+  padding: 10px; /* Espacement intérieur */
+  font-size: 16px; /* Taille de la police */
+  border: 1px solid #ccc; /* Bordure */
+  border-radius: 5px; /* Bordure arrondie */
+}
+
+/* Style du bouton */
+.message-input button {
+  padding: 10px 20px; /* Espacement intérieur */
+  font-size: 16px; /* Taille de la police */
+  background-color: #cdebff; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  border: none; /* Supprimer la bordure */
+  border-radius: 5px; /* Bordure arrondie */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+/* Style du bouton au survol */
+.message-input button:hover {
+  background-color: #cdebff; /* Couleur de fond au survol */
+}
+
+
+.chat-container {
+  display: flex;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 600px;
+  max-height: 600px;
+  /*margin: 20px;*/
+  border: 1px solid #ccc;
+  background-color: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.users-list {
+  flex: 1;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #3498db;
+  color: #fff;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.users-list-container {
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+}
+
+
+
+.download-button:hover {
+  background-color: #cdebff;
+}
+
+
+.users-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.users-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.user-item.active {
+  background-color: #cdebff;
+  color: #4f4f4f;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.user-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-item span {
+  font-weight: bold;
+}
+
+.separator {
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
+
+.chat-area {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 100%;
+}
+.chat-area-container {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  width: 100%;
+}
+
+.selected-user {
+  background: #3498db;
+  padding: 20px;
+  box-sizing: border-box;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.selected-user-bar {
+  position: sticky; /* Permet à la barre de rester collée en haut de l'écran */
+  top: 0; /* Positionne la barre en haut de l'écran */
+  background-color: #3498db; /* Couleur de fond */
+  padding: 10px; /* Espacement intérieur */
+  border-bottom: 1px solid #ccc; /* Bordure inférieure */
+  z-index: 999; /* Assure que la barre est au-dessus des autres éléments */
+  border-radius: 8px;
+  text-align: center; /* Centrage horizontal du contenu */
+  color: #fff; /* Couleur du texte */
+}
+
+
+.message {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+#chat-messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.message p {
+  padding: 0 12px;
+  border-radius: 15px;
+  word-wrap: break-word;
+}
+
+
+
+.user-item span.nbr-msg {
+  margin-left: 10px;
+  background-color: #f8fa6f;
+  color: white;
+  padding: 5px;
+  width: 10px;
+  border-radius: 50%;
+  height: 10px;
+}
+
+.sender {
+  background-color: #3498db;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.receiver {
+  background-color: #ecf0f1;
+  color: #333;
+  align-self: flex-start;
+}
+
+.message-input {
+  margin-top: auto;
+  display: flex;
+}
+
+.mesg-input{
+  flex: 3;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.file-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 50px; /* Largeur personnalisée */
+}
+
+
+.message-input button {
+  padding: 10px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.message-input .buttonone {
+  padding: 10px;
+  border: none;
+  background-color: #ffffff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selected-user {
+  position: absolute; /* Permet de positionner l'élément de manière absolue par rapport à .chat-area */
+  top: 10px; /* Ajustez cette valeur selon votre préférence */
+  left: 50%; /* Centre horizontalement */
+  transform: translateX(-50%); /* Centre horizontalement */
+  background-color: #f0f0f0; /* Couleur de fond */
+  padding: 5px 10px; /* Espacement intérieur */
+  border-radius: 5px; /* Coins arrondis */
+  z-index: 1000; /* Assurez-vous que l'élément est au-dessus des autres éléments */
+}
+
+
+.message-input-one button {
+  padding: 10px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-form {
+  max-width: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.user-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-form label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.user-form input {
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.user-form button {
+  padding: 12px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+a.logout {
+  color: #fff;
+  text-decoration: none;
+}

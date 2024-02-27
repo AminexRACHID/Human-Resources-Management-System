@@ -17,6 +17,7 @@ public class RouteValidator {
 //            "/api/employees",  // create admin or Employee User
             "/manage/user",
             "/api/absences/allDemandes",
+            "/api/account/passwordRecovre",
             "/eureka"
     );
 

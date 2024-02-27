@@ -66,8 +66,15 @@ body {
 
 .users-list-container {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
+
+
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
 
 .users-list h2 {
     font-size: 1.5rem;
@@ -138,6 +145,8 @@ body {
     word-wrap: break-word;
 }
 
+
+
 .user-item span.nbr-msg {
     margin-left: 10px;
     background-color: #f8fa6f;
@@ -165,13 +174,23 @@ body {
     display: flex;
 }
 
-.message-input input {
-    flex: 1;
+.mesg-input{
+    flex: 3;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 10px;
 }
+
+.file-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 50px; /* Largeur personnalisée */
+}
+
 
 .message-input button {
     padding: 10px;

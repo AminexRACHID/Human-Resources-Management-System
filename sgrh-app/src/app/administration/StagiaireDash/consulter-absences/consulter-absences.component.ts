@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit,ViewChild} from '@angular/core';
 import {AbsenceService} from "../../../services/absences/absence.service";
 import {AuthService} from "../../../services/authentification/auth.service";
 import {EmployeeService} from "../../../services/employees/employee.service";
@@ -9,7 +9,7 @@ import {StagiaireService} from "../../../services/stagiaires/stagiaire.service";
   templateUrl: './consulter-absences.component.html',
   styleUrl: './consulter-absences.component.css'
 })
-export class ConsulterAbsencesComponent implements OnInit{
+export class ConsulterAbsencesComponent implements OnInit,AfterViewInit{
 
   userId:any;
   absences:any;
@@ -32,7 +32,9 @@ export class ConsulterAbsencesComponent implements OnInit{
       }
     );
   }
+  ngAfterViewInit(): void {
 
+  }
   getAbsence(id:number){
     this.absenceService.getAbsenceByStagiaireId(id).subscribe(
       response => {

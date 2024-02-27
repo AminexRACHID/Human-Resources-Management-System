@@ -226,4 +226,36 @@ public class EmployeeServiceImpl implements EmployeeService {
         return documentRepository.findByEmployeeId(employeeId);
     }
 
+
+    @Transactional
+    @Override
+    public void createAdminAuto(EmployeeDto employeeDto) {
+        if (employeeRepository.existsByEmail(employeeDto.getEmail()) || employeeRepository.existsByCin(employeeDto.getCin())) {
+
+        }else {
+
+            Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+            String password = "adminmiaad2023";
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            Account account = new Account();
+            account.setLogin(employee.getEmail());
+            account.setPassword(passwordEncoder.encode(password));
+            account.setConfirmation(true);
+            account.setRole(employeeDto.getRole());
+
+            employee.setAccount(account);
+            account.setEmployee(employee);
+            Document document = new Document();
+            document.setDocumentName("");
+            document.setContent(new byte[0]);
+
+            document.setEmployee(employee);
+
+            documentRepository.save(document);
+            employeeRepository.save(employee);
+            accountRepository.save(account);
+        }
+
+
+    }
 }

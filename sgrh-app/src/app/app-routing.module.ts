@@ -52,6 +52,9 @@ import {
 import {NotFoundPageComponent} from "./not-found-page/not-found-page.component";
 import {AuthoriStagiaireGuard} from "./guards/authori-stagiaire.guard";
 import {AuthoriEmployeeGuard} from "./guards/authori-employee.guard";
+import {AddNewStageComponent} from "./administration/inters-offres-management/add-new-stage/add-new-stage.component";
+import {ManageStagesComponent} from "./administration/inters-offres-management/manage-stages/manage-stages.component";
+import {ChatappComponent} from "./chat/chatapp/chatapp.component";
 
 
 
@@ -87,6 +90,10 @@ const routes: Routes = [
   { path: 'employee/consulter-absences', component: EmployeeConsultationAbsencesComponent, canActivate : [AuthenticationGuard,AuthoriEmployeeGuard], data : {role:"Employee"}},
   { path: 'employee/demande-formation', component: EmployeeDemandeFormationComponent, canActivate : [AuthenticationGuard,AuthoriEmployeeGuard], data : {role:"Employee"}},
   { path: 'employee/status-demande-formation', component: EmployeeStatusDemandeFormationComponent, canActivate : [AuthenticationGuard,AuthoriEmployeeGuard], data : {role:"Employee"}},
+  //Not Yet Finshed :
+  { path: 'admin/stages/add-stage', component: AddNewStageComponent, canActivate : [AuthenticationGuard,AuthorizationGuard], data : {role:"Admin"} },
+  { path: 'admin/stages/manage-stages', component: ManageStagesComponent, canActivate : [AuthenticationGuard,AuthorizationGuard], data : {role:"Admin"} },
+  { path: 'chat', component:ChatappComponent, canActivate : [AuthenticationGuard]},
   //Wild Card Route for 404 request
   { path: '**', pathMatch: 'full',
     component: NotFoundPageComponent },

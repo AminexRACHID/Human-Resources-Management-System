@@ -66,4 +66,10 @@ export class FormationService {
   getFormationById(id:any){
     return this.http.get<any>(`http://localhost:8090/api/miaad/formations/formation/${id}`);
   }
+
+  deleteFormationById(id:any){
+    return this.http.delete(`http://localhost:8090/api/miaad/formations/${id}`)
+  }
+
+
 }

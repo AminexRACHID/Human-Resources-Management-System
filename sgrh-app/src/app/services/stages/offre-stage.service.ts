@@ -22,6 +22,11 @@ export class OffreStageService {
 
   }
 
+  updateOffreStage(stage : any, id : any):Observable<any>{
+    return this.http.put(`http://localhost:8090/api/stage/${id}`,stage);
+
+  }
+
   public searchOffer(term:any):Observable<any>{
     return this.http.get<Array<any>>(`http://localhost:8090/api/stage/offers/title/${term}`);
   }
@@ -29,4 +34,19 @@ export class OffreStageService {
   public getStageCondidate(id : any){
     return this.http.get<any>(`http://localhost:8090/api/stage/intershipStagiaire/${id}`);
   }
+
+  deleteStageById(id:any){
+    return this.http.delete(`http://localhost:8090/api/stage/${id}`)
+  }
+
+  sendAttestationEmail(info : any):Observable<any>{
+    return this.http.post<any>(`http://localhost:8090/api/stagaires/sendAttestationAndDeleteDemande`,info);
+
+  }
+
+  generateAttestation(info : any):Observable<any>{
+    return this.http.post(`http://localhost:8090/api/stagaires/genererAttestationSansEnvoyer`,info, { responseType: 'arraybuffer' });
+
+  }
+
 }

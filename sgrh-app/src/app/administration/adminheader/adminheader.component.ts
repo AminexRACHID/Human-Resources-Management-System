@@ -4,15 +4,23 @@ import {AuthService} from "../../services/authentification/auth.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AlertluncherService} from "../../services/alerts/alertluncher.service";
+import {StagiaireService} from "../../services/stagiaires/stagiaire.service";
+import {EmployeeService} from "../../services/employees/employee.service";
+import {data, type} from "jquery";
+import {ChatService} from "../../services/messagerie/chat.service";
 declare var feather: any;
 @Component({
   selector: 'app-adminheader',
   templateUrl: './adminheader.component.html',
   styleUrl: './adminheader.component.css'
 })
-export class AdminheaderComponent implements AfterViewInit {
+export class AdminheaderComponent implements AfterViewInit, OnInit {
   changePasswordForm: FormGroup;
-  constructor(private renderer: Renderer2, private el: ElementRef, private fb: FormBuilder, public authService : AuthService, private router:Router, private http:HttpClient, private alertService:AlertluncherService) {
+  nicknamee : any;
+  fullName : any;
+  firstNameH : any;
+  lastNameH : any;
+  constructor(private renderer: Renderer2, private el: ElementRef, private fb: FormBuilder, public authService : AuthService, private router:Router, private http:HttpClient, private alertService:AlertluncherService, private stagiaireService:StagiaireService, private employeeService:EmployeeService, private websocketService:ChatService) {
     this.changePasswordForm = this.fb.group({
       oldpassword: ['', Validators.required],
       newpassword: ['', [Validators.pattern(/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[@#$%^&*!.])([0-9a-zA-Z@#$%^&*!.]|[^ ]){8,}$/)
@@ -20,6 +28,34 @@ export class AdminheaderComponent implements AfterViewInit {
       ],
       passwordconfirmation: ['', Validators.required]
     });
+  }
+  getName(){
+    if (this.authService.roles === "Stagiaire"){
+      this.stagiaireService.getCondidateByEmail(this.authService.username).subscribe({
+        next: (data) => {
+          this.firstNameH = data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1);
+          this.lastNameH =  data.lastName.toUpperCase();
+
+        },
+        error: (err) => {
+        }
+      });
+    } else {
+      this.employeeService.getEmployeeByEmail(this.authService.username).subscribe({
+        next: (data) => {
+          this.firstNameH = data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1);
+          this.lastNameH = data.lastName.toUpperCase();
+          this.fullName = data.firstName +' '+ data.lastName;
+          this.nicknamee = data.firstName + data.lastName;
+        },
+        error: (err) => {
+        }
+      });
+    }
+  }
+
+  ngOnInit(): void {
+    this.getName();
   }
   ngAfterViewInit() {
     feather.replace(); // Replace feather icons
@@ -142,7 +178,14 @@ export class AdminheaderComponent implements AfterViewInit {
   }
 
   handleLogout() {
-    this.authService.logout();
-
+    if (this.authService.roles !== "Stagiaire"){
+      this.websocketService.disconnect(this.nicknamee, this.fullName);
+    }
+    // console.log(this.fullName+"   "+this.nicknamee);
+    setTimeout(() => {
+      this.authService.logout();
+    },500);
   }
+
+
 }

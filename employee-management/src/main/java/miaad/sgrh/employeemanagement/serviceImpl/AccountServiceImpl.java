@@ -1,5 +1,6 @@
 package miaad.sgrh.employeemanagement.serviceImpl;
 
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import miaad.sgrh.employeemanagement.dto.UserDto;
 import miaad.sgrh.employeemanagement.entity.Account;
@@ -117,6 +118,20 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account save(Account account){
         return accountRepository.save(account);
+    }
+
+
+    @Override
+    public String recover(String email) throws MessagingException {
+        Account account = accountRepository.findAccountByLogin(email);
+        if (account != null){
+            emailService.sendHtmlMailForPasswordRecovering(email);
+            return "password Recovered";
+        } else {
+            throw new RuntimeException("Account not found");
+        }
+
+
     }
 
 

@@ -43,7 +43,17 @@ export class AddplanformationComponent implements OnInit {
   removeFormation(index: number) {
     (this.form.get('formations') as FormArray).removeAt(index);
   }
-
+  validateDuration() {
+    const durationInput = document.getElementById('duration');
+    // @ts-ignore
+    if (durationInput.value < 0) {
+      // @ts-ignore
+      durationInput.value = '';
+    } else {
+      // @ts-ignore
+      durationInput.setCustomValidity('');
+    }
+  }
   onSubmit() {
     const formData = this.form.value;
 

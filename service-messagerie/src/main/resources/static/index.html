@@ -25,7 +25,8 @@
     <div class="users-list">
         <div class="users-list-container">
             <div class="message-input">
-                <input type="text" id="toAll" placeholder="à tous les utilisateurs">
+                <input type="text" id="messageContent" placeholder="à tous les utilisateurs">
+                <input type="file" id="fileInputToAll" class="file-input">
                 <button id="sendButton">Envoyer</button>
             </div>
 
@@ -45,8 +46,8 @@
 
         <form id="messageForm" name="messageForm" class="hidden">
             <div class="message-input">
-                <input autocomplete="off" type="text" id="message" placeholder="Type your message...">
-                <input type="file" id="fileInput">
+                <input autocomplete="off" type="text" class="mesg-input" id="message" placeholder="Type your message...">
+                <input type="file" id="fileInput" class="file-input">
                 <button>Send</button>
             </div>
         </form>

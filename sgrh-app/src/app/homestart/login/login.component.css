@@ -1,0 +1,16 @@
+.chat-box-tray {
+  background: #eee;
+  display: flex;
+  align-items: baseline;
+  padding: 10px 15px;
+  align-items: center;
+  margin-top: 19px;
+  bottom: 0;
+}
+.blurred {
+  filter: blur(5px); /* You can adjust the amount of blur as needed */
+}
+.modal{
+  top: 30%;
+  left: 30%;
+}

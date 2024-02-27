@@ -1,0 +1,461 @@
+<app-adminassets></app-adminassets>
+<div id="app">
+  <div id="sidebar" class='active'>
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <img src="assets/img/umi_logo.svg" style="zoom:150%;" srcset="">
+      </div>
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class='sidebar-title'>Employee</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="user" width="20"></i>
+              <span>Menu Employee</span>
+            </a>
+
+            <ul class="submenu ">
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-absence" routerLink="/employee/demande-absence">Demande Absence</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/consulter-absences" routerLink="/employee/consulter-absences">Absences</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/demande-formation" routerLink='/employee/demande-formation'>Demande Formation</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" href="employee/status-demande-formation" routerLink='/employee/status-demande-formation'>Status Formations</a>
+              </li>
+            </ul>
+
+          </li>
+          <li class='sidebar-title'>Administration</li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="briefcase" width="20"></i>
+              <span>Employees</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/all-employees">Afficher Employees</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-employee">Ajouter Employee</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="users" width="20"></i>
+              <span>Stagiaires</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-Stage">Demandes</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/entretien">Entretien</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink='/admin/stagiaire'>Accepter</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-refusees">Refuser</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stagiaire-carte">Carte Des Stagiaires</a>
+              </li>
+
+            </ul>
+
+          </li>
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" height="14" width="17.5" viewBox="0 0 640 512"><path fill="#0d6efd" d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5V291.9c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"/></svg></i>
+              <span>Stages</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stages/add-stage">Add Stage</a>
+              </li>
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/stages/manage-stages">Gérer Les Stages</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="clock" width="20"></i>
+              <span>Absences</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/demandes-absences">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-justifier">Justifier</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/absences-non-justifier">Non Justifier</a>
+              </li>
+
+            </ul>
+
+          </li>
+
+          <li class="sidebar-item  has-sub">
+            <a href="#" class='sidebar-link'>
+              <i data-feather="file-text" width="20"></i>
+              <span>Formations</span>
+            </a>
+
+            <ul class="submenu ">
+
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-plan">Plan de formations</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/add-plan">Ajouter un Plan</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/manage-demande-formation">Demandes</a>
+              </li>
+              <li>
+                <a routerLinkActive="Active" [routerLinkActiveOptions]="{exact : true}" routerLink="/admin/employee-formation">Formations</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul>
+      </div>
+      <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+  </div>
+  <div id="main">
+    <app-adminheader>
+
+    </app-adminheader>
+    <div class="main-content container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>Gestion des Stages</h3>
+          </div>
+          <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class='breadcrumb-header'>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a>Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Stages</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <section class="section">
+        <div class="card">
+          <div class="card-body">
+            <table #dataTable class='table table-hover' id="table1">
+              <thead>
+              <tr>
+                <th>Titre</th>
+                <th>type</th>
+                <th >Date Debut</th>
+                <th>Duree</th>
+                <th >Niveau</th>
+                <th>Rémunération</th>
+                <th colspan="3">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let o of offers; let i = index">
+                <td>{{o.title}}</td>
+                <td>{{o.type}}</td>
+                <td >{{o.startDate}}</td>
+                <td>{{o.duration}} mois</td>
+                <td>{{o.diploma}}</td>
+                <td *ngIf="o.remuneration === false">Non</td>
+                <td *ngIf="o.remuneration === true">Oui</td>
+                <!--                Detail-->
+                <td>
+                  <a type="button" data-toggle="modal" [attr.data-target]="'#exampleModalLong' + i">
+                    <span class="badge bg-info text-dark"><i><svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 576 512"><path fill="#ffffff" d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></i></span>
+                  </a>
+                  <!-- The Modal -->
+                  <div class="modal fade text-left" [id]="'exampleModalLong' + i" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="exampleModalLabel">Opportunité passionnante pour {{o.title}}</h4>
+                          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                          <!-- Job Post Company Start -->
+                          <div class="job-post-company pt-20 pb-20">
+                            <div class="container">
+                              <div class="row justify-content-between">
+                                <!-- Left Content -->
+                                <div class="col-xl-7 col-lg-8">
+                                  <!-- Job Single -->
+                                  <div class="single-job-items mb-50">
+                                    <div class="job-items">
+                                      <div class="company-img company-img-details">
+                                        <a href="#"><img src="assets/logo-offers.png" alt=""></a>
+                                      </div>
+                                      <div class="job-tittle mt-1" >
+                                        <a href="#">
+                                          <h4>{{o.title}}</h4>
+                                        </a>
+                                        <ul>
+                                          <li>UMI FSM</li>
+                                          <li><i class="fas fa-map-marker-alt"></i>Meknès, Maroc</li>
+                                          <li *ngIf="o.remuneration !== true">Non Rémunéré</li>
+                                          <li *ngIf="o.remuneration !== false">Rémunéré</li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- Job Single End -->
+
+                                  <div class="job-post-details">
+                                    <div class="post-details1 mb-50">
+                                      <!-- Small Section Tittle -->
+                                      <div class="small-section-tittle">
+                                        <h4>Description de Stage </h4>
+                                      </div>
+                                      <p> {{o.description}}</p>
+                                    </div>
+                                  </div>
+                                  <div class="post-details4  mb-50">
+                                    <!-- Small Section Tittle -->
+                                    <div class="small-section-tittle">
+                                      <h4>Company Information</h4>
+                                    </div>
+                                    <span>FSM</span>
+                                    <p>
+                                      Créée en 1982, la Faculté des Sciences de Meknès (FSM) en tant que premier établissement universitaire à accès ouvert dans la région Meknès-Tafilalt, peut être fière de ses 37 ans d’expérience cumulée qui font d’elle la locomotive du système éducatif universitaire à l’échelle de la région.                              </p>
+
+                                  </div>
+                                </div>
+                                <!-- Right Content -->
+                                <div class="col-xl-5 col-lg-5">
+                                  <div class="post-details3  mb-50">
+                                    <!-- Small Section Tittle -->
+                                    <div class="small-section-tittle">
+                                      <h4>Details</h4>
+                                    </div>
+                                    <ul>
+                                      <li>Date de début:<span>{{o.startDate}}</span></li>
+                                      <li>Lieu: <span>Meknès, Maroc</span></li>
+                                      <li>Type: <span>{{o.type}}</span></li>
+                                      <li>Niveau: <span>{{o.diploma}}</span></li>
+                                      <li>Durée:  <span>{{o.duration}} mois</span></li>
+                                      <li>Rémunération:
+                                        <span *ngIf="o.remuneration !== true">Non</span>
+                                        <span *ngIf="o.remuneration !== false">Oui</span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div class="post-details4  mb-50 ml-20" >
+                                    <!-- Small Section Tittle -->
+                                    <div class="small-section-tittle">
+                                      <ul>
+                                        <li>Nom: <span>UMI FSM </span></li>
+                                        <li>Web: <span>www.fs-umi.ac.ma</span></li>
+                                        <li>Email: <span>fs-contact&commat;umi.ac.ma</span></li>
+                                        <li>Tele: <span>+212 5 35 53 73 21</span></li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Job Post Company End -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--          End Modal        -->
+                </td>
+
+                <td>
+                  <a type="button" data-toggle="modal" (click)="getdata(o)" [attr.data-target]="'#inlineForm' + i">
+                    <span class="badge bg-warning text-dark"><i><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></i></span>
+                  </a>
+
+                  <!--form Modal -->
+                  <div *ngIf="stage" class="modal fade text-left" [id]="'inlineForm' + i" tabindex="-1" role="dialog"
+                       aria-labelledby="myModalLabel33" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel33">Modifier Stage</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></i>
+                          </button>
+                        </div>
+                          <div class="modal-body">
+                            <section id="multiple-column-form">
+                              <div class="row match-height">
+                                <div class="col-12">
+                                  <div class="card">
+                                    <div class="card-content">
+                                      <div class="card-body">
+<!--                                        <form class="form" >-->
+                                          <div class="row">
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group">
+                                                <label for="titre-column">Titre</label>
+                                                <input type="text" id="titre-column" class="form-control" placeholder="{{o.title}}"
+                                                       name="title" [(ngModel)]="stage.title" [required]="true">
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group">
+                                                <label>Type</label>
+                                                <select class="choices form-select" name="type" [(ngModel)]="stage.type" [required]="true">
+                                                  <option value="Stage De Fin D’étude" [selected]="o.type === 'Stage De Fin D’étude'">Stage De Fin D’étude</option>
+                                                  <option value="Stage Préembauche" [selected]="o.type === 'Stage Préembauche'">Stage Préembauche</option>
+                                                  <option value="Stage D’observation" [selected]="o.type === 'Stage D’observation'">Stage D’observation</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group">
+                                                <label>Rémunération</label>
+                                                <select class="choices form-select" name="remuneration" [(ngModel)]="stage.remuneration" [required]="true">
+                                                  <option value="true" [selected]="o.remuneration === true">Oui</option>
+                                                  <option value="false" [selected]="o.remuneration === false">Non</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group">
+                                                <label for="niveau_etudes">Niveau d'études</label>
+                                                <select class="form-control" id="niveau_etudes" name="diploma" [(ngModel)]="stage.diploma" [required]="true">
+                                                  <option value="Bac" [selected]="o.diploma === 'Bac'">Bac</option>
+                                                  <option value="Bac+2" [selected]="o.diploma === 'Bac+2'">Bac+2</option>
+                                                  <option value="Bac+3" [selected]="o.diploma === 'Bac+3'">Bac+3</option>
+                                                  <option value="Bac+5" [selected]="o.diploma === 'Bac+5'">Bac+5</option>
+                                                  <option value="Plus" [selected]="o.diploma === 'Plus'">Plus</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group ">
+                                                <label for="date-debut">Date Debut</label>
+                                                <div class="input-group date custom-datepicker" id="datepicker">
+                                                  <input type="text" class="form-control" placeholder="{{o.startDate}}" id="date-debut" name="startDate" [(ngModel)]="stage.startDate" [required]="true" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group">
+                                                <label for="duration" class="col-md-6 col-12">Durée du Stage</label>
+                                                <div class="col-md-12 col-12">
+                                                  <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="{{o.duration}}" id="duration" [(ngModel)]="stage.duration" name="duration" min="1" onfocus="(this.type='number')" onblur="(this.type='text')" (input)="validateDuration()" [required]="true"/>
+                                                    <div class="input-group-append">
+                                                      <span class="input-group-text">Mois</span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                              <div class="form-group ">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control" id="description" placeholder="{{o.description}}" name="description" [(ngModel)]="stage.description" [required]="true"></textarea>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end">
+                                              <button type="submit" class="btn btn-primary mr-1 mb-1" (click)="onSubmit(o.id)" data-dismiss="modal">Submit</button>
+                                              <button type="reset" class="btn btn-light-secondary mr-1 mb-1">Reset</button>
+                                            </div>
+                                          </div>
+<!--                                        </form>-->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--          End Modal        -->
+
+                </td>
+                <td>
+                  <a type="button" data-toggle="modal" [attr.data-target]="'#danger' + i" >
+                    <span class="badge bg-danger"><i ><svg xmlns="http://www.w3.org/2000/svg" height="19" width="19" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg></i></span>
+                  </a>
+                  <!--Danger theme Modal -->
+                  <div class="modal fade text-left" [id]="'danger' + i" tabindex="-1" role="dialog"
+                       aria-labelledby="myModalLabel120" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header bg-danger">
+                          <h5 class="modal-title white" id="myModalLabel120">Attention !!</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Êtes-vous sûr de vouloir supprimer Ce Stage ?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                          </button>
+                          <button type="button" class="btn btn-danger ml-1" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block" data-dismiss="modal" (click)="deleteStage(o.id)">Supprimer</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+

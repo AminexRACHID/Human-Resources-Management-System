@@ -66,7 +66,9 @@ public class StageController {
     public ResponseEntity<?> deleteStage(@PathVariable("id") Long id){
         try{
             stageService.deleteStage(id);
-            return ResponseEntity.ok("Stage deleted successfully.");
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("message", "Stage deleted successfully.");
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

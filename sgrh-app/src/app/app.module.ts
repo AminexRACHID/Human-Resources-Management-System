@@ -52,6 +52,9 @@ import { EmployeeConsultationAbsencesComponent } from './administration/Employee
 import { EmployeeStatusDemandeFormationComponent } from './administration/EmployeeDash/employee-status-demande-formation/employee-status-demande-formation.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import {NgToastModule} from "ng-angular-popup";
+import { ManageStagesComponent } from './administration/inters-offres-management/manage-stages/manage-stages.component';
+import { AddNewStageComponent } from './administration/inters-offres-management/add-new-stage/add-new-stage.component';
+import { ChatappComponent } from './chat/chatapp/chatapp.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +96,10 @@ import {NgToastModule} from "ng-angular-popup";
     EmployeeDemandeAbsencesComponent,
     EmployeeConsultationAbsencesComponent,
     EmployeeStatusDemandeFormationComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    ManageStagesComponent,
+    AddNewStageComponent,
+    ChatappComponent
   ],
   imports: [
     BrowserModule,

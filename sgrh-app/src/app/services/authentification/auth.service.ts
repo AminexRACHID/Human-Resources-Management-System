@@ -27,6 +27,11 @@ export class AuthService {
     return this.http.post("http://localhost:8090/manage/user", form)
   }
 
+  public recoverPassword(body:any){
+    return this.http.get<any>(`http://localhost:8090/api/account/passwordRecovre/${body}`)
+  }
+
+
 
   loadProfile(data:any) {
     this.isAuthenticated = true
@@ -34,7 +39,6 @@ export class AuthService {
     let decodeJwt : any = jwtDecode(this.accessToken);
     this.username = decodeJwt.sub;
     this.roles = decodeJwt.roles;
-    // console.log(this.roles);
     window.localStorage.setItem("jwt-token",this.accessToken);
   }
 

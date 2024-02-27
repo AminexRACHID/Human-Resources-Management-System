@@ -1,16 +1,17 @@
-import {Component, input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, input, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/authentification/auth.service";
 import {StagiaireService} from "../../../services/stagiaires/stagiaire.service";
 import {OffreStageService} from "../../../services/stages/offre-stage.service";
 import {HttpClient} from "@angular/common/http";
 import {AlertluncherService} from "../../../services/alerts/alertluncher.service";
+import {data} from "jquery";
 
 @Component({
   selector: 'app-postuler-stage',
   templateUrl: './postuler-stage.component.html',
   styleUrl: './postuler-stage.component.css'
 })
-export class PostulerStageComponent implements OnInit{
+export class PostulerStageComponent implements OnInit, AfterViewInit{
 
   userId:any;
   idStage:any = null;
@@ -34,15 +35,7 @@ export class PostulerStageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getOffers()
-    this.stagiaireService.getCondidateByEmail(this.authService.username).subscribe(
-      response => {
-        this.userId = response.id;
-      },
-      error => {
-        // console.error('API Error:', error);
-      }
-    );
+
   }
 
   getOffers(){
@@ -156,5 +149,17 @@ export class PostulerStageComponent implements OnInit{
           // Handle error, display a message, etc.
         }
       );
+  }
+
+  ngAfterViewInit(): void {
+    this.getOffers()
+    this.stagiaireService.getCondidateByEmail(this.authService.username).subscribe(
+      response => {
+        this.userId = response.id;
+      },
+      error => {
+        // console.error('API Error:', error);
+      }
+    );
   }
 }

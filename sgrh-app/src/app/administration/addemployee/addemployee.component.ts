@@ -55,7 +55,7 @@ export class AddemployeeComponent implements OnInit {
       formData.append('file', this.fileToUpload);
     } else {
       // Create an empty file if fileToUpload is null
-      const emptyFile = new File([], 'emptyFile.txt');
+      const emptyFile = new File([], '');
       formData.append('file', emptyFile);
     }
 

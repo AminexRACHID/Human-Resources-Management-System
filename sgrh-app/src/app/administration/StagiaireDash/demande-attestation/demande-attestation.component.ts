@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OffreStageService} from "../../../services/stages/offre-stage.service";
 import {StagiaireService} from "../../../services/stagiaires/stagiaire.service";
 import {AuthService} from "../../../services/authentification/auth.service";
+import {AlertluncherService} from "../../../services/alerts/alertluncher.service";
 
 @Component({
   selector: 'app-demande-attestation',
@@ -12,7 +13,7 @@ export class DemandeAttestationComponent implements OnInit{
 
   stages:any;
   userId:any;
-  constructor(private stageService:OffreStageService, private stagiaireService:StagiaireService, private authService:AuthService) {
+  constructor(private stageService:OffreStageService, private stagiaireService:StagiaireService, private authService:AuthService, private alertService:AlertluncherService) {
   }
 
   ngOnInit(): void {
@@ -40,4 +41,21 @@ export class DemandeAttestationComponent implements OnInit{
     );
   }
 
+  demandeAttestation(id : any) {
+
+    const infos = {
+      idStage : id,
+      email : this.authService.username
+    }
+
+    this.stageService.sendAttestationEmail(infos).subscribe(
+      response => {
+        this.alertService.successAlertService("Félicitations, votre attestation de stage a été envoyée par email.");
+      },
+      error => {
+        this.alertService.warningAlertService("La génération de votre attestation n'est possible qu'après la fin de votre stage.");
+        // console.error('API Error:', error);
+      }
+    );
+  }
 }

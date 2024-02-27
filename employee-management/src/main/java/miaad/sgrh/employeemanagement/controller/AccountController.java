@@ -1,5 +1,6 @@
 package miaad.sgrh.employeemanagement.controller;
 
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import miaad.sgrh.employeemanagement.dto.UserDto;
 import miaad.sgrh.employeemanagement.entity.Account;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -120,6 +123,20 @@ public class AccountController {
     @GetMapping("/accc/{email}")
     public Account  getaccounte(@PathVariable("email") String email){
         return accountRepository.findAccountByLogin(email);
+    }
+
+    @GetMapping("/passwordRecovre/{email}")
+    public ResponseEntity<?>  passwordRecovre(@PathVariable("email") String email) throws MessagingException {
+        try {
+            String var  = accountService.recover(email);
+            Map<String, String> responseMap = new HashMap<>();
+            responseMap.put("message", "pawssword sent to email");
+
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
 }

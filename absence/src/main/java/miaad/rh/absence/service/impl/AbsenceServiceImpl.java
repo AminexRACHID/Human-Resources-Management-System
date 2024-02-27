@@ -252,7 +252,9 @@ public class AbsenceServiceImpl implements AbsenceService {
         List<Absence> absences = absenceRepository.findByColaborateurId(id);
 
         for (Absence absence : absences) {
-            absenceRepository.delete(absence);
+            if(absence.isEmployee()){
+                absenceRepository.delete(absence);
+            }
         }
     }
 

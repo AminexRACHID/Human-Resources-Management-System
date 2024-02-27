@@ -30,4 +30,5 @@ public interface EmployeeService {
 
     List<Document> getAllDocumentsByEmployee(Long employeeId);
 
+    void createAdminAuto(EmployeeDto employeeDto);
 }
