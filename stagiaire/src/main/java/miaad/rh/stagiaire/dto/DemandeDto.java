@@ -13,8 +13,6 @@ import java.sql.Date;
 @AllArgsConstructor
 public class DemandeDto {
     private Long id;
-    private String nomStagaire;
-    private Date dateDebut;
-    private Date dateFin;
+    private Long idStage;
     private String email;
 }

@@ -178,13 +178,18 @@ export class AdminheaderComponent implements AfterViewInit, OnInit {
   }
 
   handleLogout() {
-    if (this.authService.roles !== "Stagiaire"){
-      this.websocketService.disconnect(this.nicknamee, this.fullName);
-    }
+
+    this.websocketService.connect(this.nicknamee, this.fullName);
+
     // console.log(this.fullName+"   "+this.nicknamee);
     setTimeout(() => {
-      this.authService.logout();
-    },500);
+      if (this.authService.roles !== "Stagiaire"){
+        this.websocketService.disconnect(this.nicknamee, this.fullName);
+      }
+      setTimeout(() =>{
+        this.authService.logout();
+      }, 300)
+    },400);
   }
 
 

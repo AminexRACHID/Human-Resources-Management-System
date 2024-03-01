@@ -19,7 +19,7 @@ export class EmployeeStatusDemandeFormationComponent implements OnInit,AfterView
   statusRejected:any;
   // @ts-ignore
   @ViewChild('dataTable', { static: false }) table: ElementRef;
-  constructor(private authService: AuthService, private employeeService:EmployeeService, private formationService:FormationService) {
+  constructor(public authService: AuthService, private employeeService:EmployeeService, private formationService:FormationService) {
   }
   ngOnInit(): void {
     this.employeeService.getEmployeeByEmail(this.authService.username).subscribe(

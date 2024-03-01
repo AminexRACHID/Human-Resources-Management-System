@@ -187,7 +187,7 @@
                 <th [hidden]="true">Ville</th>
                 <th >Phone</th>
                 <th >Niveau</th>
-                <th >Gender</th>
+                <th [hidden]="true">Gender</th>
                 <th>Stage</th>
                 <th [hidden]="true">Type</th>
                 <th [hidden]="true">Remuneration</th>
@@ -204,7 +204,7 @@
                 <td [hidden]="true">{{c.stagiaire.city}}</td>
                 <td >{{c.stagiaire.phone}}</td>
                 <td >{{c.stagiaire.levelStudies}}</td>
-                <td >{{c.stagiaire.gender}}</td>
+                <td [hidden]="true">{{c.stagiaire.gender}}</td>
                 <td>{{c.stage.title}}</td>
                 <td [hidden]="true">{{c.stage.type}}</td>
                 <td [hidden]="true">{{c.stage.remuneration}}</td>

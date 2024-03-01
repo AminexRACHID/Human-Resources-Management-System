@@ -18,8 +18,6 @@ public class Demande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nomStagaire;
-    private Date dateDebut;
-    private Date dateFin;
+    private Long idStage;
     private String email;
 }

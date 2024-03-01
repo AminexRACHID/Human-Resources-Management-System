@@ -1,0 +1,200 @@
+services:
+  mysql_db:
+    image: mysql
+    command: --max_connections=200
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: sgrh@2023
+      MYSQL_DATABASE: sgrh
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+    ports:
+      - "3307:3306"
+    networks:
+      - sgrh_app
+  mongodb:
+    image: mongo
+    container_name: mongo_db
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: sgrh
+      MONGO_INITDB_ROOT_PASSWORD: sgrh
+      MONGO_INITDB_DATABASE: chatapp
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })'"]
+    ports:
+      - "27017:27017"
+    networks:
+      - sgrh_app
+  mongo_express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: sgrh
+      ME_CONFIG_MONGODB_ADMINPASSWORD: sgrh
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - "8081:8081"
+    networks:
+      - sgrh_app
+  absence-app-service:
+    build: ./absence
+    container_name: absence-service
+    ports:
+      - "8070:8070"
+    expose:
+      - "8070"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  administration-app-service:
+    build: ./administration
+    container_name: administration-service
+    ports:
+      - "8073:8073"
+    expose:
+      - "8073"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  api-gateway-app-service:
+    build: ./api-gateway
+    container_name: api-gateway-service
+    ports:
+      - "8090:8090"
+    expose:
+      - "8090"
+    environment:
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  employee-management-app-service:
+    build: ./employee-management
+    container_name: employee-management-service
+    ports:
+      - "8021:8021"
+    expose:
+      - "8021"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  offre-stage-app-service:
+    build: ./offre-stage
+    container_name: offre-stage-service
+    ports:
+      - "8084:8084"
+    expose:
+      - "8084"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  service-employee-app-service:
+    build: ./service_employee
+    container_name: service-employee-service
+    ports:
+      - "8051:8051"
+    expose:
+      - "8051"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  service-formation-app-service:
+    build: ./service_formation
+    container_name: service-formation-service
+    ports:
+      - "8050:8050"
+    expose:
+      - "8050"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  service-messagerie-app-service:
+    build: ./service-messagerie
+    container_name: service-messagerie-service
+    ports:
+      - "8088:8088"
+    expose:
+      - "8088"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+      - mongodb
+      - mongo_express
+    networks:
+      - sgrh_app
+  service-registery-app-service:
+    build: ./service-registery
+    container_name: service-registery-service
+    ports:
+      - "8761:8761"
+    expose:
+      - "8761"
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  stagiaire-app-service:
+    build: ./stagiaire
+    container_name: stagiaire-service
+    ports:
+      - "8071:8071"
+    expose:
+      - "8071"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+  user-app-service:
+    build: ./user
+    container_name: user-service
+    ports:
+      - "8043:8043"
+    expose:
+      - "8043"
+    environment:
+      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
+      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysql_db
+    networks:
+      - sgrh_app
+networks:
+  sgrh_app:
+    driver: bridge
+
+volumes:
+  mysqldata:
+  mongodata:

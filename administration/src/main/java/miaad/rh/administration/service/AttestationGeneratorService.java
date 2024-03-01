@@ -30,7 +30,7 @@ public class AttestationGeneratorService {
 
         // Ajout du logo à gauche
         try {
-            Image imgLeft = Image.getInstance("src/main/resources/asset/umi.jpg");
+            Image imgLeft = Image.getInstance("administration/src/main/resources/asset/umi.jpg");
             imgLeft.scaleToFit(150, 50);
             PdfPCell cellLeft = new PdfPCell(imgLeft);
             cellLeft.setBorder(Rectangle.NO_BORDER);
@@ -41,7 +41,7 @@ public class AttestationGeneratorService {
 
         // Ajout du logo à droite
         try {
-            Image imgRight = Image.getInstance("src/main/resources/asset/fsm.png");
+            Image imgRight = Image.getInstance("administration/src/main/resources/asset/fsm.png");
             imgRight.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
             PdfPCell cellRight = new PdfPCell(imgRight);
             cellRight.setBorder(Rectangle.NO_BORDER);
@@ -104,7 +104,7 @@ public class AttestationGeneratorService {
 
         // Ajout de l'image contenant la signature du responsable en bas à droite
         try {
-            Image imgRightbtm = Image.getInstance("src/main/resources/asset/signature.png");
+            Image imgRightbtm = Image.getInstance("administration/src/main/resources/asset/signature.png");
             imgRightbtm.scaleToFit(150, 50);
             imgRightbtm.setAlignment(Element.ALIGN_RIGHT);
             document.add(imgRightbtm);

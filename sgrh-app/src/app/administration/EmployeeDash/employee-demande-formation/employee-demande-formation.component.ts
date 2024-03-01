@@ -14,7 +14,7 @@ export class EmployeeDemandeFormationComponent implements OnInit{
   userId : any;
   formations:any;
   search:any
-  constructor(private formationService: FormationService, private authService: AuthService, private employeeService:EmployeeService, private alertService:AlertluncherService) {
+  constructor(private formationService: FormationService, public authService: AuthService, private employeeService:EmployeeService, private alertService:AlertluncherService) {
   }
   ngOnInit(): void {
     this.getFormations();

@@ -51,7 +51,7 @@
                 <a href="job_details.html"><img src="assets/logo-offers.png" alt=""></a>
               </div>
               <div class="job-tittle">
-                <a href="job_details.html"><h4>{{o.title}}</h4></a>
+                <a data-bs-toggle="modal" [attr.data-bs-target]="'#exampleModalLong' + i"><h4>{{o.title}}</h4></a>
                 <ul>
                   <li>UMI FSM</li>
                   <li><i class="fas fa-map-marker-alt"></i>Meknès, Maroc</li>

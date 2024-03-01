@@ -7,9 +7,7 @@ public class DemandeMapper {
     public static DemandeDto mapToDemandeDto(Demande demande){
         return new DemandeDto(
                 demande.getId(),
-                demande.getNomStagaire(),
-                demande.getDateDebut(),
-                demande.getDateFin(),
+                demande.getIdStage(),
                 demande.getEmail()
         );
     }
@@ -17,9 +15,7 @@ public class DemandeMapper {
     public static Demande mapToDemande(DemandeDto demandeDto){
         return new Demande(
                 demandeDto.getId(),
-                demandeDto.getNomStagaire(),
-                demandeDto.getDateDebut(),
-                demandeDto.getDateFin(),
+                demandeDto.getIdStage(),
                 demandeDto.getEmail()
         );
     }

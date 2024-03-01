@@ -1,20 +1,28 @@
 package miaad.rh.stagiaire.controller;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import miaad.rh.stagiaire.dto.DemandeDto;
-import miaad.rh.stagiaire.dto.EmailInfoDto;
+import lombok.NoArgsConstructor;
+import miaad.rh.stagiaire.dto.*;
+import miaad.rh.stagiaire.feign.OffreFeignClient;
+import miaad.rh.stagiaire.feign.StagaireRestClient;
 import miaad.rh.stagiaire.service.PDFGeneratorService;
 import miaad.rh.stagiaire.service.StagaireService;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -23,54 +31,78 @@ public class StagaireController {
     private StagaireService stagaireService;
     private JavaMailSender javaMailSender;  // Add this line
     private PDFGeneratorService pdfGeneratorService;
+    private StagaireRestClient stagaireRestClient;
+    private OffreFeignClient offreFeignClient;
+
 
     @PostMapping("/sendAttestation")
     public void sendEmailWithAttachment(@RequestBody EmailInfoDto emailInfoDto) {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        String subject = "attestation de stage";
-        String message = "Je vous félicite pour la terminaison de votre stage.";
-        String attachmentName = "attestation.pdf";
-
-        try {
-            // Générer le PDF avec les informations de EmailInfoDto
-            byte[] attestationPdf = pdfGeneratorService.generateAttestation(
-                    emailInfoDto.getNomStagaire(),
-                    emailInfoDto.getDateDebut(),
-                    emailInfoDto.getDateFin()
-            );
-
-            // Préparer le message MIME
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setTo(emailInfoDto.getEmail());
-            helper.setSubject(subject);
-            helper.setText(message);
-
-            // Ajouter le PDF en pièce jointe
-            ByteArrayResource pdfAttachment = new ByteArrayResource(attestationPdf);
-            helper.addAttachment(attachmentName, pdfAttachment);
-
-            // Envoyer l'email
-            javaMailSender.send(mimeMessage);
-
-        } catch (MessagingException e) {
-            e.printStackTrace(); // Gérer l'exception de manière appropriée
-        } catch (Exception e) {
-            e.printStackTrace(); // Gérer l'exception de manière appropriée
-        }
+        stagaireService.sendAttestation(emailInfoDto);
     }
 
-    // la méthode pour envoyer l'attestaion et suprimer la demande pour accepter
-    @PostMapping("/sendAttestationAndDeleteDemande")
-    public ResponseEntity<?> sendAttestationAndDeleteDemande(@RequestBody DemandeDto demandeDto) {
+    // Générer attestation et ne pas l'envoyer
+    @PostMapping("/genererAttestationSansEnvoyer")
+    public ResponseEntity<?> genererAttestationSansEnvoyer(@RequestBody DemandeDto demandeDto){
         try {
-            EmailInfoDto emailInfoDto = new EmailInfoDto(demandeDto.getNomStagaire(), demandeDto.getDateDebut(), demandeDto.getDateFin(), demandeDto.getEmail());
-            sendEmailWithAttachment(emailInfoDto);
-            stagaireService.deleteDemande(demandeDto.getId());
-            return ResponseEntity.ok("Demande deleted successfully !");
+            byte[] attestation = stagaireService.generateAttestationPdf(demandeDto);
+
+            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(attestation));
+
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "filename; filename=attestation.pdf");
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(resource);
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
+
     }
+
+//     la méthode pour envoyer l'attestaion et suprimer la demande pour accepter
+@PostMapping("/sendAttestationAndDeleteDemande")
+public ResponseEntity<?> sendAttestationAndDeleteDemande(@RequestBody DemandeDto demandeDto) {
+    Map<String, String> responseMap = new HashMap<>();
+
+    try {
+        StagiaireDto stagaireDto = stagaireRestClient.getStagiaireByEmails(demandeDto.getEmail());
+        String fullName = stagaireDto.getFirstName()+ " " +stagaireDto.getLastName();
+        OffreDto offreDto = offreFeignClient.getStageById(demandeDto.getIdStage());
+        Date dateF = stagaireService.getDateFin(offreDto.getStartDate(), (long) offreDto.getDuration());
+
+        // Convertir la dateF en LocalDate pour la comparaison
+        LocalDate localDateF = dateF.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+
+
+        // Récupérer la date actuelle
+        LocalDate currentDate = LocalDate.now();
+
+        System.out.println("currentDate :"+currentDate);
+        System.out.println("datefin :"+localDateF);
+
+        // Vérifier si la dateF est postérieure à la date actuelle
+        if (!localDateF.isAfter(currentDate)) {
+            EmailInfoDto emailInfoDto = new EmailInfoDto(fullName, offreDto.getStartDate(), dateF, demandeDto.getEmail());
+            sendEmailWithAttachment(emailInfoDto);
+//            stagaireService.deleteDemande(demandeDto.getId());
+
+            responseMap.put("message", "Attestation envoyer par e-mail !");
+
+            return ResponseEntity.ok(responseMap);
+        } else {
+            responseMap.put("message", "La date de fin n'est pas postérieure à la date actuelle.");
+            return ResponseEntity.badRequest().body(responseMap);
+        }
+    } catch (Exception e){
+        throw new RuntimeException(e.getMessage());
+    }
+}
+
     // la méthode pour créer une demande
     @PostMapping("/createDemande")
     public ResponseEntity<?> createDemande(@RequestBody DemandeDto demandeDto) {
@@ -103,6 +135,7 @@ public class StagaireController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
 
 

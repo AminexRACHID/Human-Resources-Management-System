@@ -22,7 +22,7 @@ export class EmployeeConsultationAbsencesComponent implements OnInit,AfterViewIn
   fullname:any;
   // @ts-ignore
   @ViewChild('dataTable', { static: false }) table: ElementRef;
-  constructor(private absenceService:AbsenceService, private authService: AuthService, private employeeService:EmployeeService, private websocketService:ChatService) {
+  constructor(private absenceService:AbsenceService, public authService: AuthService, private employeeService:EmployeeService, private websocketService:ChatService) {
   }
   ngOnInit(): void {
     this.employeeService.getEmployeeByEmail(this.authService.username).subscribe(

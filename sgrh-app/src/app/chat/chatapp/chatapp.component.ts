@@ -36,7 +36,7 @@ export class ChatappComponent implements OnInit,AfterViewInit {
 
 
 
-  constructor(private websocketService: ChatService,private http: HttpClient, private employeeService:EmployeeService, private authService:AuthService, private stagiaireService:StagiaireService) {}
+  constructor(private websocketService: ChatService,private http: HttpClient, private employeeService:EmployeeService, public authService:AuthService, private stagiaireService:StagiaireService) {}
 
   ngAfterViewInit(): void {
     // console.log('ssssssssssssssssssssssssssssssss')

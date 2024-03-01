@@ -228,7 +228,7 @@ export class ManageplanformationComponent implements OnInit,AfterViewInit{
         this.alertService.successAlertService("Suppression du formation réalisée.");
       },
       (error) => {
-        this.alertService.errorAlertService("Une erreur est survenue. Veuillez réessayer ultérieurement.");
+        // this.alertService.errorAlertService("Une erreur est survenue. Veuillez réessayer ultérieurement.");
       }
     );
   }

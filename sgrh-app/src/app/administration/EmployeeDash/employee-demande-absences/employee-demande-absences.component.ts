@@ -21,7 +21,7 @@ export class EmployeeDemandeAbsencesComponent implements OnInit{
     employee:true
   };
 
-  constructor(private absenceService: AbsenceService, private authService: AuthService, private employeeService:EmployeeService, private alertService: AlertluncherService) {
+  constructor(private absenceService: AbsenceService, public authService: AuthService, private employeeService:EmployeeService, private alertService: AlertluncherService) {
   }
 
   ngOnInit(): void {

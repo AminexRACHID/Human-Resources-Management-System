@@ -6,7 +6,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Calendar;
 
 
@@ -17,6 +17,15 @@ public class PDFGeneratorService {
         Document document = new Document();
         PdfWriter.getInstance(document, byteArrayOutputStream);
 
+//        System.out.println(endDate);
+//
+        String[] partsstartDate = startDate.toString().split(" ");
+//        System.out.println(partsstartDate);
+        String[] partsendDate = endDate.toString().split(" ");
+        String startDateN = partsstartDate[0] + " " + partsstartDate[2] + " " + partsstartDate[1] + " " + partsstartDate[5];
+        String endDateN = partsendDate[0] + " " + partsendDate[2] + " " + partsendDate[1] + " " + partsendDate[5];
+
+
         // Ouverture du document
         document.open();
 
@@ -26,7 +35,7 @@ public class PDFGeneratorService {
 
         // Ajout du logo à gauche
         try {
-            Image imgLeft = Image.getInstance("src/main/resources/asset/umi.jpg");            imgLeft.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
+            Image imgLeft = Image.getInstance("stagiaire/src/main/resources/asset/umi.jpg");            imgLeft.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
             PdfPCell cellLeft = new PdfPCell(imgLeft);
             cellLeft.setBorder(Rectangle.NO_BORDER);
             table.addCell(cellLeft);
@@ -36,7 +45,7 @@ public class PDFGeneratorService {
 
         // Ajout du logo à droite
         try {
-            Image imgRight = Image.getInstance("src/main/resources/asset/fsm.png");
+            Image imgRight = Image.getInstance("stagiaire/src/main/resources/asset/fsm.png");
             imgRight.scaleToFit(150, 50); // Ajustez la taille du logo selon vos besoins
             PdfPCell cellRight = new PdfPCell(imgRight);
             cellRight.setBorder(Rectangle.NO_BORDER);
@@ -67,9 +76,9 @@ public class PDFGeneratorService {
         content.add(new Phrase("Je soussigné, responsable du département informatique, certifie que M/Mme "));
         content.add(new Phrase(stagiaireName, boldFont));
         content.add(new Phrase(" a effectué son stage au département d'Informatique de la Faculté des Sciences de Meknès du "));
-        content.add(new Phrase(startDate.toString(), boldFont));
+        content.add(new Phrase(startDateN, boldFont));
         content.add(new Phrase(" au "));
-        content.add(new Phrase(endDate.toString(), boldFont));
+        content.add(new Phrase(endDateN, boldFont));
         content.add(new Phrase("."));
         content.add((new Phrase("\n\n")));
         content.add((new Phrase("Cette attestation est délivrée à l'intéressé(e) afin de servir et valoir ce que de droit.\n\n")));
@@ -95,7 +104,7 @@ public class PDFGeneratorService {
 
         // Ajout de l'image contenant la signature du responsable en bas à droite
         try {
-            Image imgRightbtm = Image.getInstance("src/main/resources/asset/signature.png");
+            Image imgRightbtm = Image.getInstance("stagiaire/src/main/resources/asset/signature.png");
             imgRightbtm.scaleToFit(150, 50);
             imgRightbtm.setAlignment(Element.ALIGN_RIGHT);
             document.add(imgRightbtm);
