@@ -15,7 +15,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 @SpringBootApplication
-@EnableDiscoveryClient
 @EnableFeignClients
 public class EmployeeManagementApplication {
 

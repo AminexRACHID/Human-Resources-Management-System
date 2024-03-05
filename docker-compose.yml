@@ -1,14 +1,13 @@
 services:
-  mysql_db:
+  mysqldb:
     image: mysql
-    command: --max_connections=200
+    restart: always
     volumes:
       - mysqldata:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: sgrh@2023
+      MYSQL_PASSWORD: sgrh@2023
       MYSQL_DATABASE: sgrh
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - "3307:3306"
     networks:
@@ -39,34 +38,6 @@ services:
       - "8081:8081"
     networks:
       - sgrh_app
-  absence-app-service:
-    build: ./absence
-    container_name: absence-service
-    ports:
-      - "8070:8070"
-    expose:
-      - "8070"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
-  administration-app-service:
-    build: ./administration
-    container_name: administration-service
-    ports:
-      - "8073:8073"
-    expose:
-      - "8073"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
   api-gateway-app-service:
     build: ./api-gateway
     container_name: api-gateway-service
@@ -75,65 +46,7 @@ services:
     expose:
       - "8090"
     environment:
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
-  employee-management-app-service:
-    build: ./employee-management
-    container_name: employee-management-service
-    ports:
-      - "8021:8021"
-    expose:
-      - "8021"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
-  offre-stage-app-service:
-    build: ./offre-stage
-    container_name: offre-stage-service
-    ports:
-      - "8084:8084"
-    expose:
-      - "8084"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
-  service-employee-app-service:
-    build: ./service_employee
-    container_name: service-employee-service
-    ports:
-      - "8051:8051"
-    expose:
-      - "8051"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
-    networks:
-      - sgrh_app
-  service-formation-app-service:
-    build: ./service_formation
-    container_name: service-formation-service
-    ports:
-      - "8050:8050"
-    expose:
-      - "8050"
-    environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
-    depends_on:
-      - mysql_db
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
     networks:
       - sgrh_app
   service-messagerie-app-service:
@@ -144,10 +57,8 @@ services:
     expose:
       - "8088"
     environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
     depends_on:
-      - mysql_db
       - mongodb
       - mongo_express
     networks:
@@ -159,8 +70,114 @@ services:
       - "8761:8761"
     expose:
       - "8761"
+    networks:
+      - sgrh_app
+  absence-app-service:
+    build: ./absence
+    container_name: absence-service
+    ports:
+      - "8070:8070"
+    expose:
+      - "8070"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
     depends_on:
-      - mysql_db
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  employee-management-app-service:
+    build: ./employee-management
+    container_name: employee-management-service
+    ports:
+      - "8021:8021"
+    expose:
+      - "8021"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  administration-app-service:
+    build: ./administration
+    container_name: administration-service
+    ports:
+      - "8073:8073"
+    expose:
+      - "8073"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  offre-stage-app-service:
+    build: ./offre-stage
+    container_name: offre-stage-service
+    ports:
+      - "8084:8084"
+    expose:
+      - "8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  service-employee-app-service:
+    build: ./service_employee
+    container_name: service-employee-service
+    ports:
+      - "8051:8051"
+    expose:
+      - "8051"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  service-formation-app-service:
+    build: ./service_formation
+    container_name: service-formation-service
+    ports:
+      - "8050:8050"
+    expose:
+      - "8050"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
+    depends_on:
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
     networks:
       - sgrh_app
   stagiaire-app-service:
@@ -171,10 +188,14 @@ services:
     expose:
       - "8071"
     environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
     depends_on:
-      - mysql_db
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
     networks:
       - sgrh_app
   user-app-service:
@@ -185,10 +206,23 @@ services:
     expose:
       - "8043"
     environment:
-      - DATABASE_SERVICE_URL=jdbc:mysql://localhost:3307/sgrh
-      - DISCOVERY_SERVICE_URL=http://service-registery-app-service:8761/eureka
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/sgrh?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registery-app-service:8761/eureka
     depends_on:
-      - mysql_db
+      - mysqldb
+      - service-registery-app-service
+      - api-gateway-app-service
+    networks:
+      - sgrh_app
+  angular-app-service:
+    container_name: angular-app
+    build: ./sgrh-app
+    ports:
+      - '4200:80'
+    expose:
+      - "4200"
     networks:
       - sgrh_app
 networks:

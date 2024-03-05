@@ -1,0 +1,15 @@
+services:
+  frontend-service:
+    container_name: frontend-service
+    build: ./
+    image: frontend-service
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
