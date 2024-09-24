@@ -1,4 +1,4 @@
-# Systeme-de-Gestion-des-Ressources-Humaines
+# Human Resources Management System
 
 This project is a distributed Human Resources Management System (HRMS) designed for organizations and enterprises to efficiently manage various human resource processes. The system provides a range of services for both employees and administrators, aiming to streamline operations, manage personnel data, and facilitate internal communication.
 
